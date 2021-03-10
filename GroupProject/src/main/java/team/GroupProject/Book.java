@@ -6,7 +6,10 @@ public class Book {
     private String ISBN;
 
     // This can be a link to a picture to be displayed
-    private String picture;
+    private String bookName;
+
+
+	private String picture;
     private String description;
     private String author;
     private String publisher;
@@ -14,12 +17,14 @@ public class Book {
     // A book will be liked to a bookstore
     
 
-    public Book(String ISBN, String picture, String description, String author, String publisher) {
-        this.ISBN = ISBN;
+    public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
+        this.bookName = bookName;
+    	this.ISBN = ISBN;
         this.picture = picture;
         this.description = description;
         this.author = author;
         this.publisher = publisher;
+     
     }
 
     public String getISBN() {
@@ -30,6 +35,14 @@ public class Book {
         this.ISBN = ISBN;
     }
 
+    public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+	
     public String getPicture() {
         return picture;
     }
