@@ -10,7 +10,7 @@ public class Bookstore {
 
     public Bookstore(Owner owner){
         this.owner = owner;
-        books = new ArrayList<>();
+        this.books = new ArrayList<Book>();
     }
 
     public Owner getOwner() {
