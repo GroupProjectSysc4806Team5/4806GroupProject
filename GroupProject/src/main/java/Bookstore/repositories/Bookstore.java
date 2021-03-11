@@ -1,4 +1,4 @@
-package team.GroupProject;
+package Bookstore.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +12,13 @@ public class Bookstore {
     @ManyToOne
     private Owner owner;
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
     private List<Book> books;
 
     //private List orders;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Bookstore(){ }

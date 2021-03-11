@@ -1,4 +1,4 @@
-package team.GroupProject;
+package Bookstore.repositories;
 
 import javax.persistence.*;
 
@@ -8,11 +8,11 @@ public class User {
     private String name;
     private String email;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     public Cart cart;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public User() {}

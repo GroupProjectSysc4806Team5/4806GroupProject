@@ -1,5 +1,8 @@
 package team.GroupProject;
 
+import Bookstore.repositories.Book;
+import Bookstore.repositories.Bookstore;
+
 import java.util.HashSet;
 import java.util.Set;
 
