@@ -10,7 +10,9 @@ public class Order {
     private int id;
     
     @OneToMany(fetch=FetchType.EAGER, targetEntity = Book.class)
+    
     private List<Book> books;
+    
     private Customer customer;
     
     public Order(int id, List<Book> books, Customer customer) {
@@ -21,14 +23,17 @@ public class Order {
     }
     
     public int getId() { 
+    	
     	return this.id; }
     
-     public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-    public void setId(int id) {
+       public void setId(int id) {
     	this.id = id; }
 
+     public void setBooks(List<Book> books) {
+    	 
+        this.books = books;
+    }
+ 
     public List<Book> getBooks() { 
     	return this.books; }
     
