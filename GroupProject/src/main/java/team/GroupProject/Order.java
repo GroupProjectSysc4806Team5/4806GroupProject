@@ -1,4 +1,6 @@
 package team.GroupProject;
+import Bookstore.Model.Book;
+
 import java.util.List;
 
 import javax.persistence.*;

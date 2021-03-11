@@ -1,11 +1,15 @@
-package team.GroupProject;
+package Bookstore.Model;
 
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 public class Book {
 
 
-    private String ISBN;
+    private String isbn;
 
-    // This can be a link to a picture to be displayed
     private String bookName;
 
 
@@ -14,12 +18,26 @@ public class Book {
     private String author;
     private String publisher;
 
-    // A book will be liked to a bookstore
-    
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    // The Bookstore that the Book belongs to
+    @ManyToOne
+    private Bookstore store;
+
+    @ManyToMany(mappedBy = "books")
+    private List<Cart> carts;
+
+
+
+    public Book() {
+
+    }
 
     public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
         this.bookName = bookName;
-    	this.ISBN = ISBN;
+    	this.isbn = ISBN;
         this.picture = picture;
         this.description = description;
         this.author = author;
@@ -28,11 +46,11 @@ public class Book {
     }
 
     public String getISBN() {
-        return ISBN;
+        return isbn;
     }
 
     public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+        this.isbn = ISBN;
     }
 
     public String getBookName() {
@@ -74,4 +92,35 @@ public class Book {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public Bookstore getStore() {
+        return store;
+    }
+
+    public void setStore(Bookstore store) {
+        this.store = store;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
+
+    public void addCarts(Cart cart){
+        carts.add(cart);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
 }
