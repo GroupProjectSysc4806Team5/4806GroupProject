@@ -9,7 +9,6 @@ public class Book {
 
     private String ISBN;
 
-    // This can be a link to a picture to be displayed
     private String bookName;
 
 
