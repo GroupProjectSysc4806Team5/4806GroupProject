@@ -2,11 +2,14 @@ package team.GroupProject;
 
 import java.util.ArrayList;
 
+import antlr.collections.List;
+
 public class Bookstore {
 
     private Owner owner;
 
     private ArrayList<Book> books;
+    private List orders;
 
     public Bookstore(Owner owner){
         this.owner = owner;
