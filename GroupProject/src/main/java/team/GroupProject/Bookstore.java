@@ -1,15 +1,27 @@
 package team.GroupProject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import antlr.collections.List;
 
+import javax.persistence.*;
+
+@Entity
 public class Bookstore {
 
+    @ManyToOne
     private Owner owner;
 
-    private ArrayList<Book> books;
-    private List orders;
+    @OneToMany(mappedBy = "store")
+    private List<Book> books;
+
+    //private List orders;
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    public Bookstore(){ }
 
     public Bookstore(Owner owner){
         this.owner = owner;
@@ -24,11 +36,19 @@ public class Bookstore {
         this.owner = owner;
     }
 
-    public ArrayList<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
