@@ -1,5 +1,5 @@
 package team.GroupProject;
-import Bookstore.repositories.Book;
+import Bookstore.Model.Book;
 
 import java.util.List;
 

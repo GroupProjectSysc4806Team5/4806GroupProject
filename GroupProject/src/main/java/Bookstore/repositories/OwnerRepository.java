@@ -1,5 +1,6 @@
 package Bookstore.repositories;
 
+import Bookstore.Model.Owner;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

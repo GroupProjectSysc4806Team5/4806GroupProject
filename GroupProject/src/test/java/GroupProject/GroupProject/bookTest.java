@@ -3,7 +3,7 @@ package GroupProject.GroupProject;
 import org.junit.Before;
 
 import junit.framework.TestCase;
-import Bookstore.repositories.Book;
+import Bookstore.Model.Book;
 
 public class bookTest extends TestCase {
 	private Book book;

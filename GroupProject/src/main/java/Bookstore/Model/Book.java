@@ -1,4 +1,4 @@
-package Bookstore.repositories;
+package Bookstore.Model;
 
 
 import javax.persistence.*;

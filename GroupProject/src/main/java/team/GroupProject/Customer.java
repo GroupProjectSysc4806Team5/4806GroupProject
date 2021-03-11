@@ -1,6 +1,6 @@
 package team.GroupProject;
 
-import Bookstore.repositories.Cart;
+import Bookstore.Model.Cart;
 
 import java.util.Set;
 
