@@ -1,20 +1,20 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
-import SearchBar from "./components/SearchBar/SearchBar";
+import BookList from "./components/BookList/BookList";
+import Home from './components/Home/Home';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Amazin Online Bookstore
-        </p>
-        <SearchBar></SearchBar>
-      </header>
-    </div>
-
-  );
+class App extends Component {
+    render() {
+        return (
+            <Router>
+                <Switch>
+                    <Route path='/' exact={true} component={Home}/>
+                    <Route path='/books' exact={true} component={BookList}/>
+                </Switch>
+            </Router>
+        )
+    }
 }
 
 export default App;
