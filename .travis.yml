@@ -1,6 +1,6 @@
   
 language: java
-deploy: skip_cleanup: true
+deploy: 
   provider: heroku
   api-key:
     secure: $HEROKU_API_KEY
