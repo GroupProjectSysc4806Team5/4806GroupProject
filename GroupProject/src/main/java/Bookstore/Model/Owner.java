@@ -1,9 +1,6 @@
-package team.GroupProject;
+package Bookstore.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +9,11 @@ public class Owner {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade= CascadeType.ALL,mappedBy = "owner")
     private List<Bookstore> stores;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Owner(String name){

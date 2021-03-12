@@ -1,5 +1,7 @@
 package team.GroupProject;
 
+import Bookstore.Model.Cart;
+
 import java.util.Set;
 
 public class Customer {

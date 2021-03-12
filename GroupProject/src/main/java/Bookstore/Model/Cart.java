@@ -1,4 +1,4 @@
-package team.GroupProject;
+package Bookstore.Model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -7,14 +7,14 @@ import java.util.List;
 @Entity
 public class Cart {
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Book> books;
 
-    @OneToOne
+    @OneToOne(mappedBy = "cart")
     private User user;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Cart() {}

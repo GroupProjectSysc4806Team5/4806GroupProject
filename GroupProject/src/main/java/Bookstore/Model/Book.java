@@ -1,4 +1,5 @@
-package team.GroupProject;
+package Bookstore.Model;
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -7,9 +8,8 @@ import java.util.List;
 public class Book {
 
 
-    private String ISBN;
+    private String isbn;
 
-    // This can be a link to a picture to be displayed
     private String bookName;
 
 
@@ -26,7 +26,7 @@ public class Book {
     @ManyToOne
     private Bookstore store;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "books")
     private List<Cart> carts;
 
 
@@ -37,7 +37,7 @@ public class Book {
 
     public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
         this.bookName = bookName;
-    	this.ISBN = ISBN;
+    	this.isbn = ISBN;
         this.picture = picture;
         this.description = description;
         this.author = author;
@@ -46,11 +46,11 @@ public class Book {
     }
 
     public String getISBN() {
-        return ISBN;
+        return isbn;
     }
 
     public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+        this.isbn = ISBN;
     }
 
     public String getBookName() {
@@ -121,4 +121,6 @@ public class Book {
     public Long getId() {
         return id;
     }
+
+
 }
