@@ -1,28 +1,11 @@
 language: java
-<<<<<<< revertBranch
-<<<<<<< master
-jdk:
-  - openjdk8
-=======
 sudo: true
 dist: trusty
 jdk: oraclejdk8
 before_install:
   - chmod +x mvnw
->>>>>>> 296a54a Update .travis.yml
-=======
-sudo: true
-dist: trusty
-jdk: oraclejdk8
-before_install:
-  - chmod +x mvnw
->>>>>>> 296a54a Update .travis.yml
 deploy:
   provider: heroku
-  api_key:
+  api-key:
     secure: $HEROKU_API_KEY
-<<<<<<< master
   app: sysc-4806-project-2021
-=======
-  app: sysc-4806-project-2020
->>>>>>> 6e28495 Update .travis.yml
