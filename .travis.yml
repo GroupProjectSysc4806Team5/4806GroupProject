@@ -21,4 +21,8 @@ deploy:
   provider: heroku
   api_key:
     secure: $HEROKU_API_KEY
+<<<<<<< master
   app: sysc-4806-project-2021
+=======
+  app: sysc-4806-project-2020
+>>>>>>> 6e28495 Update .travis.yml
