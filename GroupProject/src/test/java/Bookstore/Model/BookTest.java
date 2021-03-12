@@ -51,6 +51,7 @@ class BookTest {
 		assertEquals("testOwner", book.getAuthor());
 	}
 
+	
 	@Test
 	void testGetPublisher() {
 		assertEquals("testPublisher", book.getPublisher());
