@@ -15,11 +15,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public User() {}
+    public User() {
+        cart = new Cart(this);
+    }
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+        cart = new Cart(this);
     }
 
     public void setName(String name) {

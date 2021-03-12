@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Entity
 public class Bookstore {
 
+    private String name;
+
     @ManyToOne
     private Owner owner;
 
@@ -21,11 +23,14 @@ public class Bookstore {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Bookstore(){ }
+    public Bookstore(){
+        this.books = new ArrayList<Book>();
+    }
 
-    public Bookstore(Owner owner){
+    public Bookstore(Owner owner, String name){
         this.owner = owner;
         this.books = new ArrayList<Book>();
+        this.name = name;
     }
 
     public Owner getOwner() {
@@ -50,5 +55,13 @@ public class Bookstore {
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
