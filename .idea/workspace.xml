@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9a735589-62d6-40f1-a6a8-93065870a64b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/GroupProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GroupProject.iml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="Travis-ci_setup" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MavenRunner">
+    <option name="delegateBuildToMaven" value="true" />
+    <option name="jreName" value="15" />
+  </component>
+  <component name="ProjectId" id="1pa9G8kRZS0qtLWx1qaugzawSCO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.runner" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Winter 2021 Classes\SYSC 4806\Project\4806GroupProject\GroupProject\src\main\resources\templates" />
+      <recent name="D:\Winter 2021 Classes\SYSC 4806\Project\4806GroupProject\GroupProject\resources\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Winter 2021 Classes\SYSC 4806\Project\4806GroupProject\GroupProject" />
+      <recent name="D:\Winter 2021 Classes\SYSC 4806\Project\4806GroupProject\GroupProject\src\main\java\Bookstore\Controllers" />
+      <recent name="D:\Winter 2021 Classes\SYSC 4806\Project\4806GroupProject\GroupProject\src\main\resources\templates" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="WebLauncher" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="GroupProject" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="Bookstore.WebLauncher" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9a735589-62d6-40f1-a6a8-93065870a64b" name="Default Changelist" comment="" />
+      <created>1615410236614</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615410236614</updated>
+      <workItem from="1615410238010" duration="10915000" />
+      <workItem from="1615426404779" duration="2404000" />
+      <workItem from="1615485205315" duration="2917000" />
+      <workItem from="1615489972368" duration="3750000" />
+      <workItem from="1615503679114" duration="11201000" />
+      <workItem from="1615516016629" duration="1451000" />
+      <workItem from="1615517490688" duration="6707000" />
+    </task>
+    <task id="LOCAL-00001" summary="Created the initial classes">
+      <created>1615414157046</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1615414157046</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added JPA Tags to the initial classes">
+      <created>1615428691870</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615428691870</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Created the Repository for the initial classes">
+      <created>1615487489993</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1615487489993</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated the repos and refactored code">
+      <created>1615494216043</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1615494216044</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Further refactoring">
+      <created>1615494300621</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615494300621</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added basic functionality to create objects">
+      <created>1615512849416</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615512849416</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixed JDK and added Basic functionality">
+      <created>1615518048069</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615518048069</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Setup Travis">
+      <created>1615519631991</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615519631991</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added missing mvnv files">
+      <created>1615521242143</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615521242143</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="Travis-ci_setup" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Created the initial classes" />
+    <MESSAGE value="Added JPA Tags to the initial classes" />
+    <MESSAGE value="Created the Repository for the initial classes" />
+    <MESSAGE value="Updated the repos and refactored code" />
+    <MESSAGE value="Further refactoring" />
+    <MESSAGE value="Added basic functionality to create objects" />
+    <MESSAGE value="Fixed JDK and added Basic functionality" />
+    <MESSAGE value="Setup Travis" />
+    <MESSAGE value="Added missing mvnv files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added missing mvnv files" />
+  </component>
+</project>

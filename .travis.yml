@@ -3,7 +3,6 @@ sudo: true
 dist: trusty
 jdk: oraclejdk8
 before_install:
-  - cd GroupProject
   - chmod +x mvnw
 deploy:
   provider: heroku
