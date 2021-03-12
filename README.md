@@ -35,6 +35,10 @@ To carry out basic funcitons, follow the following instructions:
 ## UML
 ### Class Diagram:
 
+![Diagram 1 0](https://user-images.githubusercontent.com/60012835/110885113-3e8bb700-82b4-11eb-9459-80c86d737090.PNG)
+
+
+
 ### Database Schema:
 
 
