@@ -9,6 +9,8 @@ public class Owner {
 
     private String name;
 
+    private String password;
+
     @OneToMany(cascade= CascadeType.ALL,mappedBy = "owner")
     private List<Bookstore> stores;
 
@@ -16,8 +18,9 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Owner(String name){
+    public Owner(String name, String pass){
         this.name = name;
+        password = pass;
         stores = new ArrayList<Bookstore>();
     }
 
@@ -47,5 +50,13 @@ public class Owner {
 
     public Long getId() {
         return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

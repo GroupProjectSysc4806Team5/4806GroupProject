@@ -7,6 +7,7 @@ public class User {
 
     private String name;
     private String email;
+    private String password;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     public Cart cart;
@@ -52,5 +53,13 @@ public class User {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

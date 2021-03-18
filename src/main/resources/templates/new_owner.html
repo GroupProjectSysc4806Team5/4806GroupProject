@@ -8,6 +8,7 @@
     <h1>Creating an Owner</h1>
     <form action="#" th:action="@{/new-owner-successful}" th:object="${owner}" method="post">
         <p>Name: <input type="text" th:field="*{name}" /></p>
+        <p>Password: <input type="text" th:field="*{password}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>
