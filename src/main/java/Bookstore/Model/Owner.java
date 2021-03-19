@@ -7,45 +7,64 @@ import java.util.List;
 @Entity
 public class Owner {
 
-    private String name;
+	private String name;
 
-    @OneToMany(cascade= CascadeType.ALL,mappedBy = "owner")
-    private List<Bookstore> stores;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+	private List<Bookstore> stores;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public Owner(String name){
-        this.name = name;
-        stores = new ArrayList<Bookstore>();
-    }
+	public Owner(String name) {
+		this.name = name;
+		stores = new ArrayList<Bookstore>();
+	}
 
-    public Owner() {
+	public Owner() {
 
-    }
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<Bookstore> getStore() {
-        return stores;
-    }
+	public List<Bookstore> getStore() {
+		return stores;
+	}
 
-    public void setStores(List<Bookstore> stores) {
-        this.stores = stores;
-    }
+	public void addBookstore(Bookstore bookstore) {
+		bookstore.setOwner(this);
+		this.stores.add(bookstore);
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void removeBookstore(long bookstoreId) {
+		Bookstore bookstoreFound = null;
+		for (Bookstore bookstore : this.stores) {
+			if (bookstore.getId() == bookstoreId) {
+				bookstoreFound = bookstore;
+				break;
+			}
+		}
+		if (bookstoreFound != null) {
+			this.stores.remove(bookstoreFound);
+			bookstoreFound.removeBookstoreOwner();
+		}
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setStores(List<Bookstore> stores) {
+		this.stores = stores;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
 }
