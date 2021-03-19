@@ -20,7 +20,6 @@ public class Book {
 	@GeneratedValue
 	private Long id;
 
-	// The Bookstore that the Book belongs to
 	@ManyToOne
 	private Bookstore store;
 
