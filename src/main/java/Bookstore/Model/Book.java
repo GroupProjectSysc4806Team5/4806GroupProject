@@ -26,13 +26,12 @@ public class Book {
 
 	@ManyToMany(mappedBy = "books")
 	private List<Cart> carts;
-	@ManyToOne
+	@ManyToOne(mappedBy = "sale")
 	private Sale sale;
 
 	public Book() {
 
 	}
-
 	public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
 		this.bookName = bookName;
 		this.isbn = ISBN;
@@ -138,6 +137,7 @@ public class Book {
 
 	public void removeSale() {
 		this.sale = null;
+
 	}
 
 	public Long getId() {

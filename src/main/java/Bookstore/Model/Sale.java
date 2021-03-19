@@ -25,12 +25,6 @@ public class Sale {
 	public Sale() {
 	}
 
-	public Sale(Set<Book> books, User user) {
-		this.books = books;
-		this.customer = user;
-		this.bookstores = new HashSet<>();
-	}
-
 	public Long getId() {
 		return this.id;
 	}
@@ -38,6 +32,8 @@ public class Sale {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "sale")
 
 	public Set<Book> getBooks() {
 		return this.books;
@@ -54,6 +50,7 @@ public class Sale {
 	public void setCustomer(User user) {
 		this.customer = user;
 	}
+
 
 	public Set<Bookstore> getBookstores() {
 		return this.bookstores;
