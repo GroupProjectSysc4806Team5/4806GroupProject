@@ -1,6 +1,9 @@
 package Bookstore.Model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.*;
 
 import static javax.persistence.CascadeType.ALL;
@@ -8,8 +11,11 @@ import static javax.persistence.CascadeType.ALL;
 @Entity
 public class Sale {
 	private Long id;
+	@JsonIgnore
 	private Set<Book> books;
+	@JsonIgnore
 	private User user;
+	@JsonIgnore
 	private Set<Bookstore> bookstores;
 
 	public Sale() {
@@ -41,12 +47,12 @@ public class Sale {
 	}
 
 	@ManyToOne
-	public User getCustomer() {
+	public user getUser() {
 		return this.user;
 	}
 
-	public void setCustomer(User customer) {
-		this.user = customer;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = ALL)
