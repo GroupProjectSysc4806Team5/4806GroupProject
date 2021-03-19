@@ -1,126 +1,148 @@
 package Bookstore.Model;
 
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Book {
 
+	private String isbn;
 
-    private String isbn;
-
-    private String bookName;
-
+	private String bookName;
 
 	private String picture;
-    private String description;
-    private String author;
-    private String publisher;
+	private String description;
+	private String author;
+	private String publisher;
+	private boolean available;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    // The Bookstore that the Book belongs to
-    @ManyToOne
-    private Bookstore store;
+	// The Bookstore that the Book belongs to
+	@ManyToOne
+	private Bookstore store;
 
-    @ManyToMany(mappedBy = "books")
-    private List<Cart> carts;
+	@ManyToMany(mappedBy = "books")
+	private List<Cart> carts;
+	@ManyToMany(mappedBy = "sale")
+	private Sale sale;
 
+	public Book() {
 
+	}
 
-    public Book() {
+	public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
+		this.bookName = bookName;
+		this.isbn = ISBN;
+		this.picture = picture;
+		this.description = description;
+		this.author = author;
+		this.publisher = publisher;
+		this.available = true;
 
-    }
+	}
 
-    public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
-        this.bookName = bookName;
-    	this.isbn = ISBN;
-        this.picture = picture;
-        this.description = description;
-        this.author = author;
-        this.publisher = publisher;
-     
-    }
+	public String getISBN() {
+		return isbn;
+	}
 
-    public String getISBN() {
-        return isbn;
-    }
+	public void setISBN(String ISBN) {
+		this.isbn = ISBN;
+	}
 
-    public void setISBN(String ISBN) {
-        this.isbn = ISBN;
-    }
-
-    public String getBookName() {
+	public String getBookName() {
 		return bookName;
 	}
 
 	public void setBookName(String bookName) {
 		this.bookName = bookName;
 	}
-	
-    public String getPicture() {
-        return picture;
-    }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
+	public String getPicture() {
+		return picture;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public Sale getSale() {
+		return this.sale;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
 
-    public String getAuthor() {
-        return author;
-    }
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getPublisher() {
-        return publisher;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
+	public String getAuthor() {
+		return author;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setAuthor(String author) {
+		this.author = author;
+	}
 
+	public String getPublisher() {
+		return publisher;
+	}
 
-    public Bookstore getStore() {
-        return store;
-    }
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
 
-    public void setStore(Bookstore store) {
-        this.store = store;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public List<Cart> getCarts() {
-        return carts;
-    }
+	public Bookstore getStore() {
+		return store;
+	}
 
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
-    }
+	public void setStore(Bookstore store) {
+		this.store = store;
+	}
 
-    public void addCarts(Cart cart){
-        carts.add(cart);
-    }
+	public List<Cart> getCarts() {
+		return carts;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
+	}
 
+	public void addCarts(Cart cart) {
+		carts.add(cart);
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public boolean equals(Book book) {
+		if (this.bookName.equals(book.getBookName()) && this.isbn.equals(book.getISBN())
+				&& this.picture == book.getPicture() && this.description == book.getDescription()
+				&& this.author == book.getAuthor() && this.publisher == book.getPublisher()) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean getAvailable() {
+		return this.available;
+	};
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 
 }
