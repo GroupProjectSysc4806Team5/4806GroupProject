@@ -1,7 +1,5 @@
 package Bookstore.Model;
 
-import team.GroupProject.Customer;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -11,15 +9,15 @@ import static javax.persistence.CascadeType.ALL;
 public class Sale {
 	private Long id;
 	private Set<Book> books;
-	private Customer customer;
+	private User user;
 	private Set<Bookstore> bookstores;
 
 	public Sale() {
 	}
 
-	public Sale(Set<Book> books, Customer customer) {
+	public Sale(Set<Book> books, User user) {
 		this.books = books;
-		this.customer = customer;
+		this.user = user;
 		this.bookstores = new HashSet<>();
 	}
 
@@ -43,12 +41,12 @@ public class Sale {
 	}
 
 	@ManyToOne
-	public Customer getCustomer() {
-		return this.customer;
+	public User getCustomer() {
+		return this.user;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomer(User customer) {
+		this.user = customer;
 	}
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = ALL)
