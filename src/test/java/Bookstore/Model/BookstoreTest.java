@@ -2,20 +2,11 @@ package Bookstore.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BookstoreTest {
-	private Bookstore bookStore;
-	private Owner owner;
-	private String ownerName;
-	private List<Book> books;
-	private Book book1;
-	private Book book2;
-	
+class BookTest {
+	private Book book;
 	private String bookName;
 	private String isbn;
 	private String picture;
@@ -25,34 +16,53 @@ class BookstoreTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.ownerName = "testOwner";
-    	this.owner = new Owner();
-    	owner.setName(ownerName);
-    	this.bookStore = new Bookstore(owner);
-    	
-    	
-    	this.bookName = "testBook";
+		this.bookName = "testBook";
 		this.isbn = "456456654646";
 		this.picture = "picture1.jpeg";
 		this.description = "test book";
 		this.author = "testOwner";
 		this.publisher = "testPublisher";
-		this.book1 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher);
-		
-		this.book2 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher);
-		books = new ArrayList<Book>();
-		books.add(book1);
-		books.add(book2);
+		this.book = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher);
+
 	}
 
 	@Test
-	void testGetOwner() {
-		assertEquals( "testOwner", (bookStore.getOwner()).getName());
+	void testGetISBN() {
+		assertEquals("456456654646", book.getISBN());
 	}
 
 	@Test
-	void testGetBooks() {
-		assertEquals(2, books.size());
+	void testGetBookName() {
+		assertEquals("testBook", book.getBookName());
 	}
 
+	@Test
+	void testGetPicture() {
+		assertEquals("test book", book.getDescription());
+	}
+
+	@Test
+	void testGetDescription() {
+		assertEquals("test book", book.getDescription());
+	}
+
+	@Test
+	void testGetAuthor() {
+		assertEquals("testOwner", book.getAuthor());
+	}
+
+	@Test
+	void testGetPublisher() {
+		assertEquals("testPublisher", book.getPublisher());
+	}
+
+	@Test
+	public void testEquals() {
+		Book sameBook = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher);
+		Book differentBook = new Book("Different Test Book", "987654321", "different_picture.jpeg",
+				"book for testing purposes", "Mark Twain", "96024 publishing");
+
+		assert (this.book.equals(sameBook));
+		assert (!this.book.equals(differentBook));
+	}
 }
