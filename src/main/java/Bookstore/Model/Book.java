@@ -25,8 +25,8 @@ public class Book {
 
 	@ManyToMany(mappedBy = "books")
 	private List<Cart> carts;
-	@ManyToMany(mappedBy = "sale")
-	private Sale sale;
+//	@ManyToMany(mappedBy = "sale")
+//	private Sale sale;
 
 	public Book() {
 
@@ -63,13 +63,13 @@ public class Book {
 		return picture;
 	}
 
-	public Sale getSale() {
-		return this.sale;
-	}
-
-	public void setSale(Sale sale) {
-		this.sale = sale;
-	}
+//	public Sale getSale() {
+//		return this.sale;
+//	}
+//
+//	public void setSale(Sale sale) {
+//		this.sale = sale;
+//	}
 
 	public void setPicture(String picture) {
 		this.picture = picture;

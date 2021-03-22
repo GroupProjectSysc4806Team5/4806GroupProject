@@ -8,7 +8,7 @@ import static javax.persistence.CascadeType.ALL;
 @Entity
 public class Sale {
 	private Long id;
-	private Set<Book> books;
+//	private Set<Book> books;
 	private User user;
 	private Set<Bookstore> bookstores;
 
@@ -16,7 +16,7 @@ public class Sale {
 	}
 
 	public Sale(Set<Book> books, User user) {
-		this.books = books;
+//		this.books = books;
 		this.user = user;
 		this.bookstores = new HashSet<>();
 	}
@@ -31,14 +31,14 @@ public class Sale {
 		this.id = id;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "sale")
-	public Set<Book> getBooks() {
-		return this.books;
-	}
-
-	public void setBooks(Set<Book> books) {
-		this.books = books;
-	}
+//	@ManyToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "sale")
+//	public Set<Book> getBooks() {
+//		return this.books;
+//	}
+//
+//	public void setBooks(Set<Book> books) {
+//		this.books = books;
+//	}
 
 	@ManyToOne
 	public User getCustomer() {

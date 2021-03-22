@@ -16,7 +16,7 @@ class OwnerTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		this.owner = new Owner();
-		store1 = new Bookstore("TestStore");
+		store1 = new Bookstore(owner);
 		stores = new ArrayList<Bookstore>();
 	}
 
@@ -31,7 +31,7 @@ class OwnerTest {
 		stores.add(store1);
 		owner.setStores(stores);
 		List<Bookstore> storess = owner.getStore();
-		assertEquals("TestStore", storess.get(0).getName());
+		assertEquals(owner, storess.get(0).getOwner());
 	}
 
 
