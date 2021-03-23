@@ -186,8 +186,7 @@ public class WebController {
      */
     @GetMapping("owner_open_bookstore")
     public String ownerOpenBookstore(Model model, @RequestParam(required = true, name = "id")String id){
-        Bookstore store = new Bookstore();
-        model.addAttribute("store", store);
+        model.addAttribute("store", new Bookstore());
         model.addAttribute("id",id);
 
         return "owner_open_bookstore";
@@ -196,11 +195,16 @@ public class WebController {
     @PostMapping("owner_opened_bookstore")
     public String openedBookstore(Model model, @ModelAttribute Bookstore store, @RequestParam(name = "id", required = true)  String id){
         Owner owner = ownerRepo.findById(Long.parseLong(id));
-        owner.addStore(store);
-        store.setOwner(owner);
+
+        for(Bookstore s: owner.getStores()) {
+            System.out.println(s.getName());
+        }
         bookstoreRepo.save(store);
+        store.setOwner(owner);
+        owner.addStore(store);
         ownerRepo.save(owner);
 
+        model.addAttribute("store_name",store.getName());
         return "owner_opened_bookstore";
     }
 
@@ -211,6 +215,7 @@ public class WebController {
     public String viewBookstores(Model model, @RequestParam(required = true, name = "id") String id){
         Owner owner = ownerRepo.findById(Long.parseLong(id));
         List<Bookstore> stores = owner.getStores();
+
         if (!stores.isEmpty()){
             model.addAttribute("stores",stores);
             return "bookstores";

@@ -9,9 +9,10 @@ import javax.persistence.*;
 @Entity
 public class Bookstore {
 
+    @Column
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Owner owner;
 
     @OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
@@ -20,7 +21,7 @@ public class Bookstore {
     //private List orders;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Bookstore(){ }
