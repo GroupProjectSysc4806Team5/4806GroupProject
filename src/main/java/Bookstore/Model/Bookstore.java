@@ -11,7 +11,7 @@ public class Bookstore {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Owner owner;
 
     @OneToMany(mappedBy = "store",cascade = CascadeType.ALL)

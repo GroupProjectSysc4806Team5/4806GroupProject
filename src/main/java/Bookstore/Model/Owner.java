@@ -25,7 +25,7 @@ public class Owner {
     }
 
     public Owner() {
-
+        stores = new ArrayList<Bookstore>();
     }
 
     public String getName() {
@@ -58,5 +58,9 @@ public class Owner {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addStore(Bookstore store){
+        stores.add(store);
     }
 }

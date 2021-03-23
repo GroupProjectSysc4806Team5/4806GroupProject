@@ -186,15 +186,21 @@ public class WebController {
      */
     @GetMapping("owner_open_bookstore")
     public String ownerOpenBookstore(Model model, @RequestParam(required = true, name = "id")String id){
-        Owner possible_owner = ownerRepo.findById(Long.parseLong(id));
-        Bookstore store = new Bookstore(possible_owner);
+        Bookstore store = new Bookstore();
         model.addAttribute("store", store);
+        model.addAttribute("id",id);
+
         return "owner_open_bookstore";
     }
 
     @PostMapping("owner_opened_bookstore")
-    public String openedBookstore(Model model, @ModelAttribute Bookstore store){
+    public String openedBookstore(Model model, @ModelAttribute Bookstore store, @RequestParam(name = "id", required = true)  String id){
+        Owner owner = ownerRepo.findById(Long.parseLong(id));
+        owner.addStore(store);
+        store.setOwner(owner);
         bookstoreRepo.save(store);
+        ownerRepo.save(owner);
+
         return "owner_opened_bookstore";
     }
 

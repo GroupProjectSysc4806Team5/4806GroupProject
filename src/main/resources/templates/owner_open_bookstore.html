@@ -5,7 +5,7 @@
     <title>Opening a new Bookstore</title>
 </head>
 <body>
-    <form action="#" th:action="@{/owner_opened_bookstore}" th:object="${store}" method="post">
+    <form action="#" th:action="@{/owner_opened_bookstore(id=${id})}" th:object="${store}" method="post">
         <p>Name: <input type="text" th:field="*{name}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
