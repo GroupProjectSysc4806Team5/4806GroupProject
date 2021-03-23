@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Entity
 public class Bookstore {
 
+    private String name;
+
     @ManyToOne
     private Owner owner;
 
@@ -50,5 +52,13 @@ public class Bookstore {
 
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

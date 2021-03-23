@@ -36,7 +36,7 @@ public class Owner {
         this.name = name;
     }
 
-    public List<Bookstore> getStore() {
+    public List<Bookstore> getStores() {
         return stores;
     }
 

@@ -17,10 +17,10 @@ public class WebLauncher {
 
 
     // This function will create a owner in the database for the login
-//    @Bean
-//    public CommandLineRunner createOwner(OwnerRepository repo){
-//        return (args) -> {
-//            repo.save(new Owner("Eugene Cain","pass"));
-//        };
-//    }
+    @Bean
+    public CommandLineRunner createOwner(OwnerRepository repo){
+        return (args) -> {
+            repo.save(new Owner("Eugene Cain","pass"));
+        };
+    }
 }

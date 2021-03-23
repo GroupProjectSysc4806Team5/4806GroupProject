@@ -159,7 +159,8 @@ public class WebController {
 
                 if (o.getName().equals(user.getName()) && o.getPassword().equals(user.getPassword())) {
                     model.addAttribute("name", o.getName());
-                    return "login_success";
+                    model.addAttribute("id",o.getId());
+                    return "owner_login_success";
                 }
             }
 
@@ -171,6 +172,7 @@ public class WebController {
                 System.out.println("possible_users info: " + u.getName() + "\nPassword: " + u.getPassword());
                 if (u.getName().equals(user.getName()) && u.getPassword().equals(user.getPassword())) {
                     model.addAttribute("name", u.getName());
+                    model.addAttribute("id",u.getId());
                     return "login_success";
                 }
             }
@@ -179,4 +181,35 @@ public class WebController {
         return "login_fail";
     }
 
+    /*
+     * This function will take a owner input to create a bookstore
+     */
+    @GetMapping("owner_open_bookstore")
+    public String ownerOpenBookstore(Model model, @RequestParam(required = true, name = "id")String id){
+        Owner possible_owner = ownerRepo.findById(Long.parseLong(id));
+        Bookstore store = new Bookstore(possible_owner);
+        model.addAttribute("store", store);
+        return "owner_open_bookstore";
+    }
+
+    @PostMapping("owner_opened_bookstore")
+    public String openedBookstore(Model model, @ModelAttribute Bookstore store){
+        bookstoreRepo.save(store);
+        return "owner_opened_bookstore";
+    }
+
+    /*
+     * This function will allow a owner to view a list of their bookstores
+     */
+    @GetMapping("view_bookstores")
+    public String viewBookstores(Model model, @RequestParam(required = true, name = "id") String id){
+        Owner owner = ownerRepo.findById(Long.parseLong(id));
+        List<Bookstore> stores = owner.getStores();
+        if (!stores.isEmpty()){
+            model.addAttribute("stores",stores);
+            return "bookstores";
+        } else {
+            return "no_bookstores";
+        }
+    }
 }
