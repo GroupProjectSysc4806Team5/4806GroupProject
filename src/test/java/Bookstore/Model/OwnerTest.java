@@ -30,7 +30,7 @@ class OwnerTest {
 	void testGetStore() {
 		stores.add(store1);
 		owner.setStores(stores);
-		List<Bookstore> storess = owner.getStore();
+		List<Bookstore> storess = owner.getStores();
 		assertEquals(owner, storess.get(0).getOwner());
 	}
 
