@@ -144,7 +144,7 @@ public class WebController {
     }
 
     // Temporary Post Mapping
-    @PostMapping("login-check")
+    @PostMapping("login")
     public String checkLogin(Model model, @ModelAttribute User user){
 
         List<Owner> possible_owners = ownerRepo.findByName(user.getName());
@@ -196,15 +196,14 @@ public class WebController {
     public String openedBookstore(Model model, @ModelAttribute Bookstore store, @RequestParam(name = "id", required = true)  String id){
         Owner owner = ownerRepo.findById(Long.parseLong(id));
 
-        for(Bookstore s: owner.getStores()) {
-            System.out.println(s.getName());
-        }
-        bookstoreRepo.save(store);
+
+        //bookstoreRepo.save(store);
         store.setOwner(owner);
         owner.addStore(store);
         ownerRepo.save(owner);
 
         model.addAttribute("store_name",store.getName());
+        model.addAttribute("id",id);
         return "owner_opened_bookstore";
     }
 
@@ -215,12 +214,75 @@ public class WebController {
     public String viewBookstores(Model model, @RequestParam(required = true, name = "id") String id){
         Owner owner = ownerRepo.findById(Long.parseLong(id));
         List<Bookstore> stores = owner.getStores();
+        model.addAttribute("id",id);
 
         if (!stores.isEmpty()){
             model.addAttribute("stores",stores);
+
             return "bookstores";
         } else {
             return "no_bookstores";
         }
+    }
+
+    /*
+     * Create a login page for the logged in user
+     */
+    @GetMapping("login_page_owner")
+    public String loginPageOwner(Model model,  @RequestParam(required = true, name = "id") String id){
+        Owner owner = ownerRepo.findById(Long.parseLong(id));
+        model.addAttribute("id",id);
+        model.addAttribute("name",owner.getName());
+        return "owner_login_success";
+    }
+
+    /*
+     * Create a page to view a bookstore and add books to it
+     */
+    @GetMapping("bookstore")
+    public String viewBookstoreOwner(Model model, @RequestParam(required = true, name = "id")String id){
+
+        // Get the bookstore
+        Bookstore store = bookstoreRepo.findById(Long.parseLong(id));
+
+        model.addAttribute("name", store.getName());
+        model.addAttribute("owner",store.getOwner());
+        model.addAttribute("store_id",store.getId());
+
+
+        return "owner/owner-view-bookstore";
+    }
+
+    @GetMapping("view_books")
+    public String viewBook(Model model, @RequestParam(required = true, name = "id")String id){
+        Bookstore store = bookstoreRepo.findById(Long.parseLong(id));
+        List<Book> books = bookRepo.findByStore(store);
+
+        model.addAttribute("id",id);
+        model.addAttribute("books",books);
+
+        return "owner/view_books";
+    }
+
+    @GetMapping("owner_add_book")
+    public String ownerAddBook(Model model, @RequestParam(required = true, name = "id")String id){
+        model.addAttribute("book",new Book());
+        model.addAttribute("id",id);
+        return "owner/add_book";
+    }
+
+    @PostMapping("added_book")
+    public String addedBook(Model model, @RequestParam(required = true, name = "id")String id, @ModelAttribute Book book){
+        model.addAttribute("name", book.getBookName());
+        //bookRepo.save(book);
+
+        model.addAttribute("id",id);
+        // Get the store for it's store id
+        Bookstore store = bookstoreRepo.findById(Long.parseLong(id));
+        book.setStore(store);
+        store.addBook(book);
+        bookstoreRepo.save(store);
+
+        return "owner/added_book";
     }
 }

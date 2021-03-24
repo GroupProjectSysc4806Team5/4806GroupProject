@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+</head>
+<body>
+    <h1>Book List</h1>
+    <tr th:each="book : ${books}">
+    <!--    <a th:text="${book.getBookName()}" th:href="'bookstore?id='+${store.getId()}"/><br/>-->
+        <p th:text="${book.getBookName()}"/>
+    </tr>
+
+    <a th:href="'bookstore?id='+${id}">Return to store page</a>
+</body>
+</html>
