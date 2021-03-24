@@ -5,7 +5,7 @@
     <title th:text="${name}"/>
 </head>
 <body>
-    <h1 th:text="'Welcome owner '+${owner}+'!'"/>
+    <h1 th:text="'Welcome owner '+${owner.getName()}+'!'"/>
     <p>What would you like to do?</p>
 
     <ul>
@@ -13,6 +13,7 @@
         <li><a th:href="'/owner_add_book?id=' + ${store_id}">Add a book</a></li>
     </ul>
 
+    <a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
 
 </body>
 </html>

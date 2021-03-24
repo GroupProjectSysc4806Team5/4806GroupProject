@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -160,7 +159,7 @@ public class WebController {
                 if (o.getName().equals(user.getName()) && o.getPassword().equals(user.getPassword())) {
                     model.addAttribute("name", o.getName());
                     model.addAttribute("id",o.getId());
-                    return "owner_login_success";
+                    return "owner/login_success";
                 }
             }
 
@@ -189,7 +188,7 @@ public class WebController {
         model.addAttribute("store", new Bookstore());
         model.addAttribute("id",id);
 
-        return "owner_open_bookstore";
+        return "owner/open_bookstore";
     }
 
     @PostMapping("owner_opened_bookstore")
@@ -204,7 +203,7 @@ public class WebController {
 
         model.addAttribute("store_name",store.getName());
         model.addAttribute("id",id);
-        return "owner_opened_bookstore";
+        return "owner/opened_bookstore";
     }
 
     /*
@@ -219,9 +218,9 @@ public class WebController {
         if (!stores.isEmpty()){
             model.addAttribute("stores",stores);
 
-            return "bookstores";
+            return "owner/bookstores";
         } else {
-            return "no_bookstores";
+            return "owner/no_bookstores";
         }
     }
 
@@ -233,7 +232,7 @@ public class WebController {
         Owner owner = ownerRepo.findById(Long.parseLong(id));
         model.addAttribute("id",id);
         model.addAttribute("name",owner.getName());
-        return "owner_login_success";
+        return "owner/login_success";
     }
 
     /*
@@ -248,9 +247,10 @@ public class WebController {
         model.addAttribute("name", store.getName());
         model.addAttribute("owner",store.getOwner());
         model.addAttribute("store_id",store.getId());
+        model.addAttribute("id",store.getOwner().getId());
 
 
-        return "owner/owner-view-bookstore";
+        return "owner/view-bookstore";
     }
 
     @GetMapping("view_books")
@@ -284,5 +284,40 @@ public class WebController {
         bookstoreRepo.save(store);
 
         return "owner/added_book";
+    }
+
+    @GetMapping("edit_book")
+    public String editBook(Model model, @RequestParam(required = true, name = "id")String id) {
+        Book book = bookRepo.findById(Long.parseLong(id));
+
+        model.addAttribute("book",book);
+
+        //Attach the Store to the model
+        model.addAttribute("store",book.getStore());
+
+        return "owner/edit_book";
+    }
+
+    @PostMapping("edited_book")
+    public String editedBook(Model model,  @RequestParam(required = true, name = "id")String id, @ModelAttribute Book book, @ModelAttribute Bookstore store){
+
+        // use the book from the repo and add values using the
+        Book repoBook = bookRepo.findById(Long.parseLong(id));
+        model.addAttribute("id",repoBook.getStore().getId());
+
+//        System.out.println("passed id:" + id);
+//        System.out.println("store id:" + repoBook.getStore().getId());
+
+        repoBook.setBookName(book.getBookName());
+        repoBook.setISBN(book.getISBN());
+        repoBook.setPicture(book.getPicture());
+        repoBook.setAuthor(book.getAuthor());
+        repoBook.setDescription(book.getDescription());
+        repoBook.setPicture(book.getPublisher());
+
+        //bookstoreRepo.save(store);
+        bookRepo.save(repoBook);
+
+        return "owner/edited_book";
     }
 }

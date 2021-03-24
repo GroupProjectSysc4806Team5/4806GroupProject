@@ -17,7 +17,7 @@ public class Book {
 	private boolean available;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@ManyToOne
@@ -144,4 +144,19 @@ public class Book {
 		this.available = available;
 	}
 
+	@Override
+	public String toString() {
+		return "Book{" +
+				"isbn='" + isbn + '\'' +
+				", bookName='" + bookName + '\'' +
+				", picture='" + picture + '\'' +
+				", description='" + description + '\'' +
+				", author='" + author + '\'' +
+				", publisher='" + publisher + '\'' +
+				", available=" + available +
+				", id=" + id +
+				", store=" + store +
+				", carts=" + carts +
+				'}';
+	}
 }
