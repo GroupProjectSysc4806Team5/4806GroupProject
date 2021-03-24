@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${name}"/>
+</head>
+<body>
+    <h1 th:text="'Welcome owner '+${owner}+'!'"/>
+    <p>What would you like to do?</p>
+
+    <ul>
+        <li><a th:href="'/view_books?id=' + ${store_id}">View Books</a></li>
+        <li><a th:href="'/owner_add_book?id=' + ${store_id}">Add a book</a></li>
+    </ul>
+
+
+</body>
+</html>

@@ -7,7 +7,9 @@
 <body>
     <h1>Stores List</h1>
     <tr th:each="store : ${stores}">
-        <p th:text="${store.getName()}"/>
+        <a th:text="${store.getName()}" th:href="'bookstore?id='+${store.getId()}"/><br/>
     </tr>
+
+    <a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
 </body>
 </html>

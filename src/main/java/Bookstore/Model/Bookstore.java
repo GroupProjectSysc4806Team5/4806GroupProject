@@ -62,4 +62,8 @@ public class Bookstore {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void addBook(Book book){
+        books.add(book);
+    }
 }
