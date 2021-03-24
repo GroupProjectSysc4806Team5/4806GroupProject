@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bookstore Created!</title>
 </head>
 <body>
+    <h1 th:text="'The library '+${store_name}+ ' has been created!'"/>
+
 
 </body>
 </html>
