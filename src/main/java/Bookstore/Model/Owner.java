@@ -15,7 +15,7 @@ public class Owner {
     private List<Bookstore> stores;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Owner(String name, String pass){

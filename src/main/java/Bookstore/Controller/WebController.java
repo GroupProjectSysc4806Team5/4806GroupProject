@@ -247,6 +247,7 @@ public class WebController {
         model.addAttribute("name", store.getName());
         model.addAttribute("owner",store.getOwner());
         model.addAttribute("store_id",store.getId());
+        model.addAttribute("id",store.getOwner().getId());
 
 
         return "owner/view-bookstore";
@@ -283,5 +284,40 @@ public class WebController {
         bookstoreRepo.save(store);
 
         return "owner/added_book";
+    }
+
+    @GetMapping("edit_book")
+    public String editBook(Model model, @RequestParam(required = true, name = "id")String id) {
+        Book book = bookRepo.findById(Long.parseLong(id));
+
+        model.addAttribute("book",book);
+
+        //Attach the Store to the model
+        model.addAttribute("store",book.getStore());
+
+        return "owner/edit_book";
+    }
+
+    @PostMapping("edited_book")
+    public String editedBook(Model model,  @RequestParam(required = true, name = "id")String id, @ModelAttribute Book book, @ModelAttribute Bookstore store){
+
+        // use the book from the repo and add values using the
+        Book repoBook = bookRepo.findById(Long.parseLong(id));
+        model.addAttribute("id",repoBook.getStore().getId());
+
+//        System.out.println("passed id:" + id);
+//        System.out.println("store id:" + repoBook.getStore().getId());
+
+        repoBook.setBookName(book.getBookName());
+        repoBook.setISBN(book.getISBN());
+        repoBook.setPicture(book.getPicture());
+        repoBook.setAuthor(book.getAuthor());
+        repoBook.setDescription(book.getDescription());
+        repoBook.setPicture(book.getPublisher());
+
+        //bookstoreRepo.save(store);
+        bookRepo.save(repoBook);
+
+        return "owner/edited_book";
     }
 }
