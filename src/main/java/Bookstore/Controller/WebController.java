@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -160,7 +159,7 @@ public class WebController {
                 if (o.getName().equals(user.getName()) && o.getPassword().equals(user.getPassword())) {
                     model.addAttribute("name", o.getName());
                     model.addAttribute("id",o.getId());
-                    return "owner_login_success";
+                    return "owner/login_success";
                 }
             }
 
@@ -189,7 +188,7 @@ public class WebController {
         model.addAttribute("store", new Bookstore());
         model.addAttribute("id",id);
 
-        return "owner_open_bookstore";
+        return "owner/open_bookstore";
     }
 
     @PostMapping("owner_opened_bookstore")
@@ -204,7 +203,7 @@ public class WebController {
 
         model.addAttribute("store_name",store.getName());
         model.addAttribute("id",id);
-        return "owner_opened_bookstore";
+        return "owner/opened_bookstore";
     }
 
     /*
@@ -219,9 +218,9 @@ public class WebController {
         if (!stores.isEmpty()){
             model.addAttribute("stores",stores);
 
-            return "bookstores";
+            return "owner/bookstores";
         } else {
-            return "no_bookstores";
+            return "owner/no_bookstores";
         }
     }
 
@@ -233,7 +232,7 @@ public class WebController {
         Owner owner = ownerRepo.findById(Long.parseLong(id));
         model.addAttribute("id",id);
         model.addAttribute("name",owner.getName());
-        return "owner_login_success";
+        return "owner/login_success";
     }
 
     /*
@@ -250,7 +249,7 @@ public class WebController {
         model.addAttribute("store_id",store.getId());
 
 
-        return "owner/owner-view-bookstore";
+        return "owner/view-bookstore";
     }
 
     @GetMapping("view_books")
