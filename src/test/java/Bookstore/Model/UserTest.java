@@ -10,23 +10,35 @@ class UserTest {
 	private User user;
 	String userName; 
 	String userEmail; 
+	String address;
+	String phoneNumber;
 	@BeforeEach
 	void setUp() throws Exception {
 		this.userName = "testUser";
     	this.userEmail = "testEmail";
-    	this.user = new User(userName, userEmail);
+    	this.address = "xx-street";
+    	this.phoneNumber = "xxx-xxx-xxxx";
+    	this.user = new User(userName, "xx-street", "testEmail", "xxx-xxx-xxxx" );
     	this.cart = new Cart();
 	}
 
 	@Test
 	void testGetName() {
-		assertEquals( "testUser", String.valueOf(user.getName()));
+		assertEquals( "testUser", user.getName());
 	}
 
 	@Test
-	void testGetEmail() {
-		assertEquals("testEmail", (String)user.getEmail());
+	void testGetAddress() {
+		assertEquals("xx-street", user.getAddress());
 	}
 
+	@Test
+	void testGetPhoneNumber() {
+		assertEquals("xxx-xxx-xxxx", user.getPhoneNumber());
+	}
+	@Test
+	void testGetEmail() {
+		assertEquals("testEmail", user.getEmail());
+	}
 
 }
