@@ -1,55 +1,55 @@
 package Bookstore.Model;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
-import static javax.persistence.CascadeType.ALL;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Cart {
-    private Long id;
-    private Set<Book> books;
-    private User customer;
 
-    public Cart(){ this.books = new HashSet<Book>();}
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Book> books;
+
+    @OneToOne(mappedBy = "cart")
+    private User user;
 
     @Id
-    @GeneratedValue
-    public Long getId(){ return this.id; }
-    public void setId(Long id){ this.id = id; }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "shoppingCarts")
-    public Set<Book> getBooks() { return this.books; }
-    public void setBooks(Set<Book> books) { this.books = books; }
+    public Cart() {}
+
+    public Cart(User user) {
+        this.user = user;
+        books = new ArrayList<Book>();
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
     public void addBook(Book book){
-        this.books.add(book);
-        book.addShoppingCart(this);
-    }
-    private void removeBooks() {
-        //The reason this does not call .clear() and changes the reference to a new Set is because of the
-        //Hibernate layer, when a checkout occurs the books collection is moved to the Sale object,
-        //if it is cleared here, it causes issues when Hibernate tries to persist.
-        this.books = new HashSet<Book>();
+        books.add(book);
     }
 
-    @OneToOne(fetch = FetchType.EAGER, cascade=ALL)
-    public User getCustomer() { return this.customer; }
-    public void setCustomer(User customer) { this.customer = customer; }
+    public User getUser() {
+        return user;
+    }
 
-    public Sale checkout() {
-        if (!this.books.isEmpty()) {
-            Sale sale = new Sale(this.books, this.customer);
-            for (Book book : this.books) {
-                book.setAvailable(false);
-                sale.addBookstore(book.getBookstore());
-                book.removeShoppingCarts();
-                book.setSale(sale);
-            }
-            this.removeBooks();
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-            return sale;
-        } else {
-            return null;
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public Long getId() {
+        return id;
     }
 }

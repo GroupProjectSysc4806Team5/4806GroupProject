@@ -313,7 +313,7 @@ public class WebController {
         repoBook.setPicture(book.getPicture());
         repoBook.setAuthor(book.getAuthor());
         repoBook.setDescription(book.getDescription());
-        repoBook.setPicture(book.getPublisher());
+        repoBook.setPublisher(book.getPublisher());
 
         //bookstoreRepo.save(store);
         bookRepo.save(repoBook);

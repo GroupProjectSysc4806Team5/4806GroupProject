@@ -1,12 +1,10 @@
 package Bookstore.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
 
 @Entity
 public class Bookstore {
@@ -24,6 +22,38 @@ public class Bookstore {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    public Bookstore(){ }
+
+    public Bookstore(Owner owner){
+        this.owner = owner;
+        this.books = new ArrayList<Book>();
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

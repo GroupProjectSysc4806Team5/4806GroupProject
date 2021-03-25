@@ -1,15 +1,13 @@
 package Bookstore.Model;
 
-import static javax.persistence.CascadeType.ALL;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 @Entity
 public class Owner {
+
+    private String name;
 
     private String password;
 
@@ -28,40 +26,30 @@ public class Owner {
 
     public Owner() {
         stores = new ArrayList<Bookstore>();
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public List<Bookstore> getStores() {
         return stores;
     }
 
-
-    public Bookstore getBookstoreById(long bookstoreId){
-        for (Bookstore bookstore: this.bookstores){
-            if (bookstore.getId() == bookstoreId){
-                return bookstore;
-            }
-        }
-        return null;
+    public void setStores(List<Bookstore> stores) {
+        this.stores = stores;
     }
 
-    public void addBookstore(Bookstore bookstore){
-        bookstore.setOwner(this);
-        this.bookstores.add(bookstore);
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void removeBookstoreById(long bookstoreId){
-        Bookstore bookstoreFound = null;
-        for (Bookstore bookstore : this.bookstores){
-            if (bookstore.getId() == bookstoreId){
-                bookstoreFound = bookstore;
-                break;
-            }
-        }
-        if (bookstoreFound != null) {
-            this.bookstores.remove(bookstoreFound);
-            bookstoreFound.removeBookstoreOwner();
-        }
+    public Long getId() {
+        return id;
     }
 
     public String getPassword() {

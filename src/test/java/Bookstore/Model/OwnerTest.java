@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 class OwnerTest {
 	Owner owner;
 	Bookstore store1;
-	Set<Bookstore> stores;
+	List<Bookstore> stores;
 	
 	@BeforeEach
 	void setUp() throws Exception {
