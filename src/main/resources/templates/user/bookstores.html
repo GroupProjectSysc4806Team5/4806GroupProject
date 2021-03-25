@@ -7,10 +7,12 @@
 </head>
 <body>
     <h1>Stores List</h1>
-    <tr th:each="store : ${stores}">
-        <li><a th:href="'bookstore?id='+${store.getId()}" th:text="${store.getName()}"></a></li>
-    </tr>
-
-    <a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
+    <span th:if="${stores.isEmpty()}">No stores available</span>
+    <span th:unless="${stores.isEmpty()}">
+        <tr th:each="store : ${stores}">
+            <li><a th:href="'view_bookstore?id='+${store.getId()}" th:text="${store.getName()}"></a></li>
+        </tr>
+    </span>
+    <a th:href="'view_cart'" th:text="'View cart'"></a>
 </body>
 </html>
