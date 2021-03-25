@@ -1,21 +1,20 @@
 package Bookstore.repositories;
 
 
-import Bookstore.Model.User;
+
+import java.util.List;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import Bookstore.Model.User;
 
 @Repository
-@RepositoryRestResource(collectionResourceRel = "users", path = "users")
-public interface UserRepository extends PagingAndSortingRepository<User,Long>{
-
-    User findById(long id);
-
+@RepositoryRestResource(collectionResourceRel = "customers", path = "customers")
+public interface UserRepository extends PagingAndSortingRepository<User, Long>{
+	User findById(long id);
     List<User> findByName(String name);
-
     List<User> findByEmail(String email);
 
 }

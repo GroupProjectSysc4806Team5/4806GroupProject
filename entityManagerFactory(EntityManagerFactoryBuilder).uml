@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Persistence</ID>
+  <OriginalElement>JavaeeElement:/403f3c3f/entityManagerFactory/GroupProject/jpa/JPA/PersistenceModel</OriginalElement>
+  <nodes>
+    <node x="321.0" y="13.0">Sale#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Sale.java</node>
+    <node x="-27.5" y="176.0">Book#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Book.java</node>
+    <node x="-12.0" y="533.0">AbstractPersistable#jar://C:/Users/Ryan Tordesillas/.m2/repository/org/springframework/data/spring-data-jpa/2.2.3.RELEASE/spring-data-jpa-2.2.3.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractPersistable.class</node>
+    <node x="297.5" y="391.0">Owner#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Owner.java</node>
+    <node x="1.0" y="13.0">Cart#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Cart.java</node>
+    <node x="-4.0" y="642.0">AbstractAuditable#jar://C:/Users/Ryan Tordesillas/.m2/repository/org/springframework/data/spring-data-jpa/2.2.3.RELEASE/spring-data-jpa-2.2.3.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class</node>
+    <node x="308.0" y="242.0">Bookstore#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Bookstore.java</node>
+    <node x="273.0" y="665.0">null#null</node>
+    <node x="137.5" y="-20.0">User#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/User.java</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Cart#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Cart.java" target="Book#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Book.java">
+      <point x="0.0" y="27.0" />
+      <point x="0.0" y="-104.0" />
+    </edge>
+    <edge source="User#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/User.java" target="Cart#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Cart.java">
+      <point x="-62.5" y="0.0" />
+      <point x="39.0" y="0.0" />
+    </edge>
+    <edge source="Sale#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Sale.java" target="User#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/User.java">
+      <point x="-39.0" y="0.0" />
+      <point x="62.5" y="0.0" />
+    </edge>
+    <edge source="Sale#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Sale.java" target="Bookstore#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Bookstore.java">
+      <point x="0.0" y="27.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="Book#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Book.java" target="Bookstore#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Bookstore.java">
+      <point x="67.5" y="0.0" />
+      <point x="-52.0" y="0.0" />
+    </edge>
+    <edge source="Owner#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Owner.java" target="Bookstore#file://D:/Winter 2021 Classes/SYSC 4806/Project/4806GroupProject/src/main/java/Bookstore/Model/Bookstore.java">
+      <point x="0.0" y="-49.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="AbstractAuditable#jar://C:/Users/Ryan Tordesillas/.m2/repository/org/springframework/data/spring-data-jpa/2.2.3.RELEASE/spring-data-jpa-2.2.3.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class" target="null#null">
+      <point x="84.0" y="0.0" />
+      <point x="-7.0" y="0.0" />
+    </edge>
+    <edge source="AbstractAuditable#jar://C:/Users/Ryan Tordesillas/.m2/repository/org/springframework/data/spring-data-jpa/2.2.3.RELEASE/spring-data-jpa-2.2.3.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractAuditable.class" target="AbstractPersistable#jar://C:/Users/Ryan Tordesillas/.m2/repository/org/springframework/data/spring-data-jpa/2.2.3.RELEASE/spring-data-jpa-2.2.3.RELEASE.jar!/org/springframework/data/jpa/domain/AbstractPersistable.class">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Orthogonal" zoom="1.0" x="325.0" y="309.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+    <Category>Embeddables</Category>
+    <Category>Superclasses</Category>
+  </Categories>
+</Diagram>
+
