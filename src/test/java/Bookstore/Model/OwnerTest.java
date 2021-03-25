@@ -3,21 +3,24 @@ package Bookstore.Model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
 
 class OwnerTest {
 	Owner owner;
 	Bookstore store1;
-	List<Bookstore> stores;
+	Set<Bookstore> stores;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		this.owner = new Owner();
 		store1 = new Bookstore("TestStore");
-		stores = new ArrayList<Bookstore>();
+		stores = new HashSet<Bookstore>(); 
 	}
 
 	@Test
@@ -29,9 +32,10 @@ class OwnerTest {
 	@Test
 	void testGetStore() {
 		stores.add(store1);
-		owner.setStores(stores);
-		List<Bookstore> storess = owner.getStore();
-		assertEquals("TestStore", storess.get(0).getName());
+		owner.setBookstores(stores);
+		Set<Bookstore> storess = owner.getBookstores();
+		List<Bookstore> stringsList = new ArrayList<>(storess);
+		assertEquals("TestStore", (stringsList.get(0)).getName());
 	}
 
 
