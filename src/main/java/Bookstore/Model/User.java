@@ -9,7 +9,7 @@ public class User {
     private String email;
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
     public Cart cart;
 
     @Id

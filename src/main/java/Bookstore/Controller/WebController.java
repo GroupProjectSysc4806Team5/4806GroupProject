@@ -322,6 +322,12 @@ public class WebController {
     /**
      * User Mappings
      */
+
+    private User getUser(long id) {
+        User user = userRepo.findById(id);
+        return user;
+    }
+
     @GetMapping("user/view_all_bookstores")
     public String viewAllBookstores(Model model) {
         List<Bookstore> stores = (List<Bookstore>) bookstoreRepo.findAll();
@@ -358,7 +364,7 @@ public class WebController {
 
     @GetMapping("user/view_cart")
     public String viewCart(Model model) {
-        User user = currentUser;
+        User user = getUser(currentUser.getId());
         Cart cart = user.getCart();
 
         if (cart == null) {
@@ -383,17 +389,19 @@ public class WebController {
         @RequestParam(name = "id") String book_id,
         HttpServletRequest request) {
 
-        User user = currentUser;
+        User user = getUser(currentUser.getId());
         Cart cart = user.getCart();
 
         if (cart == null) {
             cart = new Cart(user);
+            user.setCart(cart);
         }
 
         Book book = bookRepo.findById(Long.parseLong(book_id));
         if (cart.getBooks().stream().noneMatch(_book -> book.getId().equals(_book.getId()))) {
             cart.addBook(book);
             user.setCart(cart);
+            cartRepo.save(cart);
         }
 
         // After adding the book to the cart, redirect back to the book page
@@ -405,7 +413,7 @@ public class WebController {
         @RequestParam(name = "id") String id,
         HttpServletRequest request) {
 
-        User user = currentUser;
+        User user = getUser(currentUser.getId());
         Cart cart = user.getCart();
 
         if (cart != null) {
@@ -417,6 +425,7 @@ public class WebController {
 
                 books.remove(bookToRemove);
                 cart.setBooks(books);
+                cartRepo.save(cart);
             }
         }
 

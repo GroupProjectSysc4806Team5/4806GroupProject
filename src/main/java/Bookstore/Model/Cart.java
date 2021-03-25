@@ -14,7 +14,7 @@ public class Cart {
     private User user;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Cart() {}
@@ -47,6 +47,7 @@ public class Cart {
     public void setId(Long id) {
         this.id = id;
     }
+
 
 
     public Long getId() {
