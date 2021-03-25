@@ -33,7 +33,7 @@ class BookTest {
 
 	@Test
 	void testGetBookName() {
-		assertEquals("testBook", book.getBookName());
+		assertEquals("testBook", book.getName());
 	}
 
 	@Test
