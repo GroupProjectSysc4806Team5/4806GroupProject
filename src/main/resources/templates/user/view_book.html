@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title th:text="${book.getBookName()}"></title>
+</head>
+<body>
+    <h1>Book Information</h1>
+    <p th:text="'Name: ' + ${book.getBookName()}"></p>
+    <p th:text="'ISBN: ' + ${book.getISBN()}"></p>
+    <p th:text="'Picture: ' + ${book.getPicture()}"></p>
+    <p th:text="'Author: ' + ${book.getAuthor()}"></p>
+    <p th:text="'Description: ' + ${book.getDescription()}"></p>
+    <p th:text="'Publisher: ' + ${book.getPublisher()}"></p>
+    <form action="#" th:action="@{/user/add_to_cart(id=${book.getId()})}" th:object="${book}" method="post">
+        <button name="addToCart" value="addToCart">Add to cart</button>
+    </form>
+    <br><br>
+    <a th:href="'view_cart'" th:text="'View cart'"></a>
+    <br>
+    <a th:href="'view_bookstore?id='+${book.getStore().getId()}">Return to bookstore</a>
+</body>
+</html>
