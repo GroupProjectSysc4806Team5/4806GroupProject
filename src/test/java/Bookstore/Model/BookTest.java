@@ -41,7 +41,7 @@ class BookTest {
 
 	@Test
 	void testGetPicture() {
-		assertEquals("test book", book.getDescription());
+		assertEquals(picture, book.getPicture());
 	}
 
 	@Test
