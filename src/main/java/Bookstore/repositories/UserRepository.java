@@ -15,8 +15,6 @@ import Bookstore.Model.User;
 public interface UserRepository extends PagingAndSortingRepository<User, Long>{
 	User findById(long id);
     List<User> findByName(String name);
-    List<User> findByAddress(String address);
     List<User> findByEmail(String email);
-    List<User> findByPhoneNumber(String phoneNumber);
-    User findByUsername(String username);
+
 }

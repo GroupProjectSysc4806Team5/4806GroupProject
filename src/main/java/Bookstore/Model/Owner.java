@@ -1,72 +1,66 @@
 package Bookstore.Model;
 
-import static javax.persistence.CascadeType.ALL;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Owner extends Client{
+public class Owner {
+
     private String name;
-    @JsonIgnore
-    private Set<Bookstore> bookstores;
 
-    public Owner(){
-        super("ADMIN");
-        this.bookstores = new HashSet<Bookstore>(); 
-    }
-    public Owner(String name){
-        super();
+    private String password;
+
+    @OneToMany(cascade= CascadeType.ALL,mappedBy = "owner")
+    private List<Bookstore> stores;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    public Owner(String name, String pass){
         this.name = name;
-        this.bookstores = new HashSet<Bookstore>();
+        password = pass;
+        stores = new ArrayList<Bookstore>();
     }
 
-    public Owner(String username, String password, String name){
-        super(username, password, "ADMIN");
+    public Owner() {
+        stores = new ArrayList<Bookstore>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.bookstores = new HashSet<Bookstore>();
     }
 
-
-
-    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "bookstoreOwner")
-    public Set<Bookstore> getBookstores() { return this.bookstores; }
-    public void setBookstores(Set<Bookstore> bookstores) { this.bookstores = bookstores; }
-
-    public Bookstore getBookstoreById(long bookstoreId){
-        for (Bookstore bookstore: this.bookstores){
-            if (bookstore.getId() == bookstoreId){
-                return bookstore;
-            }
-        }
-        return null;
+    public List<Bookstore> getStores() {
+        return stores;
     }
 
-    public void addBookstore(Bookstore bookstore){
-        bookstore.setOwner(this);
-        this.bookstores.add(bookstore);
+    public void setStores(List<Bookstore> stores) {
+        this.stores = stores;
     }
 
-    public void removeBookstoreById(long bookstoreId){
-        Bookstore bookstoreFound = null;
-        for (Bookstore bookstore : this.bookstores){
-            if (bookstore.getId() == bookstoreId){
-                bookstoreFound = bookstore;
-                break;
-            }
-        }
-        if (bookstoreFound != null) {
-            this.bookstores.remove(bookstoreFound);
-            bookstoreFound.removeBookstoreOwner();
-        }
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void addStore(Bookstore store){
+        stores.add(store);
+    }
 }

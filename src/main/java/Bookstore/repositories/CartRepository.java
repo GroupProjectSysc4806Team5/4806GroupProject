@@ -7,8 +7,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import Bookstore.Model.Cart;
 import Bookstore.Model.User;
 
-@RepositoryRestResource(collectionResourceRel = "shoppingcarts", path = "shoppingcarts")
+@RepositoryRestResource(collectionResourceRel = "carts", path = "carts")
 public interface CartRepository extends PagingAndSortingRepository<Cart, Long> {
 	Cart findById(long id);
-	Cart findByCustomer(User customer);
+	Cart findByUser(User user);
 }

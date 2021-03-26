@@ -28,7 +28,7 @@ class BookstoreTest {
 		this.ownerName = "testOwner";
     	this.owner = new Owner();
     	owner.setName(ownerName);
-    	this.bookStore = new Bookstore("tstStore");
+    	this.bookStore = new Bookstore(owner);
     	this.bookStore.setOwner(owner);
     	
     	

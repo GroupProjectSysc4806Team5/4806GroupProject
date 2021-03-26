@@ -12,5 +12,4 @@ import Bookstore.Model.Owner;
 public interface OwnerRepository extends PagingAndSortingRepository<Owner, Long> {
     Owner findById(long id);
     List<Owner> findByName(String name);
-    Owner findByUsername(String username);
 }

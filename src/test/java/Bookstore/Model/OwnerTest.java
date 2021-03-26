@@ -14,13 +14,13 @@ import org.junit.jupiter.api.BeforeEach;
 class OwnerTest {
 	Owner owner;
 	Bookstore store1;
-	Set<Bookstore> stores;
+	List<Bookstore> stores;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		this.owner = new Owner();
-		store1 = new Bookstore("TestStore");
-		stores = new HashSet<Bookstore>(); 
+		store1 = new Bookstore(owner);
+		stores = new ArrayList<Bookstore>();
 	}
 
 	@Test
@@ -32,10 +32,9 @@ class OwnerTest {
 	@Test
 	void testGetStore() {
 		stores.add(store1);
-		owner.setBookstores(stores);
-		Set<Bookstore> storess = owner.getBookstores();
-		List<Bookstore> stringsList = new ArrayList<>(storess);
-		assertEquals("TestStore", (stringsList.get(0)).getName());
+		owner.setStores(stores);
+		List<Bookstore> storess = owner.getStores();
+		assertEquals(owner, storess.get(0).getOwner());
 	}
 
 
