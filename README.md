@@ -43,5 +43,8 @@ To carry out basic funcitons, follow the following instructions:
 ### ER Diagram:
 ![Diagram 1 0](entityManagerFactory(EntityManagerFactoryBuilder).png)
 
+### Database Schema:
+![Database Schema](Diagrams/Schema.pdf)
+
 
 
