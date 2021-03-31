@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
+	<style type="text/css">
+		html
+		{
+		    width: 100%;
+		    height: 100%;
+		}
+		
+		body
+		{
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+			flex-direction: column;
+		}
+		footer 
+		{ 
+			position: fixed;
+			bottom: 0;
+		
+		}
+	</style>
     <meta charset="UTF-8">
     <title>Add Book to User's Cart</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -13,11 +34,20 @@
     </tr>
 
     <form action="#" th:action="@{/add-book-successful(id=${id})}" method="post">
-        <p>Book id: <input type="text" th:field="*{book_id}" /></p>
+        <p>Book id:<br> <input type="text" th:field="*{book_id}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        <br><br><br>
     </form>
-
+        
+   
+	 <br> 
+    <form action="#" th:action="@{/}" method="get">
+       	 <input type="submit" value="HomePage" />
+    </form>
+    
+   
 
 
 </body>
 </html>
+
