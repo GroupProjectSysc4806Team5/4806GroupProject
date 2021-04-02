@@ -1,0 +1,32 @@
+{
+  "amazinBookstoreApp": {
+    "book": {
+      "home": {
+        "title": "Books",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Book",
+        "createOrEditLabel": "Create or edit a Book",
+        "notFound": "No Books found"
+      },
+      "created": "A new Book is created with identifier {{ param }}",
+      "updated": "A Book is updated with identifier {{ param }}",
+      "deleted": "A Book is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Book {{ id }}?"
+      },
+      "detail": {
+        "title": "Book"
+      },
+      "id": "Id",
+      "author": "Author",
+      "available": "Available",
+      "bookName": "Book Name",
+      "description": "Description",
+      "isbn": "Isbn",
+      "picture": "Picture",
+      "publisher": "Publisher",
+      "bookstore": "Bookstore",
+      "cart": "Cart"
+    }
+  }
+}

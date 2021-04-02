@@ -1,0 +1,89 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-book-heading" data-cy="BookCreateUpdateHeading" jhiTranslate="amazinBookstoreApp.book.home.createOrEditLabel">
+        Create or edit a Book
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.author" for="field_author">Author</label>
+          <input type="text" class="form-control" name="author" id="field_author" data-cy="author" formControlName="author" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.available" for="field_available">Available</label>
+          <input type="checkbox" class="form-check" name="available" id="field_available" data-cy="available" formControlName="available" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.bookName" for="field_bookName">Book Name</label>
+          <input type="text" class="form-control" name="bookName" id="field_bookName" data-cy="bookName" formControlName="bookName" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.isbn" for="field_isbn">Isbn</label>
+          <input type="text" class="form-control" name="isbn" id="field_isbn" data-cy="isbn" formControlName="isbn" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.picture" for="field_picture">Picture</label>
+          <input type="text" class="form-control" name="picture" id="field_picture" data-cy="picture" formControlName="picture" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.publisher" for="field_publisher">Publisher</label>
+          <input type="text" class="form-control" name="publisher" id="field_publisher" data-cy="publisher" formControlName="publisher" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.book.bookstore" for="field_bookstore">Bookstore</label>
+          <select class="form-control" id="field_bookstore" data-cy="bookstore" name="bookstore" formControlName="bookstore">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="bookstoreOption.id === editForm.get('bookstore')!.value?.id ? editForm.get('bookstore')!.value : bookstoreOption"
+              *ngFor="let bookstoreOption of bookstoresSharedCollection; trackBy: trackBookstoreById"
+            >
+              {{ bookstoreOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "amazinBookstoreApp": {
+    "bookstore": {
+      "home": {
+        "title": "Bookstores",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Bookstore",
+        "createOrEditLabel": "Create or edit a Bookstore",
+        "notFound": "No Bookstores found"
+      },
+      "created": "A new Bookstore is created with identifier {{ param }}",
+      "updated": "A Bookstore is updated with identifier {{ param }}",
+      "deleted": "A Bookstore is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bookstore {{ id }}?"
+      },
+      "detail": {
+        "title": "Bookstore"
+      },
+      "id": "Id",
+      "name": "Name",
+      "owner": "Owner"
+    }
+  }
+}

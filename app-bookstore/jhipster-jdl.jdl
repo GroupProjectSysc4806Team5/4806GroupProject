@@ -1,0 +1,68 @@
+
+entity Bookstore {
+	id Long,
+    name String
+}
+
+entity Book {
+	id Long,
+    author String,
+    available Boolean,
+    bookName String,
+    description String,
+    isbn String,
+    picture String,
+    publisher String
+}
+
+entity Cart {
+	id Long
+}
+
+entity User {
+	id Long,
+    email String,
+    name String,
+    password String
+}
+
+entity Owner {
+	id Long,
+    name String,
+    password String
+}
+
+entity Sale {
+	id Long
+}
+
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
+
+relationship OneToOne {
+	Cart{user} to User
+    Sale{cart} to Cart
+}
+
+relationship ManyToOne {
+	Book{bookstore} to Bookstore
+    Owner to Bookstore{owner}
+}
+
+relationship ManyToMany {
+	Cart{book} to Book{cart}
+}
+
+// Set pagination options
+// paginate JobHistory, Employee with infinite-scroll
+// paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+// service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
