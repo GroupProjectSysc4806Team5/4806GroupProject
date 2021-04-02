@@ -1,30 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head>
-	<style type="text/css">
-		html
-		{
-		    width: 100%;
-		    height: 100%;
-		}
-		
-		body
-		{
-		    display: flex;
-		    justify-content: space-between;
-		    align-items: center;
-			flex-direction: column;
-		}
-		footer 
-		{ 
-			position: fixed;
-			bottom: 0;
-		
-		}
-	</style>
-    <meta charset="UTF-8">
-    <title>Book Created</title>
+<head>    <meta charset="UTF-8">
+    <title>Login Successful</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
     <h1 th:text="${name}+' Created!'"/>
