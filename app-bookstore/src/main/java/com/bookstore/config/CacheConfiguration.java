@@ -50,6 +50,14 @@ public class CacheConfiguration {
             createCache(cm, com.bookstore.domain.User.class.getName() + ".authorities");
             createCache(cm, com.bookstore.domain.PersistentToken.class.getName());
             createCache(cm, com.bookstore.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, com.bookstore.domain.Bookstore.class.getName());
+            createCache(cm, com.bookstore.domain.Bookstore.class.getName() + ".owners");
+            createCache(cm, com.bookstore.domain.Book.class.getName());
+            createCache(cm, com.bookstore.domain.Book.class.getName() + ".carts");
+            createCache(cm, com.bookstore.domain.Cart.class.getName());
+            createCache(cm, com.bookstore.domain.Cart.class.getName() + ".books");
+            createCache(cm, com.bookstore.domain.Owner.class.getName());
+            createCache(cm, com.bookstore.domain.Sale.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
