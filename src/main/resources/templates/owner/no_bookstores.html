@@ -2,12 +2,15 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>No Bookstores!</title>
+    <title>Login Successful</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
     <h1>You do not have any bookstores!</h1>
-
-    <a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
+	<h2><a th:href="'/owner_open_bookstore?id=' + ${id}">Create a new Bookstore</a></h2>
 </body>
+<footer>
+    <a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
+</footer>
 </html>

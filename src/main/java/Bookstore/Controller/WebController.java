@@ -3,6 +3,7 @@ package Bookstore.Controller;
 import Bookstore.Model.*;
 import Bookstore.repositories.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +17,20 @@ import java.util.function.Predicate;
 @Controller
 public class WebController {
 
+	@Autowired
     private BookRepository bookRepo;
+	@Autowired
     private BookstoreRepository bookstoreRepo;
+	@Autowired
     private CartRepository cartRepo;
+	@Autowired
     private UserRepository userRepo;
+	@Autowired
     private OwnerRepository ownerRepo;
+	
     private User currentUser;
 
-    public WebController(BookRepository bookRepo, BookstoreRepository bookstoreRepo, CartRepository cartRepo, UserRepository userRepo, OwnerRepository ownerRepo) {
-        this.bookRepo = bookRepo;
-        this.ownerRepo = ownerRepo;
-        this.bookstoreRepo = bookstoreRepo;
-        this.cartRepo = cartRepo;
-        this.userRepo = userRepo;
-    }
-
+  
     @GetMapping("/")
     public String index(Model model) {
         return "index";

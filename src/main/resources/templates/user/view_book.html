@@ -2,9 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Login Successful</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title th:text="${book.getBookName()}"></title>
-</head>
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
 <body>
     <h1>Book Information</h1>
     <p th:text="'Name: ' + ${book.getBookName()}"></p>
@@ -19,6 +19,8 @@
     <br><br>
     <a th:href="'view_cart'" th:text="'View cart'"></a>
     <br>
-    <a th:href="'view_bookstore?id='+${book.getStore().getId()}">Return to bookstore</a>
 </body>
+<footer>
+    <a th:href="'view_bookstore?id='+${book.getStore().getId()}">Return to bookstore</a>
+</footer>
 </html>
