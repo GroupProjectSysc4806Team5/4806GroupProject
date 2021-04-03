@@ -23,19 +23,16 @@ public class Cart implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
-    private User user;
+    private Customer customer;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "rel_cart__book", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     @JsonIgnoreProperties(value = { "bookstore", "carts" }, allowSetters = true)
     private Set<Book> books = new HashSet<>();
-
-    @JsonIgnoreProperties(value = { "cart" }, allowSetters = true)
-    @OneToOne(mappedBy = "cart")
-    private Sale sale;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -51,17 +48,17 @@ public class Cart implements Serializable {
         return this;
     }
 
-    public User getUser() {
-        return this.user;
+    public Customer getCustomer() {
+        return this.customer;
     }
 
-    public Cart user(User user) {
-        this.setUser(user);
+    public Cart customer(Customer customer) {
+        this.setCustomer(customer);
         return this;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Set<Book> getBooks() {
@@ -87,25 +84,6 @@ public class Cart implements Serializable {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
-    }
-
-    public Sale getSale() {
-        return this.sale;
-    }
-
-    public Cart sale(Sale sale) {
-        this.setSale(sale);
-        return this;
-    }
-
-    public void setSale(Sale sale) {
-        if (this.sale != null) {
-            this.sale.setCart(null);
-        }
-        if (sale != null) {
-            sale.setCart(this);
-        }
-        this.sale = sale;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

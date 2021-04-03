@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.bookstore.IntegrationTest;
 import com.bookstore.domain.Bookstore;
 import com.bookstore.repository.BookstoreRepository;
+import com.bookstore.service.dto.BookstoreDTO;
+import com.bookstore.service.mapper.BookstoreMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -41,6 +43,9 @@ class BookstoreResourceIT {
 
     @Autowired
     private BookstoreRepository bookstoreRepository;
+
+    @Autowired
+    private BookstoreMapper bookstoreMapper;
 
     @Autowired
     private EntityManager em;
@@ -82,12 +87,13 @@ class BookstoreResourceIT {
     void createBookstore() throws Exception {
         int databaseSizeBeforeCreate = bookstoreRepository.findAll().size();
         // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
         restBookstoreMockMvc
             .perform(
                 post(ENTITY_API_URL)
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isCreated());
 
@@ -103,6 +109,7 @@ class BookstoreResourceIT {
     void createBookstoreWithExistingId() throws Exception {
         // Create the Bookstore with an existing ID
         bookstore.setId(1L);
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
 
         int databaseSizeBeforeCreate = bookstoreRepository.findAll().size();
 
@@ -112,7 +119,7 @@ class BookstoreResourceIT {
                 post(ENTITY_API_URL)
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -171,13 +178,14 @@ class BookstoreResourceIT {
         // Disconnect from session so that the updates on updatedBookstore are not directly saved in db
         em.detach(updatedBookstore);
         updatedBookstore.name(UPDATED_NAME);
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(updatedBookstore);
 
         restBookstoreMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedBookstore.getId())
+                put(ENTITY_API_URL_ID, bookstoreDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedBookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isOk());
 
@@ -194,13 +202,16 @@ class BookstoreResourceIT {
         int databaseSizeBeforeUpdate = bookstoreRepository.findAll().size();
         bookstore.setId(count.incrementAndGet());
 
+        // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBookstoreMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, bookstore.getId())
+                put(ENTITY_API_URL_ID, bookstoreDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -215,13 +226,16 @@ class BookstoreResourceIT {
         int databaseSizeBeforeUpdate = bookstoreRepository.findAll().size();
         bookstore.setId(count.incrementAndGet());
 
+        // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookstoreMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -236,13 +250,16 @@ class BookstoreResourceIT {
         int databaseSizeBeforeUpdate = bookstoreRepository.findAll().size();
         bookstore.setId(count.incrementAndGet());
 
+        // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookstoreMockMvc
             .perform(
                 put(ENTITY_API_URL)
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -317,13 +334,16 @@ class BookstoreResourceIT {
         int databaseSizeBeforeUpdate = bookstoreRepository.findAll().size();
         bookstore.setId(count.incrementAndGet());
 
+        // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBookstoreMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, bookstore.getId())
+                patch(ENTITY_API_URL_ID, bookstoreDTO.getId())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -338,13 +358,16 @@ class BookstoreResourceIT {
         int databaseSizeBeforeUpdate = bookstoreRepository.findAll().size();
         bookstore.setId(count.incrementAndGet());
 
+        // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookstoreMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -359,13 +382,16 @@ class BookstoreResourceIT {
         int databaseSizeBeforeUpdate = bookstoreRepository.findAll().size();
         bookstore.setId(count.incrementAndGet());
 
+        // Create the Bookstore
+        BookstoreDTO bookstoreDTO = bookstoreMapper.toDto(bookstore);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookstoreMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(bookstore))
+                    .content(TestUtil.convertObjectToJsonBytes(bookstoreDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

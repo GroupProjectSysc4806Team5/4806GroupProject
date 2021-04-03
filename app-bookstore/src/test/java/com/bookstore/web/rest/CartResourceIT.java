@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.bookstore.IntegrationTest;
 import com.bookstore.domain.Cart;
 import com.bookstore.repository.CartRepository;
+import com.bookstore.service.CartService;
+import com.bookstore.service.dto.CartDTO;
+import com.bookstore.service.mapper.CartMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -51,6 +54,12 @@ class CartResourceIT {
     private CartRepository cartRepositoryMock;
 
     @Autowired
+    private CartMapper cartMapper;
+
+    @Mock
+    private CartService cartServiceMock;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -90,9 +99,13 @@ class CartResourceIT {
     void createCart() throws Exception {
         int databaseSizeBeforeCreate = cartRepository.findAll().size();
         // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
         restCartMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(cart))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isCreated());
 
@@ -107,13 +120,17 @@ class CartResourceIT {
     void createCartWithExistingId() throws Exception {
         // Create the Cart with an existing ID
         cart.setId(1L);
+        CartDTO cartDTO = cartMapper.toDto(cart);
 
         int databaseSizeBeforeCreate = cartRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCartMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(cart))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -138,20 +155,20 @@ class CartResourceIT {
 
     @SuppressWarnings({ "unchecked" })
     void getAllCartsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(cartRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(cartServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restCartMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(cartRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(cartServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({ "unchecked" })
     void getAllCartsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(cartRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(cartServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restCartMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
-        verify(cartRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(cartServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -187,13 +204,14 @@ class CartResourceIT {
         Cart updatedCart = cartRepository.findById(cart.getId()).get();
         // Disconnect from session so that the updates on updatedCart are not directly saved in db
         em.detach(updatedCart);
+        CartDTO cartDTO = cartMapper.toDto(updatedCart);
 
         restCartMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedCart.getId())
+                put(ENTITY_API_URL_ID, cartDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedCart))
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isOk());
 
@@ -209,13 +227,16 @@ class CartResourceIT {
         int databaseSizeBeforeUpdate = cartRepository.findAll().size();
         cart.setId(count.incrementAndGet());
 
+        // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCartMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, cart.getId())
+                put(ENTITY_API_URL_ID, cartDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(cart))
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -230,13 +251,16 @@ class CartResourceIT {
         int databaseSizeBeforeUpdate = cartRepository.findAll().size();
         cart.setId(count.incrementAndGet());
 
+        // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCartMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(cart))
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -251,10 +275,13 @@ class CartResourceIT {
         int databaseSizeBeforeUpdate = cartRepository.findAll().size();
         cart.setId(count.incrementAndGet());
 
+        // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCartMockMvc
             .perform(
-                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(cart))
+                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -323,13 +350,16 @@ class CartResourceIT {
         int databaseSizeBeforeUpdate = cartRepository.findAll().size();
         cart.setId(count.incrementAndGet());
 
+        // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCartMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, cart.getId())
+                patch(ENTITY_API_URL_ID, cartDTO.getId())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(cart))
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -344,13 +374,16 @@ class CartResourceIT {
         int databaseSizeBeforeUpdate = cartRepository.findAll().size();
         cart.setId(count.incrementAndGet());
 
+        // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCartMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(cart))
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -365,13 +398,16 @@ class CartResourceIT {
         int databaseSizeBeforeUpdate = cartRepository.findAll().size();
         cart.setId(count.incrementAndGet());
 
+        // Create the Cart
+        CartDTO cartDTO = cartMapper.toDto(cart);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCartMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(cart))
+                    .content(TestUtil.convertObjectToJsonBytes(cartDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

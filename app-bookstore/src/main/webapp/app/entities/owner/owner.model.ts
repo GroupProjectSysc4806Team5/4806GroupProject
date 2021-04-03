@@ -1,14 +1,14 @@
+import { IUser } from 'app/entities/user/user.model';
 import { IBookstore } from 'app/entities/bookstore/bookstore.model';
 
 export interface IOwner {
   id?: number;
-  name?: string | null;
-  password?: string | null;
-  stores?: IBookstore[] | null;
+  user?: IUser | null;
+  bookstores?: IBookstore[] | null;
 }
 
 export class Owner implements IOwner {
-  constructor(public id?: number, public name?: string | null, public password?: string | null, public stores?: IBookstore[] | null) {}
+  constructor(public id?: number, public user?: IUser | null, public bookstores?: IBookstore[] | null) {}
 }
 
 export function getOwnerIdentifier(owner: IOwner): number | undefined {

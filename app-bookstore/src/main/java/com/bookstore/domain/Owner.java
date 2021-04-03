@@ -23,16 +23,14 @@ public class Owner implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "password")
-    private String password;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
 
     @OneToMany(mappedBy = "owner")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "owner", "books" }, allowSetters = true)
-    private Set<Bookstore> stores = new HashSet<>();
+    @JsonIgnoreProperties(value = { "owner" }, allowSetters = true)
+    private Set<Bookstore> bookstores = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -48,61 +46,48 @@ public class Owner implements Serializable {
         return this;
     }
 
-    public String getName() {
-        return this.name;
+    public User getUser() {
+        return this.user;
     }
 
-    public Owner name(String name) {
-        this.name = name;
+    public Owner user(User user) {
+        this.setUser(user);
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getPassword() {
-        return this.password;
+    public Set<Bookstore> getBookstores() {
+        return this.bookstores;
     }
 
-    public Owner password(String password) {
-        this.password = password;
+    public Owner bookstores(Set<Bookstore> bookstores) {
+        this.setBookstores(bookstores);
         return this;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Bookstore> getStores() {
-        return this.stores;
-    }
-
-    public Owner stores(Set<Bookstore> bookstores) {
-        this.setStores(bookstores);
-        return this;
-    }
-
-    public Owner addStores(Bookstore bookstore) {
-        this.stores.add(bookstore);
+    public Owner addBookstore(Bookstore bookstore) {
+        this.bookstores.add(bookstore);
         bookstore.setOwner(this);
         return this;
     }
 
-    public Owner removeStores(Bookstore bookstore) {
-        this.stores.remove(bookstore);
+    public Owner removeBookstore(Bookstore bookstore) {
+        this.bookstores.remove(bookstore);
         bookstore.setOwner(null);
         return this;
     }
 
-    public void setStores(Set<Bookstore> bookstores) {
-        if (this.stores != null) {
-            this.stores.forEach(i -> i.setOwner(null));
+    public void setBookstores(Set<Bookstore> bookstores) {
+        if (this.bookstores != null) {
+            this.bookstores.forEach(i -> i.setOwner(null));
         }
         if (bookstores != null) {
             bookstores.forEach(i -> i.setOwner(this));
         }
-        this.stores = bookstores;
+        this.bookstores = bookstores;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -129,8 +114,6 @@ public class Owner implements Serializable {
     public String toString() {
         return "Owner{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", password='" + getPassword() + "'" +
             "}";
     }
 }

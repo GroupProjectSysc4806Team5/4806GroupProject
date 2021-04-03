@@ -9,9 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { CartService } from '../service/cart.service';
 import { ICart, Cart } from '../cart.model';
-
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/user.service';
+import { ICustomer } from 'app/entities/customer/customer.model';
+import { CustomerService } from 'app/entities/customer/service/customer.service';
 import { IBook } from 'app/entities/book/book.model';
 import { BookService } from 'app/entities/book/service/book.service';
 
@@ -23,7 +22,7 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<CartUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let cartService: CartService;
-    let userService: UserService;
+    let customerService: CustomerService;
     let bookService: BookService;
 
     beforeEach(() => {
@@ -38,30 +37,29 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(CartUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       cartService = TestBed.inject(CartService);
-      userService = TestBed.inject(UserService);
+      customerService = TestBed.inject(CustomerService);
       bookService = TestBed.inject(BookService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
-      it('Should call User query and add missing value', () => {
+      it('Should call customer query and add missing value', () => {
         const cart: ICart = { id: 456 };
-        const user: IUser = { id: 76131 };
-        cart.user = user;
+        const customer: ICustomer = { id: 76131 };
+        cart.customer = customer;
 
-        const userCollection: IUser[] = [{ id: 28218 }];
-        spyOn(userService, 'query').and.returnValue(of(new HttpResponse({ body: userCollection })));
-        const additionalUsers = [user];
-        const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-        spyOn(userService, 'addUserToCollectionIfMissing').and.returnValue(expectedCollection);
+        const customerCollection: ICustomer[] = [{ id: 28218 }];
+        spyOn(customerService, 'query').and.returnValue(of(new HttpResponse({ body: customerCollection })));
+        const expectedCollection: ICustomer[] = [customer, ...customerCollection];
+        spyOn(customerService, 'addCustomerToCollectionIfMissing').and.returnValue(expectedCollection);
 
         activatedRoute.data = of({ cart });
         comp.ngOnInit();
 
-        expect(userService.query).toHaveBeenCalled();
-        expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(userCollection, ...additionalUsers);
-        expect(comp.usersSharedCollection).toEqual(expectedCollection);
+        expect(customerService.query).toHaveBeenCalled();
+        expect(customerService.addCustomerToCollectionIfMissing).toHaveBeenCalledWith(customerCollection, customer);
+        expect(comp.customersCollection).toEqual(expectedCollection);
       });
 
       it('Should call Book query and add missing value', () => {
@@ -85,8 +83,8 @@ describe('Component Tests', () => {
 
       it('Should update editForm', () => {
         const cart: ICart = { id: 456 };
-        const user: IUser = { id: 6441 };
-        cart.user = user;
+        const customer: ICustomer = { id: 6441 };
+        cart.customer = customer;
         const books: IBook = { id: 80961 };
         cart.books = [books];
 
@@ -94,7 +92,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(cart));
-        expect(comp.usersSharedCollection).toContain(user);
+        expect(comp.customersCollection).toContain(customer);
         expect(comp.booksSharedCollection).toContain(books);
       });
     });
@@ -164,10 +162,10 @@ describe('Component Tests', () => {
     });
 
     describe('Tracking relationships identifiers', () => {
-      describe('trackUserById', () => {
-        it('Should return tracked User primary key', () => {
+      describe('trackCustomerById', () => {
+        it('Should return tracked Customer primary key', () => {
           const entity = { id: 123 };
-          const trackResult = comp.trackUserById(0, entity);
+          const trackResult = comp.trackCustomerById(0, entity);
           expect(trackResult).toEqual(entity.id);
         });
       });

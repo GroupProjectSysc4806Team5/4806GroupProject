@@ -4,28 +4,27 @@
     {
       "fieldName": "id",
       "fieldType": "Long"
-    },
-    {
-      "fieldName": "name",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "password",
-      "fieldType": "String"
     }
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "owner",
+      "relationshipName": "user",
+      "ownerSide": true
+    },
+    {
       "relationshipType": "one-to-many",
       "otherEntityName": "bookstore",
       "otherEntityRelationshipName": "owner",
-      "relationshipName": "stores"
+      "relationshipName": "bookstore"
     }
   ],
   "entityTableName": "owner",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
-  "service": "no",
+  "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

@@ -29,6 +29,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'amazinBookstoreApp.sale.home.title' },
         loadChildren: () => import('./sale/sale.module').then(m => m.SaleModule),
       },
+      {
+        path: 'customer',
+        data: { pageTitle: 'amazinBookstoreApp.customer.home.title' },
+        loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

@@ -2,8 +2,6 @@ package com.bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -27,13 +25,8 @@ public class Bookstore implements Serializable {
     private String name;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "stores" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "bookstores" }, allowSetters = true)
     private Owner owner;
-
-    @OneToMany(mappedBy = "bookstore")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "bookstore", "carts" }, allowSetters = true)
-    private Set<Book> books = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -73,37 +66,6 @@ public class Bookstore implements Serializable {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
-    }
-
-    public Set<Book> getBooks() {
-        return this.books;
-    }
-
-    public Bookstore books(Set<Book> books) {
-        this.setBooks(books);
-        return this;
-    }
-
-    public Bookstore addBooks(Book book) {
-        this.books.add(book);
-        book.setBookstore(this);
-        return this;
-    }
-
-    public Bookstore removeBooks(Book book) {
-        this.books.remove(book);
-        book.setBookstore(null);
-        return this;
-    }
-
-    public void setBooks(Set<Book> books) {
-        if (this.books != null) {
-            this.books.forEach(i -> i.setBookstore(null));
-        }
-        if (books != null) {
-            books.forEach(i -> i.setBookstore(this));
-        }
-        this.books = books;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

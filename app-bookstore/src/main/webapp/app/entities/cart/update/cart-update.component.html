@@ -14,14 +14,14 @@
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.cart.user" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
+          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.cart.customer" for="field_customer">Customer</label>
+          <select class="form-control" id="field_customer" data-cy="customer" name="customer" formControlName="customer">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption"
-              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+              [ngValue]="customerOption.id === editForm.get('customer')!.value?.id ? editForm.get('customer')!.value : customerOption"
+              *ngFor="let customerOption of customersCollection; trackBy: trackCustomerById"
             >
-              {{ userOption.id }}
+              {{ customerOption.id }}
             </option>
           </select>
         </div>

@@ -42,7 +42,7 @@
     "rememberMeKey": "4c41b6f9d3e660208e5f7fb0d5207f516653d70af4cc47f6d21d330541e0ab1fb8b9acc645bf74ea2034d9098243ae282abf",
     "clientPackageManager": "npm",
     "languages": ["en"],
-    "entities": ["Bookstore", "Book", "Cart", "Owner", "Sale"],
-    "lastLiquibaseTimestamp": 1617330284000
+    "entities": ["Bookstore", "Book", "Cart", "Owner", "Sale", "Customer"],
+    "lastLiquibaseTimestamp": 1617483469000
   }
 }

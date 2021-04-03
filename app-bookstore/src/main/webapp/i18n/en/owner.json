@@ -18,9 +18,8 @@
         "title": "Owner"
       },
       "id": "Id",
-      "name": "Name",
-      "password": "Password",
-      "stores": "Stores"
+      "user": "User",
+      "bookstore": "Bookstore"
     }
   }
 }

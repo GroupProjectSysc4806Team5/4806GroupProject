@@ -18,9 +18,8 @@
         "title": "Cart"
       },
       "id": "Id",
-      "user": "User",
-      "book": "Book",
-      "sale": "Sale"
+      "customer": "Customer",
+      "book": "Book"
     }
   }
 }

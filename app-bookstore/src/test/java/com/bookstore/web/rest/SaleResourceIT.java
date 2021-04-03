@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.bookstore.IntegrationTest;
 import com.bookstore.domain.Sale;
 import com.bookstore.repository.SaleRepository;
+import com.bookstore.service.dto.SaleDTO;
+import com.bookstore.service.mapper.SaleMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -38,6 +40,9 @@ class SaleResourceIT {
 
     @Autowired
     private SaleRepository saleRepository;
+
+    @Autowired
+    private SaleMapper saleMapper;
 
     @Autowired
     private EntityManager em;
@@ -79,9 +84,13 @@ class SaleResourceIT {
     void createSale() throws Exception {
         int databaseSizeBeforeCreate = saleRepository.findAll().size();
         // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
         restSaleMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sale))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isCreated());
 
@@ -96,13 +105,17 @@ class SaleResourceIT {
     void createSaleWithExistingId() throws Exception {
         // Create the Sale with an existing ID
         sale.setId(1L);
+        SaleDTO saleDTO = saleMapper.toDto(sale);
 
         int databaseSizeBeforeCreate = saleRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restSaleMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sale))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -158,13 +171,14 @@ class SaleResourceIT {
         Sale updatedSale = saleRepository.findById(sale.getId()).get();
         // Disconnect from session so that the updates on updatedSale are not directly saved in db
         em.detach(updatedSale);
+        SaleDTO saleDTO = saleMapper.toDto(updatedSale);
 
         restSaleMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedSale.getId())
+                put(ENTITY_API_URL_ID, saleDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedSale))
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isOk());
 
@@ -180,13 +194,16 @@ class SaleResourceIT {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
         sale.setId(count.incrementAndGet());
 
+        // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSaleMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, sale.getId())
+                put(ENTITY_API_URL_ID, saleDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(sale))
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -201,13 +218,16 @@ class SaleResourceIT {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
         sale.setId(count.incrementAndGet());
 
+        // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSaleMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(sale))
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -222,10 +242,13 @@ class SaleResourceIT {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
         sale.setId(count.incrementAndGet());
 
+        // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSaleMockMvc
             .perform(
-                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(sale))
+                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -294,13 +317,16 @@ class SaleResourceIT {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
         sale.setId(count.incrementAndGet());
 
+        // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restSaleMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, sale.getId())
+                patch(ENTITY_API_URL_ID, saleDTO.getId())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(sale))
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -315,13 +341,16 @@ class SaleResourceIT {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
         sale.setId(count.incrementAndGet());
 
+        // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSaleMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(sale))
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -336,13 +365,16 @@ class SaleResourceIT {
         int databaseSizeBeforeUpdate = saleRepository.findAll().size();
         sale.setId(count.incrementAndGet());
 
+        // Create the Sale
+        SaleDTO saleDTO = saleMapper.toDto(sale);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restSaleMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(sale))
+                    .content(TestUtil.convertObjectToJsonBytes(saleDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.bookstore.IntegrationTest;
 import com.bookstore.domain.Book;
 import com.bookstore.repository.BookRepository;
+import com.bookstore.service.dto.BookDTO;
+import com.bookstore.service.mapper.BookMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -59,6 +61,9 @@ class BookResourceIT {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private BookMapper bookMapper;
 
     @Autowired
     private EntityManager em;
@@ -114,9 +119,13 @@ class BookResourceIT {
     void createBook() throws Exception {
         int databaseSizeBeforeCreate = bookRepository.findAll().size();
         // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
         restBookMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(book))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isCreated());
 
@@ -138,13 +147,17 @@ class BookResourceIT {
     void createBookWithExistingId() throws Exception {
         // Create the Book with an existing ID
         book.setId(1L);
+        BookDTO bookDTO = bookMapper.toDto(book);
 
         int databaseSizeBeforeCreate = bookRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restBookMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(book))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -222,13 +235,14 @@ class BookResourceIT {
             .isbn(UPDATED_ISBN)
             .picture(UPDATED_PICTURE)
             .publisher(UPDATED_PUBLISHER);
+        BookDTO bookDTO = bookMapper.toDto(updatedBook);
 
         restBookMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedBook.getId())
+                put(ENTITY_API_URL_ID, bookDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedBook))
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isOk());
 
@@ -251,13 +265,16 @@ class BookResourceIT {
         int databaseSizeBeforeUpdate = bookRepository.findAll().size();
         book.setId(count.incrementAndGet());
 
+        // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBookMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, book.getId())
+                put(ENTITY_API_URL_ID, bookDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(book))
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -272,13 +289,16 @@ class BookResourceIT {
         int databaseSizeBeforeUpdate = bookRepository.findAll().size();
         book.setId(count.incrementAndGet());
 
+        // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(book))
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -293,10 +313,13 @@ class BookResourceIT {
         int databaseSizeBeforeUpdate = bookRepository.findAll().size();
         book.setId(count.incrementAndGet());
 
+        // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookMockMvc
             .perform(
-                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(book))
+                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -390,13 +413,16 @@ class BookResourceIT {
         int databaseSizeBeforeUpdate = bookRepository.findAll().size();
         book.setId(count.incrementAndGet());
 
+        // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBookMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, book.getId())
+                patch(ENTITY_API_URL_ID, bookDTO.getId())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(book))
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -411,13 +437,16 @@ class BookResourceIT {
         int databaseSizeBeforeUpdate = bookRepository.findAll().size();
         book.setId(count.incrementAndGet());
 
+        // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(book))
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -432,13 +461,16 @@ class BookResourceIT {
         int databaseSizeBeforeUpdate = bookRepository.findAll().size();
         book.setId(count.incrementAndGet());
 
+        // Create the Book
+        BookDTO bookDTO = bookMapper.toDto(book);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restBookMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(book))
+                    .content(TestUtil.convertObjectToJsonBytes(bookDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

@@ -14,9 +14,11 @@
         <dd>
           <span>{{ cart.id }}</span>
         </dd>
-        <dt><span jhiTranslate="amazinBookstoreApp.cart.user">User</span></dt>
+        <dt><span jhiTranslate="amazinBookstoreApp.cart.customer">Customer</span></dt>
         <dd>
-          <span>{{ cart.user?.id }}</span>
+          <div *ngIf="cart.customer">
+            <a [routerLink]="['/customer', cart.customer?.id, 'view']">{{ cart.customer?.id }}</a>
+          </div>
         </dd>
         <dt><span jhiTranslate="amazinBookstoreApp.cart.book">Book</span></dt>
         <dd>

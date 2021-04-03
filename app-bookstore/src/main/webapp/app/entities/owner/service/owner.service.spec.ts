@@ -22,8 +22,6 @@ describe('Service Tests', () => {
 
       elemDefault = {
         id: 0,
-        name: 'AAAAAAA',
-        password: 'AAAAAAA',
       };
     });
 
@@ -59,8 +57,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            name: 'BBBBBB',
-            password: 'BBBBBB',
           },
           elemDefault
         );
@@ -75,12 +71,7 @@ describe('Service Tests', () => {
       });
 
       it('should partial update a Owner', () => {
-        const patchObject = Object.assign(
-          {
-            password: 'BBBBBB',
-          },
-          new Owner()
-        );
+        const patchObject = Object.assign({}, new Owner());
 
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
@@ -97,8 +88,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 1,
-            name: 'BBBBBB',
-            password: 'BBBBBB',
           },
           elemDefault
         );
@@ -150,7 +139,7 @@ describe('Service Tests', () => {
         });
 
         it('should add only unique Owner to an array', () => {
-          const ownerArray: IOwner[] = [{ id: 123 }, { id: 456 }, { id: 34829 }];
+          const ownerArray: IOwner[] = [{ id: 123 }, { id: 456 }, { id: 37198 }];
           const ownerCollection: IOwner[] = [{ id: 123 }];
           expectedResult = service.addOwnerToCollectionIfMissing(ownerCollection, ...ownerArray);
           expect(expectedResult).toHaveLength(3);

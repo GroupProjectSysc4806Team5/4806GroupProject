@@ -9,9 +9,9 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "user",
+      "otherEntityName": "customer",
       "otherEntityRelationshipName": "cart",
-      "relationshipName": "user",
+      "relationshipName": "customer",
       "ownerSide": true
     },
     {
@@ -20,19 +20,12 @@
       "otherEntityRelationshipName": "cart",
       "relationshipName": "book",
       "ownerSide": true
-    },
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "sale",
-      "otherEntityRelationshipName": "cart",
-      "relationshipName": "sale",
-      "ownerSide": false
     }
   ],
   "entityTableName": "cart",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
-  "service": "no",
+  "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

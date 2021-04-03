@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.bookstore.IntegrationTest;
 import com.bookstore.domain.Owner;
 import com.bookstore.repository.OwnerRepository;
+import com.bookstore.service.dto.OwnerDTO;
+import com.bookstore.service.mapper.OwnerMapper;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,12 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class OwnerResourceIT {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PASSWORD = "AAAAAAAAAA";
-    private static final String UPDATED_PASSWORD = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/owners";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -44,6 +40,9 @@ class OwnerResourceIT {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    private OwnerMapper ownerMapper;
 
     @Autowired
     private EntityManager em;
@@ -60,7 +59,7 @@ class OwnerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Owner createEntity(EntityManager em) {
-        Owner owner = new Owner().name(DEFAULT_NAME).password(DEFAULT_PASSWORD);
+        Owner owner = new Owner();
         return owner;
     }
 
@@ -71,7 +70,7 @@ class OwnerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Owner createUpdatedEntity(EntityManager em) {
-        Owner owner = new Owner().name(UPDATED_NAME).password(UPDATED_PASSWORD);
+        Owner owner = new Owner();
         return owner;
     }
 
@@ -85,9 +84,13 @@ class OwnerResourceIT {
     void createOwner() throws Exception {
         int databaseSizeBeforeCreate = ownerRepository.findAll().size();
         // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
         restOwnerMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(owner))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isCreated());
 
@@ -95,8 +98,6 @@ class OwnerResourceIT {
         List<Owner> ownerList = ownerRepository.findAll();
         assertThat(ownerList).hasSize(databaseSizeBeforeCreate + 1);
         Owner testOwner = ownerList.get(ownerList.size() - 1);
-        assertThat(testOwner.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testOwner.getPassword()).isEqualTo(DEFAULT_PASSWORD);
     }
 
     @Test
@@ -104,13 +105,17 @@ class OwnerResourceIT {
     void createOwnerWithExistingId() throws Exception {
         // Create the Owner with an existing ID
         owner.setId(1L);
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
 
         int databaseSizeBeforeCreate = ownerRepository.findAll().size();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restOwnerMockMvc
             .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(owner))
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -130,9 +135,7 @@ class OwnerResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(owner.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD)));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(owner.getId().intValue())));
     }
 
     @Test
@@ -146,9 +149,7 @@ class OwnerResourceIT {
             .perform(get(ENTITY_API_URL_ID, owner.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(owner.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD));
+            .andExpect(jsonPath("$.id").value(owner.getId().intValue()));
     }
 
     @Test
@@ -170,14 +171,14 @@ class OwnerResourceIT {
         Owner updatedOwner = ownerRepository.findById(owner.getId()).get();
         // Disconnect from session so that the updates on updatedOwner are not directly saved in db
         em.detach(updatedOwner);
-        updatedOwner.name(UPDATED_NAME).password(UPDATED_PASSWORD);
+        OwnerDTO ownerDTO = ownerMapper.toDto(updatedOwner);
 
         restOwnerMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedOwner.getId())
+                put(ENTITY_API_URL_ID, ownerDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(updatedOwner))
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isOk());
 
@@ -185,8 +186,6 @@ class OwnerResourceIT {
         List<Owner> ownerList = ownerRepository.findAll();
         assertThat(ownerList).hasSize(databaseSizeBeforeUpdate);
         Owner testOwner = ownerList.get(ownerList.size() - 1);
-        assertThat(testOwner.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testOwner.getPassword()).isEqualTo(UPDATED_PASSWORD);
     }
 
     @Test
@@ -195,13 +194,16 @@ class OwnerResourceIT {
         int databaseSizeBeforeUpdate = ownerRepository.findAll().size();
         owner.setId(count.incrementAndGet());
 
+        // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restOwnerMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, owner.getId())
+                put(ENTITY_API_URL_ID, ownerDTO.getId())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(owner))
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -216,13 +218,16 @@ class OwnerResourceIT {
         int databaseSizeBeforeUpdate = ownerRepository.findAll().size();
         owner.setId(count.incrementAndGet());
 
+        // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restOwnerMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(owner))
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -237,10 +242,16 @@ class OwnerResourceIT {
         int databaseSizeBeforeUpdate = ownerRepository.findAll().size();
         owner.setId(count.incrementAndGet());
 
+        // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restOwnerMockMvc
             .perform(
-                put(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(owner))
+                put(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 
@@ -261,8 +272,6 @@ class OwnerResourceIT {
         Owner partialUpdatedOwner = new Owner();
         partialUpdatedOwner.setId(owner.getId());
 
-        partialUpdatedOwner.password(UPDATED_PASSWORD);
-
         restOwnerMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedOwner.getId())
@@ -276,8 +285,6 @@ class OwnerResourceIT {
         List<Owner> ownerList = ownerRepository.findAll();
         assertThat(ownerList).hasSize(databaseSizeBeforeUpdate);
         Owner testOwner = ownerList.get(ownerList.size() - 1);
-        assertThat(testOwner.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testOwner.getPassword()).isEqualTo(UPDATED_PASSWORD);
     }
 
     @Test
@@ -292,8 +299,6 @@ class OwnerResourceIT {
         Owner partialUpdatedOwner = new Owner();
         partialUpdatedOwner.setId(owner.getId());
 
-        partialUpdatedOwner.name(UPDATED_NAME).password(UPDATED_PASSWORD);
-
         restOwnerMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedOwner.getId())
@@ -307,8 +312,6 @@ class OwnerResourceIT {
         List<Owner> ownerList = ownerRepository.findAll();
         assertThat(ownerList).hasSize(databaseSizeBeforeUpdate);
         Owner testOwner = ownerList.get(ownerList.size() - 1);
-        assertThat(testOwner.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testOwner.getPassword()).isEqualTo(UPDATED_PASSWORD);
     }
 
     @Test
@@ -317,13 +320,16 @@ class OwnerResourceIT {
         int databaseSizeBeforeUpdate = ownerRepository.findAll().size();
         owner.setId(count.incrementAndGet());
 
+        // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restOwnerMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, owner.getId())
+                patch(ENTITY_API_URL_ID, ownerDTO.getId())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(owner))
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -338,13 +344,16 @@ class OwnerResourceIT {
         int databaseSizeBeforeUpdate = ownerRepository.findAll().size();
         owner.setId(count.incrementAndGet());
 
+        // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restOwnerMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, count.incrementAndGet())
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(owner))
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -359,13 +368,16 @@ class OwnerResourceIT {
         int databaseSizeBeforeUpdate = ownerRepository.findAll().size();
         owner.setId(count.incrementAndGet());
 
+        // Create the Owner
+        OwnerDTO ownerDTO = ownerMapper.toDto(owner);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restOwnerMockMvc
             .perform(
                 patch(ENTITY_API_URL)
                     .with(csrf())
                     .contentType("application/merge-patch+json")
-                    .content(TestUtil.convertObjectToJsonBytes(owner))
+                    .content(TestUtil.convertObjectToJsonBytes(ownerDTO))
             )
             .andExpect(status().isMethodNotAllowed());
 

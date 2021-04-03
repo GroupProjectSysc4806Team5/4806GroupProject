@@ -1,7 +1,8 @@
 package com.bookstore.web.rest;
 
-import com.bookstore.domain.Bookstore;
 import com.bookstore.repository.BookstoreRepository;
+import com.bookstore.service.BookstoreService;
+import com.bookstore.service.dto.BookstoreDTO;
 import com.bookstore.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -22,7 +22,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class BookstoreResource {
 
     private final Logger log = LoggerFactory.getLogger(BookstoreResource.class);
@@ -32,26 +31,29 @@ public class BookstoreResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final BookstoreService bookstoreService;
+
     private final BookstoreRepository bookstoreRepository;
 
-    public BookstoreResource(BookstoreRepository bookstoreRepository) {
+    public BookstoreResource(BookstoreService bookstoreService, BookstoreRepository bookstoreRepository) {
+        this.bookstoreService = bookstoreService;
         this.bookstoreRepository = bookstoreRepository;
     }
 
     /**
      * {@code POST  /bookstores} : Create a new bookstore.
      *
-     * @param bookstore the bookstore to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new bookstore, or with status {@code 400 (Bad Request)} if the bookstore has already an ID.
+     * @param bookstoreDTO the bookstoreDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new bookstoreDTO, or with status {@code 400 (Bad Request)} if the bookstore has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/bookstores")
-    public ResponseEntity<Bookstore> createBookstore(@RequestBody Bookstore bookstore) throws URISyntaxException {
-        log.debug("REST request to save Bookstore : {}", bookstore);
-        if (bookstore.getId() != null) {
+    public ResponseEntity<BookstoreDTO> createBookstore(@RequestBody BookstoreDTO bookstoreDTO) throws URISyntaxException {
+        log.debug("REST request to save Bookstore : {}", bookstoreDTO);
+        if (bookstoreDTO.getId() != null) {
             throw new BadRequestAlertException("A new bookstore cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Bookstore result = bookstoreRepository.save(bookstore);
+        BookstoreDTO result = bookstoreService.save(bookstoreDTO);
         return ResponseEntity
             .created(new URI("/api/bookstores/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -61,23 +63,23 @@ public class BookstoreResource {
     /**
      * {@code PUT  /bookstores/:id} : Updates an existing bookstore.
      *
-     * @param id the id of the bookstore to save.
-     * @param bookstore the bookstore to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated bookstore,
-     * or with status {@code 400 (Bad Request)} if the bookstore is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the bookstore couldn't be updated.
+     * @param id the id of the bookstoreDTO to save.
+     * @param bookstoreDTO the bookstoreDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated bookstoreDTO,
+     * or with status {@code 400 (Bad Request)} if the bookstoreDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the bookstoreDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/bookstores/{id}")
-    public ResponseEntity<Bookstore> updateBookstore(
+    public ResponseEntity<BookstoreDTO> updateBookstore(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Bookstore bookstore
+        @RequestBody BookstoreDTO bookstoreDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Bookstore : {}, {}", id, bookstore);
-        if (bookstore.getId() == null) {
+        log.debug("REST request to update Bookstore : {}, {}", id, bookstoreDTO);
+        if (bookstoreDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, bookstore.getId())) {
+        if (!Objects.equals(id, bookstoreDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -85,34 +87,34 @@ public class BookstoreResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Bookstore result = bookstoreRepository.save(bookstore);
+        BookstoreDTO result = bookstoreService.save(bookstoreDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookstore.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookstoreDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /bookstores/:id} : Partial updates given fields of an existing bookstore, field will ignore if it is null
      *
-     * @param id the id of the bookstore to save.
-     * @param bookstore the bookstore to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated bookstore,
-     * or with status {@code 400 (Bad Request)} if the bookstore is not valid,
-     * or with status {@code 404 (Not Found)} if the bookstore is not found,
-     * or with status {@code 500 (Internal Server Error)} if the bookstore couldn't be updated.
+     * @param id the id of the bookstoreDTO to save.
+     * @param bookstoreDTO the bookstoreDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated bookstoreDTO,
+     * or with status {@code 400 (Bad Request)} if the bookstoreDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the bookstoreDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the bookstoreDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/bookstores/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<Bookstore> partialUpdateBookstore(
+    public ResponseEntity<BookstoreDTO> partialUpdateBookstore(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Bookstore bookstore
+        @RequestBody BookstoreDTO bookstoreDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Bookstore partially : {}, {}", id, bookstore);
-        if (bookstore.getId() == null) {
+        log.debug("REST request to partial update Bookstore partially : {}, {}", id, bookstoreDTO);
+        if (bookstoreDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, bookstore.getId())) {
+        if (!Objects.equals(id, bookstoreDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -120,22 +122,11 @@ public class BookstoreResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Bookstore> result = bookstoreRepository
-            .findById(bookstore.getId())
-            .map(
-                existingBookstore -> {
-                    if (bookstore.getName() != null) {
-                        existingBookstore.setName(bookstore.getName());
-                    }
-
-                    return existingBookstore;
-                }
-            )
-            .map(bookstoreRepository::save);
+        Optional<BookstoreDTO> result = bookstoreService.partialUpdate(bookstoreDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookstore.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookstoreDTO.getId().toString())
         );
     }
 
@@ -145,34 +136,34 @@ public class BookstoreResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bookstores in body.
      */
     @GetMapping("/bookstores")
-    public List<Bookstore> getAllBookstores() {
+    public List<BookstoreDTO> getAllBookstores() {
         log.debug("REST request to get all Bookstores");
-        return bookstoreRepository.findAll();
+        return bookstoreService.findAll();
     }
 
     /**
      * {@code GET  /bookstores/:id} : get the "id" bookstore.
      *
-     * @param id the id of the bookstore to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the bookstore, or with status {@code 404 (Not Found)}.
+     * @param id the id of the bookstoreDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the bookstoreDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/bookstores/{id}")
-    public ResponseEntity<Bookstore> getBookstore(@PathVariable Long id) {
+    public ResponseEntity<BookstoreDTO> getBookstore(@PathVariable Long id) {
         log.debug("REST request to get Bookstore : {}", id);
-        Optional<Bookstore> bookstore = bookstoreRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(bookstore);
+        Optional<BookstoreDTO> bookstoreDTO = bookstoreService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(bookstoreDTO);
     }
 
     /**
      * {@code DELETE  /bookstores/:id} : delete the "id" bookstore.
      *
-     * @param id the id of the bookstore to delete.
+     * @param id the id of the bookstoreDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/bookstores/{id}")
     public ResponseEntity<Void> deleteBookstore(@PathVariable Long id) {
         log.debug("REST request to delete Bookstore : {}", id);
-        bookstoreRepository.deleteById(id);
+        bookstoreService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

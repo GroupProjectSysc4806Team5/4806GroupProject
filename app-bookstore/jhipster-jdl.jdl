@@ -19,17 +19,12 @@ entity Cart {
 	id Long
 }
 
-entity User {
-	id Long,
-    email String,
-    name String,
-    password String
+entity Customer {
+	id Long
 }
 
 entity Owner {
-	id Long,
-    name String,
-    password String
+	id Long
 }
 
 entity Sale {
@@ -41,13 +36,15 @@ enum Language {
 }
 
 relationship OneToOne {
-	Cart{user} to User{cart}
-    Sale{cart} to Cart{sale}
+	Cart{customer} to Customer
+    Sale{cart} to Cart
+    Customer{user} to User
+    Owner{user} to User
 }
 
 relationship ManyToOne {
-	Book{bookstore} to Bookstore{books}
-    Bookstore{owner} to Owner{stores}
+	Book{bookstore} to Bookstore
+    Bookstore to Owner{bookstore}
 }
 
 relationship ManyToMany {
@@ -59,7 +56,7 @@ relationship ManyToMany {
 // paginate Job with pagination
 
 // Use Data Transfer Objects (DTO)
-// dto * with mapstruct
+dto * with mapstruct
 
 // Set service options to all except few
 // service all with serviceImpl except Employee, Job

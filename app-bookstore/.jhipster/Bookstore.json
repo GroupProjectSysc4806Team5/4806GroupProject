@@ -14,20 +14,14 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "owner",
-      "otherEntityRelationshipName": "stores",
-      "relationshipName": "owner"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "book",
       "otherEntityRelationshipName": "bookstore",
-      "relationshipName": "books"
+      "relationshipName": "owner"
     }
   ],
   "entityTableName": "bookstore",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
-  "service": "no",
+  "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,
