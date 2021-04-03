@@ -12,10 +12,16 @@
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-many",
+      "relationshipType": "many-to-one",
       "otherEntityName": "owner",
-      "otherEntityRelationshipName": "bookstore",
+      "otherEntityRelationshipName": "stores",
       "relationshipName": "owner"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "book",
+      "otherEntityRelationshipName": "bookstore",
+      "relationshipName": "books"
     }
   ],
   "entityTableName": "bookstore",

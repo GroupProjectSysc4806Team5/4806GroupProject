@@ -19,7 +19,8 @@
       },
       "id": "Id",
       "name": "Name",
-      "owner": "Owner"
+      "owner": "Owner",
+      "books": "Books"
     }
   }
 }

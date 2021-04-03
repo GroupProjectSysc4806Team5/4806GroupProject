@@ -34,6 +34,7 @@
         <tr>
           <th scope="col"><span jhiTranslate="amazinBookstoreApp.bookstore.id">Id</span></th>
           <th scope="col"><span jhiTranslate="amazinBookstoreApp.bookstore.name">Name</span></th>
+          <th scope="col"><span jhiTranslate="amazinBookstoreApp.bookstore.owner">Owner</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -43,6 +44,11 @@
             <a [routerLink]="['/bookstore', bookstore.id, 'view']">{{ bookstore.id }}</a>
           </td>
           <td>{{ bookstore.name }}</td>
+          <td>
+            <div *ngIf="bookstore.owner">
+              <a [routerLink]="['/owner', bookstore.owner?.id, 'view']">{{ bookstore.owner?.id }}</a>
+            </div>
+          </td>
           <td class="text-right">
             <div class="btn-group">
               <button

@@ -21,7 +21,7 @@ public class Sale implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @JsonIgnoreProperties(value = { "user", "books" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "books", "sale" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
     private Cart cart;

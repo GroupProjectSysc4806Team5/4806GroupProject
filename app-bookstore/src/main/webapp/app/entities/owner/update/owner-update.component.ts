@@ -3,12 +3,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { IOwner, Owner } from '../owner.model';
 import { OwnerService } from '../service/owner.service';
-import { IBookstore } from 'app/entities/bookstore/bookstore.model';
-import { BookstoreService } from 'app/entities/bookstore/service/bookstore.service';
 
 @Component({
   selector: 'jhi-owner-update',
@@ -17,27 +15,17 @@ import { BookstoreService } from 'app/entities/bookstore/service/bookstore.servi
 export class OwnerUpdateComponent implements OnInit {
   isSaving = false;
 
-  bookstoresSharedCollection: IBookstore[] = [];
-
   editForm = this.fb.group({
     id: [],
     name: [],
     password: [],
-    bookstore: [],
   });
 
-  constructor(
-    protected ownerService: OwnerService,
-    protected bookstoreService: BookstoreService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
+  constructor(protected ownerService: OwnerService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ owner }) => {
       this.updateForm(owner);
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -53,10 +41,6 @@ export class OwnerUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.ownerService.create(owner));
     }
-  }
-
-  trackBookstoreById(index: number, item: IBookstore): number {
-    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IOwner>>): void {
@@ -83,25 +67,7 @@ export class OwnerUpdateComponent implements OnInit {
       id: owner.id,
       name: owner.name,
       password: owner.password,
-      bookstore: owner.bookstore,
     });
-
-    this.bookstoresSharedCollection = this.bookstoreService.addBookstoreToCollectionIfMissing(
-      this.bookstoresSharedCollection,
-      owner.bookstore
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.bookstoreService
-      .query()
-      .pipe(map((res: HttpResponse<IBookstore[]>) => res.body ?? []))
-      .pipe(
-        map((bookstores: IBookstore[]) =>
-          this.bookstoreService.addBookstoreToCollectionIfMissing(bookstores, this.editForm.get('bookstore')!.value)
-        )
-      )
-      .subscribe((bookstores: IBookstore[]) => (this.bookstoresSharedCollection = bookstores));
   }
 
   protected createFromForm(): IOwner {
@@ -110,7 +76,6 @@ export class OwnerUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       password: this.editForm.get(['password'])!.value,
-      bookstore: this.editForm.get(['bookstore'])!.value,
     };
   }
 }

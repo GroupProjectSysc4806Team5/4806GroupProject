@@ -9,6 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { BookstoreService } from '../service/bookstore.service';
 import { IBookstore, Bookstore } from '../bookstore.model';
+import { IOwner } from 'app/entities/owner/owner.model';
+import { OwnerService } from 'app/entities/owner/service/owner.service';
 
 import { BookstoreUpdateComponent } from './bookstore-update.component';
 
@@ -18,6 +20,7 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<BookstoreUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let bookstoreService: BookstoreService;
+    let ownerService: OwnerService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -31,18 +34,41 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(BookstoreUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       bookstoreService = TestBed.inject(BookstoreService);
+      ownerService = TestBed.inject(OwnerService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
+      it('Should call Owner query and add missing value', () => {
+        const bookstore: IBookstore = { id: 456 };
+        const owner: IOwner = { id: 67093 };
+        bookstore.owner = owner;
+
+        const ownerCollection: IOwner[] = [{ id: 9004 }];
+        spyOn(ownerService, 'query').and.returnValue(of(new HttpResponse({ body: ownerCollection })));
+        const additionalOwners = [owner];
+        const expectedCollection: IOwner[] = [...additionalOwners, ...ownerCollection];
+        spyOn(ownerService, 'addOwnerToCollectionIfMissing').and.returnValue(expectedCollection);
+
+        activatedRoute.data = of({ bookstore });
+        comp.ngOnInit();
+
+        expect(ownerService.query).toHaveBeenCalled();
+        expect(ownerService.addOwnerToCollectionIfMissing).toHaveBeenCalledWith(ownerCollection, ...additionalOwners);
+        expect(comp.ownersSharedCollection).toEqual(expectedCollection);
+      });
+
       it('Should update editForm', () => {
         const bookstore: IBookstore = { id: 456 };
+        const owner: IOwner = { id: 18493 };
+        bookstore.owner = owner;
 
         activatedRoute.data = of({ bookstore });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(bookstore));
+        expect(comp.ownersSharedCollection).toContain(owner);
       });
     });
 
@@ -107,6 +133,16 @@ describe('Component Tests', () => {
         expect(bookstoreService.update).toHaveBeenCalledWith(bookstore);
         expect(comp.isSaving).toEqual(false);
         expect(comp.previousState).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('Tracking relationships identifiers', () => {
+      describe('trackOwnerById', () => {
+        it('Should return tracked Owner primary key', () => {
+          const entity = { id: 123 };
+          const trackResult = comp.trackOwnerById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
       });
     });
   });

@@ -33,6 +33,10 @@ public class Cart implements Serializable {
     @JsonIgnoreProperties(value = { "bookstore", "carts" }, allowSetters = true)
     private Set<Book> books = new HashSet<>();
 
+    @JsonIgnoreProperties(value = { "cart" }, allowSetters = true)
+    @OneToOne(mappedBy = "cart")
+    private Sale sale;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -83,6 +87,25 @@ public class Cart implements Serializable {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    public Sale getSale() {
+        return this.sale;
+    }
+
+    public Cart sale(Sale sale) {
+        this.setSale(sale);
+        return this;
+    }
+
+    public void setSale(Sale sale) {
+        if (this.sale != null) {
+            this.sale.setCart(null);
+        }
+        if (sale != null) {
+            sale.setCart(this);
+        }
+        this.sale = sale;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

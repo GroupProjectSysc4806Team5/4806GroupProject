@@ -41,13 +41,13 @@ enum Language {
 }
 
 relationship OneToOne {
-	Cart{user} to User
-    Sale{cart} to Cart
+	Cart{user} to User{cart}
+    Sale{cart} to Cart{sale}
 }
 
 relationship ManyToOne {
-	Book{bookstore} to Bookstore
-    Owner to Bookstore{owner}
+	Book{bookstore} to Bookstore{books}
+    Bookstore{owner} to Owner{stores}
 }
 
 relationship ManyToMany {

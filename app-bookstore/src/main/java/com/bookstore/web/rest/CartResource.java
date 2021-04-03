@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -135,10 +137,21 @@ public class CartResource {
      * {@code GET  /carts} : get all the carts.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of carts in body.
      */
     @GetMapping("/carts")
-    public List<Cart> getAllCarts(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<Cart> getAllCarts(
+        @RequestParam(required = false) String filter,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        if ("sale-is-null".equals(filter)) {
+            log.debug("REST request to get all Carts where sale is null");
+            return StreamSupport
+                .stream(cartRepository.findAll().spliterator(), false)
+                .filter(cart -> cart.getSale() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all Carts");
         return cartRepository.findAllWithEagerRelationships();
     }

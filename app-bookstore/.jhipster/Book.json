@@ -38,7 +38,7 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "bookstore",
-      "otherEntityRelationshipName": "book",
+      "otherEntityRelationshipName": "books",
       "relationshipName": "bookstore"
     },
     {

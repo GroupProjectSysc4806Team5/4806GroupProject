@@ -18,6 +18,12 @@
         <dd>
           <span>{{ bookstore.name }}</span>
         </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.bookstore.owner">Owner</span></dt>
+        <dd>
+          <div *ngIf="bookstore.owner">
+            <a [routerLink]="['/owner', bookstore.owner?.id, 'view']">{{ bookstore.owner?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
