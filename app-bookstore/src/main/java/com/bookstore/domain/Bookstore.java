@@ -26,10 +26,14 @@ public class Bookstore implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "stores" }, allowSetters = true)
+    private Owner owner;
+
     @OneToMany(mappedBy = "bookstore")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "bookstore" }, allowSetters = true)
-    private Set<Owner> owners = new HashSet<>();
+    @JsonIgnoreProperties(value = { "bookstore", "carts" }, allowSetters = true)
+    private Set<Book> books = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -58,35 +62,48 @@ public class Bookstore implements Serializable {
         this.name = name;
     }
 
-    public Set<Owner> getOwners() {
-        return this.owners;
+    public Owner getOwner() {
+        return this.owner;
     }
 
-    public Bookstore owners(Set<Owner> owners) {
-        this.setOwners(owners);
+    public Bookstore owner(Owner owner) {
+        this.setOwner(owner);
         return this;
     }
 
-    public Bookstore addOwner(Owner owner) {
-        this.owners.add(owner);
-        owner.setBookstore(this);
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Set<Book> getBooks() {
+        return this.books;
+    }
+
+    public Bookstore books(Set<Book> books) {
+        this.setBooks(books);
         return this;
     }
 
-    public Bookstore removeOwner(Owner owner) {
-        this.owners.remove(owner);
-        owner.setBookstore(null);
+    public Bookstore addBooks(Book book) {
+        this.books.add(book);
+        book.setBookstore(this);
         return this;
     }
 
-    public void setOwners(Set<Owner> owners) {
-        if (this.owners != null) {
-            this.owners.forEach(i -> i.setBookstore(null));
+    public Bookstore removeBooks(Book book) {
+        this.books.remove(book);
+        book.setBookstore(null);
+        return this;
+    }
+
+    public void setBooks(Set<Book> books) {
+        if (this.books != null) {
+            this.books.forEach(i -> i.setBookstore(null));
         }
-        if (owners != null) {
-            owners.forEach(i -> i.setBookstore(this));
+        if (books != null) {
+            books.forEach(i -> i.setBookstore(this));
         }
-        this.owners = owners;
+        this.books = books;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

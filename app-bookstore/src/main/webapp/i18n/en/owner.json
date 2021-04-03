@@ -20,7 +20,7 @@
       "id": "Id",
       "name": "Name",
       "password": "Password",
-      "bookstore": "Bookstore"
+      "stores": "Stores"
     }
   }
 }

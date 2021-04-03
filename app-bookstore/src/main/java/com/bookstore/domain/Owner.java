@@ -2,6 +2,8 @@ package com.bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -27,9 +29,10 @@ public class Owner implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "owners" }, allowSetters = true)
-    private Bookstore bookstore;
+    @OneToMany(mappedBy = "owner")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "owner", "books" }, allowSetters = true)
+    private Set<Bookstore> stores = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -71,17 +74,35 @@ public class Owner implements Serializable {
         this.password = password;
     }
 
-    public Bookstore getBookstore() {
-        return this.bookstore;
+    public Set<Bookstore> getStores() {
+        return this.stores;
     }
 
-    public Owner bookstore(Bookstore bookstore) {
-        this.setBookstore(bookstore);
+    public Owner stores(Set<Bookstore> bookstores) {
+        this.setStores(bookstores);
         return this;
     }
 
-    public void setBookstore(Bookstore bookstore) {
-        this.bookstore = bookstore;
+    public Owner addStores(Bookstore bookstore) {
+        this.stores.add(bookstore);
+        bookstore.setOwner(this);
+        return this;
+    }
+
+    public Owner removeStores(Bookstore bookstore) {
+        this.stores.remove(bookstore);
+        bookstore.setOwner(null);
+        return this;
+    }
+
+    public void setStores(Set<Bookstore> bookstores) {
+        if (this.stores != null) {
+            this.stores.forEach(i -> i.setOwner(null));
+        }
+        if (bookstores != null) {
+            bookstores.forEach(i -> i.setOwner(this));
+        }
+        this.stores = bookstores;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

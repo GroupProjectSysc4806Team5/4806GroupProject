@@ -22,19 +22,6 @@
           <label class="form-control-label" jhiTranslate="amazinBookstoreApp.owner.password" for="field_password">Password</label>
           <input type="text" class="form-control" name="password" id="field_password" data-cy="password" formControlName="password" />
         </div>
-
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="amazinBookstoreApp.owner.bookstore" for="field_bookstore">Bookstore</label>
-          <select class="form-control" id="field_bookstore" data-cy="bookstore" name="bookstore" formControlName="bookstore">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="bookstoreOption.id === editForm.get('bookstore')!.value?.id ? editForm.get('bookstore')!.value : bookstoreOption"
-              *ngFor="let bookstoreOption of bookstoresSharedCollection; trackBy: trackBookstoreById"
-            >
-              {{ bookstoreOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

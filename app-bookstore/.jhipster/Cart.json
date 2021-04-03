@@ -20,6 +20,13 @@
       "otherEntityRelationshipName": "cart",
       "relationshipName": "book",
       "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "sale",
+      "otherEntityRelationshipName": "cart",
+      "relationshipName": "sale",
+      "ownerSide": false
     }
   ],
   "entityTableName": "cart",
