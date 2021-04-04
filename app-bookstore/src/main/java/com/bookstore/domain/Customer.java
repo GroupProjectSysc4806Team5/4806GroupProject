@@ -1,5 +1,6 @@
 package com.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
@@ -20,6 +21,11 @@ public class Customer implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @JsonIgnoreProperties(value = { "sale", "books" }, allowSetters = true)
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Cart cart;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
@@ -36,6 +42,19 @@ public class Customer implements Serializable {
     public Customer id(Long id) {
         this.id = id;
         return this;
+    }
+
+    public Cart getCart() {
+        return this.cart;
+    }
+
+    public Customer cart(Cart cart) {
+        this.setCart(cart);
+        return this;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public User getUser() {

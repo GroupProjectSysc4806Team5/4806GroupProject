@@ -12,6 +12,12 @@
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "book",
+      "otherEntityRelationshipName": "bookstore",
+      "relationshipName": "book"
+    },
+    {
       "relationshipType": "many-to-one",
       "otherEntityName": "owner",
       "otherEntityRelationshipName": "bookstore",

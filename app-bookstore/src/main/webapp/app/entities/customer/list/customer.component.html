@@ -33,6 +33,7 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="amazinBookstoreApp.customer.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="amazinBookstoreApp.customer.cart">Cart</span></th>
           <th scope="col"><span jhiTranslate="amazinBookstoreApp.customer.user">User</span></th>
           <th scope="col"></th>
         </tr>
@@ -41,6 +42,11 @@
         <tr *ngFor="let customer of customers; trackBy: trackId" data-cy="entityTable">
           <td>
             <a [routerLink]="['/customer', customer.id, 'view']">{{ customer.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="customer.cart">
+              <a [routerLink]="['/cart', customer.cart?.id, 'view']">{{ customer.cart?.id }}</a>
+            </div>
           </td>
           <td>
             {{ customer.user?.id }}

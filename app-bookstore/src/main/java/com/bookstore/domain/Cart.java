@@ -23,10 +23,9 @@ public class Cart implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     @OneToOne
     @JoinColumn(unique = true)
-    private Customer customer;
+    private Sale sale;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -48,17 +47,17 @@ public class Cart implements Serializable {
         return this;
     }
 
-    public Customer getCustomer() {
-        return this.customer;
+    public Sale getSale() {
+        return this.sale;
     }
 
-    public Cart customer(Customer customer) {
-        this.setCustomer(customer);
+    public Cart sale(Sale sale) {
+        this.setSale(sale);
         return this;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setSale(Sale sale) {
+        this.sale = sale;
     }
 
     public Set<Book> getBooks() {

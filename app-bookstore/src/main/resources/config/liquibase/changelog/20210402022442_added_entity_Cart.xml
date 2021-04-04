@@ -14,8 +14,8 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="customer_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_cart__customer_id" />
+            <column name="sale_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_cart__sale_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

@@ -6,15 +6,7 @@
       "fieldType": "Long"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-one",
-      "otherEntityName": "cart",
-      "otherEntityRelationshipName": "sale",
-      "relationshipName": "cart",
-      "ownerSide": true
-    }
-  ],
+  "relationships": [],
   "entityTableName": "sale",
   "dto": "mapstruct",
   "pagination": "no",

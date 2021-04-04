@@ -12,7 +12,7 @@ public class CartDTO implements Serializable {
 
     private Long id;
 
-    private CustomerDTO customer;
+    private SaleDTO sale;
 
     private Set<BookDTO> books = new HashSet<>();
 
@@ -24,12 +24,12 @@ public class CartDTO implements Serializable {
         this.id = id;
     }
 
-    public CustomerDTO getCustomer() {
-        return customer;
+    public SaleDTO getSale() {
+        return sale;
     }
 
-    public void setCustomer(CustomerDTO customer) {
-        this.customer = customer;
+    public void setSale(SaleDTO sale) {
+        this.sale = sale;
     }
 
     public Set<BookDTO> getBooks() {
@@ -66,7 +66,7 @@ public class CartDTO implements Serializable {
     public String toString() {
         return "CartDTO{" +
             "id=" + getId() +
-            ", customer=" + getCustomer() +
+            ", sale=" + getSale() +
             ", books=" + getBooks() +
             "}";
     }

@@ -9,6 +9,8 @@ import { of, Subject } from 'rxjs';
 
 import { CustomerService } from '../service/customer.service';
 import { ICustomer, Customer } from '../customer.model';
+import { ICart } from 'app/entities/cart/cart.model';
+import { CartService } from 'app/entities/cart/service/cart.service';
 
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
@@ -21,6 +23,7 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<CustomerUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let customerService: CustomerService;
+    let cartService: CartService;
     let userService: UserService;
 
     beforeEach(() => {
@@ -35,18 +38,37 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(CustomerUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       customerService = TestBed.inject(CustomerService);
+      cartService = TestBed.inject(CartService);
       userService = TestBed.inject(UserService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
+      it('Should call cart query and add missing value', () => {
+        const customer: ICustomer = { id: 456 };
+        const cart: ICart = { id: 98402 };
+        customer.cart = cart;
+
+        const cartCollection: ICart[] = [{ id: 83541 }];
+        spyOn(cartService, 'query').and.returnValue(of(new HttpResponse({ body: cartCollection })));
+        const expectedCollection: ICart[] = [cart, ...cartCollection];
+        spyOn(cartService, 'addCartToCollectionIfMissing').and.returnValue(expectedCollection);
+
+        activatedRoute.data = of({ customer });
+        comp.ngOnInit();
+
+        expect(cartService.query).toHaveBeenCalled();
+        expect(cartService.addCartToCollectionIfMissing).toHaveBeenCalledWith(cartCollection, cart);
+        expect(comp.cartsCollection).toEqual(expectedCollection);
+      });
+
       it('Should call User query and add missing value', () => {
         const customer: ICustomer = { id: 456 };
-        const user: IUser = { id: 98402 };
+        const user: IUser = { id: 57201 };
         customer.user = user;
 
-        const userCollection: IUser[] = [{ id: 83541 }];
+        const userCollection: IUser[] = [{ id: 9112 }];
         spyOn(userService, 'query').and.returnValue(of(new HttpResponse({ body: userCollection })));
         const additionalUsers = [user];
         const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
@@ -62,13 +84,16 @@ describe('Component Tests', () => {
 
       it('Should update editForm', () => {
         const customer: ICustomer = { id: 456 };
-        const user: IUser = { id: 57201 };
+        const cart: ICart = { id: 59999 };
+        customer.cart = cart;
+        const user: IUser = { id: 29058 };
         customer.user = user;
 
         activatedRoute.data = of({ customer });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(customer));
+        expect(comp.cartsCollection).toContain(cart);
         expect(comp.usersSharedCollection).toContain(user);
       });
     });
@@ -138,6 +163,14 @@ describe('Component Tests', () => {
     });
 
     describe('Tracking relationships identifiers', () => {
+      describe('trackCartById', () => {
+        it('Should return tracked Cart primary key', () => {
+          const entity = { id: 123 };
+          const trackResult = comp.trackCartById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
+      });
+
       describe('trackUserById', () => {
         it('Should return tracked User primary key', () => {
           const entity = { id: 123 };

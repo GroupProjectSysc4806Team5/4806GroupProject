@@ -9,8 +9,6 @@ import { of, Subject } from 'rxjs';
 
 import { SaleService } from '../service/sale.service';
 import { ISale, Sale } from '../sale.model';
-import { ICart } from 'app/entities/cart/cart.model';
-import { CartService } from 'app/entities/cart/service/cart.service';
 
 import { SaleUpdateComponent } from './sale-update.component';
 
@@ -20,7 +18,6 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<SaleUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let saleService: SaleService;
-    let cartService: CartService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -34,40 +31,18 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(SaleUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       saleService = TestBed.inject(SaleService);
-      cartService = TestBed.inject(CartService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
-      it('Should call cart query and add missing value', () => {
-        const sale: ISale = { id: 456 };
-        const cart: ICart = { id: 43537 };
-        sale.cart = cart;
-
-        const cartCollection: ICart[] = [{ id: 91474 }];
-        spyOn(cartService, 'query').and.returnValue(of(new HttpResponse({ body: cartCollection })));
-        const expectedCollection: ICart[] = [cart, ...cartCollection];
-        spyOn(cartService, 'addCartToCollectionIfMissing').and.returnValue(expectedCollection);
-
-        activatedRoute.data = of({ sale });
-        comp.ngOnInit();
-
-        expect(cartService.query).toHaveBeenCalled();
-        expect(cartService.addCartToCollectionIfMissing).toHaveBeenCalledWith(cartCollection, cart);
-        expect(comp.cartsCollection).toEqual(expectedCollection);
-      });
-
       it('Should update editForm', () => {
         const sale: ISale = { id: 456 };
-        const cart: ICart = { id: 59236 };
-        sale.cart = cart;
 
         activatedRoute.data = of({ sale });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(sale));
-        expect(comp.cartsCollection).toContain(cart);
       });
     });
 
@@ -132,16 +107,6 @@ describe('Component Tests', () => {
         expect(saleService.update).toHaveBeenCalledWith(sale);
         expect(comp.isSaving).toEqual(false);
         expect(comp.previousState).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('Tracking relationships identifiers', () => {
-      describe('trackCartById', () => {
-        it('Should return tracked Cart primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackCartById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
       });
     });
   });

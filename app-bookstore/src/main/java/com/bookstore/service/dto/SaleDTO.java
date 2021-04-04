@@ -10,22 +10,12 @@ public class SaleDTO implements Serializable {
 
     private Long id;
 
-    private CartDTO cart;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public CartDTO getCart() {
-        return cart;
-    }
-
-    public void setCart(CartDTO cart) {
-        this.cart = cart;
     }
 
     @Override
@@ -54,7 +44,6 @@ public class SaleDTO implements Serializable {
     public String toString() {
         return "SaleDTO{" +
             "id=" + getId() +
-            ", cart=" + getCart() +
             "}";
     }
 }

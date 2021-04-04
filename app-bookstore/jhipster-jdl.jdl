@@ -36,15 +36,15 @@ enum Language {
 }
 
 relationship OneToOne {
-	Cart{customer} to Customer
-    Sale{cart} to Cart
-    Customer{user} to User
-    Owner{user} to User
+	Customer{cart} to Cart
+    Cart{sale} to Sale
+    Customer{user} to User{customer}
+    Owner{user} to User{owner}
 }
 
-relationship ManyToOne {
-	Book{bookstore} to Bookstore
-    Bookstore to Owner{bookstore}
+relationship OneToMany {
+	Bookstore{book} to Book{bookstore}
+    Owner{bookstore} to Bookstore
 }
 
 relationship ManyToMany {

@@ -1,12 +1,9 @@
-import { ICart } from 'app/entities/cart/cart.model';
-
 export interface ISale {
   id?: number;
-  cart?: ICart | null;
 }
 
 export class Sale implements ISale {
-  constructor(public id?: number, public cart?: ICart | null) {}
+  constructor(public id?: number) {}
 }
 
 export function getSaleIdentifier(sale: ISale): number | undefined {

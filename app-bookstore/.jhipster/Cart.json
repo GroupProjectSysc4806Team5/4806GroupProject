@@ -9,9 +9,9 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "customer",
+      "otherEntityName": "sale",
       "otherEntityRelationshipName": "cart",
-      "relationshipName": "customer",
+      "relationshipName": "sale",
       "ownerSide": true
     },
     {

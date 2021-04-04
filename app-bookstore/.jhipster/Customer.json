@@ -9,6 +9,13 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
+      "otherEntityName": "cart",
+      "otherEntityRelationshipName": "customer",
+      "relationshipName": "cart",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
       "otherEntityName": "user",
       "otherEntityRelationshipName": "customer",
       "relationshipName": "user",

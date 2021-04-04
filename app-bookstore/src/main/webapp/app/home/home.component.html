@@ -4,9 +4,11 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
+    <h1 class="display-4" jhiTranslate="home.title-customer">Welcome, Java Hipster!</h1>
 
     <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
+
+    <jhi-customer-home *jhiHasAnyAuthority="'ROLE_CUSTOMER'"></jhi-customer-home>
 
     <div [ngSwitch]="isAuthenticated()">
       <div class="alert alert-success" *ngSwitchCase="true">

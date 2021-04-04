@@ -7,8 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 
 import { ICart, Cart } from '../cart.model';
 import { CartService } from '../service/cart.service';
-import { ICustomer } from 'app/entities/customer/customer.model';
-import { CustomerService } from 'app/entities/customer/service/customer.service';
+import { ISale } from 'app/entities/sale/sale.model';
+import { SaleService } from 'app/entities/sale/service/sale.service';
 import { IBook } from 'app/entities/book/book.model';
 import { BookService } from 'app/entities/book/service/book.service';
 
@@ -19,18 +19,18 @@ import { BookService } from 'app/entities/book/service/book.service';
 export class CartUpdateComponent implements OnInit {
   isSaving = false;
 
-  customersCollection: ICustomer[] = [];
+  salesCollection: ISale[] = [];
   booksSharedCollection: IBook[] = [];
 
   editForm = this.fb.group({
     id: [],
-    customer: [],
+    sale: [],
     books: [],
   });
 
   constructor(
     protected cartService: CartService,
-    protected customerService: CustomerService,
+    protected saleService: SaleService,
     protected bookService: BookService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -58,7 +58,7 @@ export class CartUpdateComponent implements OnInit {
     }
   }
 
-  trackCustomerById(index: number, item: ICustomer): number {
+  trackSaleById(index: number, item: ISale): number {
     return item.id!;
   }
 
@@ -99,24 +99,20 @@ export class CartUpdateComponent implements OnInit {
   protected updateForm(cart: ICart): void {
     this.editForm.patchValue({
       id: cart.id,
-      customer: cart.customer,
+      sale: cart.sale,
       books: cart.books,
     });
 
-    this.customersCollection = this.customerService.addCustomerToCollectionIfMissing(this.customersCollection, cart.customer);
+    this.salesCollection = this.saleService.addSaleToCollectionIfMissing(this.salesCollection, cart.sale);
     this.booksSharedCollection = this.bookService.addBookToCollectionIfMissing(this.booksSharedCollection, ...(cart.books ?? []));
   }
 
   protected loadRelationshipsOptions(): void {
-    this.customerService
+    this.saleService
       .query({ filter: 'cart-is-null' })
-      .pipe(map((res: HttpResponse<ICustomer[]>) => res.body ?? []))
-      .pipe(
-        map((customers: ICustomer[]) =>
-          this.customerService.addCustomerToCollectionIfMissing(customers, this.editForm.get('customer')!.value)
-        )
-      )
-      .subscribe((customers: ICustomer[]) => (this.customersCollection = customers));
+      .pipe(map((res: HttpResponse<ISale[]>) => res.body ?? []))
+      .pipe(map((sales: ISale[]) => this.saleService.addSaleToCollectionIfMissing(sales, this.editForm.get('sale')!.value)))
+      .subscribe((sales: ISale[]) => (this.salesCollection = sales));
 
     this.bookService
       .query()
@@ -129,7 +125,7 @@ export class CartUpdateComponent implements OnInit {
     return {
       ...new Cart(),
       id: this.editForm.get(['id'])!.value,
-      customer: this.editForm.get(['customer'])!.value,
+      sale: this.editForm.get(['sale'])!.value,
       books: this.editForm.get(['books'])!.value,
     };
   }

@@ -1,6 +1,8 @@
 {
   "home": {
     "title": "Welcome, Java Hipster!",
+    "title-customer": "Welcome to Amazin Bookstore!",
+    "title-owner": "Welcome, Owner!",
     "subtitle": "This is your homepage",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."

@@ -10,6 +10,8 @@ public class CustomerDTO implements Serializable {
 
     private Long id;
 
+    private CartDTO cart;
+
     private UserDTO user;
 
     public Long getId() {
@@ -18,6 +20,14 @@ public class CustomerDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public CartDTO getCart() {
+        return cart;
+    }
+
+    public void setCart(CartDTO cart) {
+        this.cart = cart;
     }
 
     public UserDTO getUser() {
@@ -54,6 +64,7 @@ public class CustomerDTO implements Serializable {
     public String toString() {
         return "CustomerDTO{" +
             "id=" + getId() +
+            ", cart=" + getCart() +
             ", user=" + getUser() +
             "}";
     }

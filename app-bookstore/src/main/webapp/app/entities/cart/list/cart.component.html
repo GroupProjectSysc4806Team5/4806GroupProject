@@ -33,7 +33,7 @@
       <thead>
         <tr>
           <th scope="col"><span jhiTranslate="amazinBookstoreApp.cart.id">Id</span></th>
-          <th scope="col"><span jhiTranslate="amazinBookstoreApp.cart.customer">Customer</span></th>
+          <th scope="col"><span jhiTranslate="amazinBookstoreApp.cart.sale">Sale</span></th>
           <th scope="col"><span jhiTranslate="amazinBookstoreApp.cart.book">Book</span></th>
           <th scope="col"></th>
         </tr>
@@ -44,8 +44,8 @@
             <a [routerLink]="['/cart', cart.id, 'view']">{{ cart.id }}</a>
           </td>
           <td>
-            <div *ngIf="cart.customer">
-              <a [routerLink]="['/customer', cart.customer?.id, 'view']">{{ cart.customer?.id }}</a>
+            <div *ngIf="cart.sale">
+              <a [routerLink]="['/sale', cart.sale?.id, 'view']">{{ cart.sale?.id }}</a>
             </div>
           </td>
           <td>

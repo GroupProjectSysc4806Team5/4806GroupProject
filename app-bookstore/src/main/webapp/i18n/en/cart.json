@@ -18,7 +18,7 @@
         "title": "Cart"
       },
       "id": "Id",
-      "customer": "Customer",
+      "sale": "Sale",
       "book": "Book"
     }
   }

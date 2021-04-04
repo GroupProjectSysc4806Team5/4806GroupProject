@@ -18,6 +18,7 @@
         "title": "Customer"
       },
       "id": "Id",
+      "cart": "Cart",
       "user": "User"
     }
   }

@@ -1,14 +1,14 @@
-import { ICustomer } from 'app/entities/customer/customer.model';
+import { ISale } from 'app/entities/sale/sale.model';
 import { IBook } from 'app/entities/book/book.model';
 
 export interface ICart {
   id?: number;
-  customer?: ICustomer | null;
+  sale?: ISale | null;
   books?: IBook[] | null;
 }
 
 export class Cart implements ICart {
-  constructor(public id?: number, public customer?: ICustomer | null, public books?: IBook[] | null) {}
+  constructor(public id?: number, public sale?: ISale | null, public books?: IBook[] | null) {}
 }
 
 export function getCartIdentifier(cart: ICart): number | undefined {

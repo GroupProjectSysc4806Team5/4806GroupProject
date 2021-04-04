@@ -14,12 +14,6 @@
         <dd>
           <span>{{ sale.id }}</span>
         </dd>
-        <dt><span jhiTranslate="amazinBookstoreApp.sale.cart">Cart</span></dt>
-        <dd>
-          <div *ngIf="sale.cart">
-            <a [routerLink]="['/cart', sale.cart?.id, 'view']">{{ sale.cart?.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

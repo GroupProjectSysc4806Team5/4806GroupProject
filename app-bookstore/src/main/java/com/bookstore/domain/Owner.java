@@ -29,7 +29,7 @@ public class Owner implements Serializable {
 
     @OneToMany(mappedBy = "owner")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "owner" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "books", "owner" }, allowSetters = true)
     private Set<Bookstore> bookstores = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
