@@ -1,11 +1,8 @@
 package com.bookstore.service;
 
 import com.bookstore.config.Constants;
-import com.bookstore.domain.Authority;
-import com.bookstore.domain.User;
-import com.bookstore.repository.AuthorityRepository;
-import com.bookstore.repository.PersistentTokenRepository;
-import com.bookstore.repository.UserRepository;
+import com.bookstore.domain.*;
+import com.bookstore.repository.*;
 import com.bookstore.security.AuthoritiesConstants;
 import com.bookstore.security.SecurityUtils;
 import com.bookstore.service.dto.AdminUserDTO;
@@ -35,6 +32,12 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
+    private OwnerRepository ownerRepository;
+
+    private CustomerRepository customerRepository;
+
+    private CartRepository cartRepository;
+
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -47,12 +50,18 @@ public class UserService {
 
     public UserService(
         UserRepository userRepository,
+        OwnerRepository ownerRepository,
+        CustomerRepository customerRepository,
+        CartRepository cartRepository,
         PasswordEncoder passwordEncoder,
         PersistentTokenRepository persistentTokenRepository,
         AuthorityRepository authorityRepository,
         CacheManager cacheManager
     ) {
         this.userRepository = userRepository;
+        this.ownerRepository = ownerRepository;
+        this.customerRepository = customerRepository;
+        this.cartRepository = cartRepository;
         this.passwordEncoder = passwordEncoder;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
@@ -142,10 +151,19 @@ public class UserService {
         newUser.setActivated(false);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
-        Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
-        newUser.setAuthorities(authorities);
+        if (userDTO.getAuthorities() != null) {
+            Set<Authority> authorities = userDTO
+                .getAuthorities()
+                .stream()
+                .map(authorityRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+            newUser.setAuthorities(authorities);
+        }
+        newUser.setActivated(true);
         userRepository.save(newUser);
+        this.createCustomerOrOwner(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -159,6 +177,32 @@ public class UserService {
         userRepository.flush();
         this.clearUserCaches(existingUser);
         return true;
+    }
+
+    private void createCustomer(User createdUser) {
+        Customer customer = new Customer();
+        customer.setUser(createdUser);
+
+        Cart cart = new Cart();
+        customer.setCart(cart);
+
+        customerRepository.save(customer);
+        cartRepository.save(cart);
+    }
+
+    private void createOwner(User createdUser) {
+        Owner owner = new Owner();
+        owner.setUser(createdUser);
+
+        ownerRepository.save(owner);
+    }
+
+    private void createCustomerOrOwner(User createdUser) {
+        if (createdUser.getAuthorities().stream().map(Authority::getName).anyMatch(a -> a.equals(AuthoritiesConstants.CUSTOMER))) {
+            this.createCustomer(createdUser);
+        } else if (createdUser.getAuthorities().stream().map(Authority::getName).anyMatch(a -> a.equals(AuthoritiesConstants.OWNER))) {
+            this.createOwner(createdUser);
+        }
     }
 
     public User createUser(AdminUserDTO userDTO) {
@@ -175,7 +219,7 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode("password");
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
@@ -191,6 +235,8 @@ public class UserService {
             user.setAuthorities(authorities);
         }
         userRepository.save(user);
+        this.createCustomerOrOwner(user);
+
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
         return user;

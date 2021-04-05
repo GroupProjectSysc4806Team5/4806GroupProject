@@ -155,6 +155,19 @@ public class CustomerResource {
     }
 
     /**
+     * {@code GET  /customers/:id} : get the "id" customer.
+     *
+     * @param login the login of the customerDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/customers/{login}")
+    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable String login) {
+        log.debug("REST request to get Customer : {}", login);
+        Optional<CustomerDTO> customerDTO = customerService.findByUserLogin(login);
+        return ResponseUtil.wrapOrNotFound(customerDTO);
+    }
+
+    /**
      * {@code DELETE  /customers/:id} : delete the "id" customer.
      *
      * @param id the id of the customerDTO to delete.

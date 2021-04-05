@@ -34,6 +34,10 @@ export class CustomerService {
     return this.http.get<ICustomer>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByLogin(login: string): Observable<EntityResponseType> {
+    return this.http.get<ICustomer>(`${this.resourceUrl}?login=${login}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ICustomer[]>(this.resourceUrl, { params: options, observe: 'response' });

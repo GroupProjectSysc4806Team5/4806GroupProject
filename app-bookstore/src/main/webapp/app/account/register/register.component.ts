@@ -21,6 +21,7 @@ export class RegisterComponent implements AfterViewInit {
   success = false;
 
   registerForm = this.fb.group({
+    userRole: ['ROLE_CUSTOMER', [Validators.required]],
     login: [
       '',
       [
@@ -49,13 +50,15 @@ export class RegisterComponent implements AfterViewInit {
     this.errorEmailExists = false;
     this.errorUserExists = false;
 
+    const userRole = this.registerForm.get(['userRole'])!.value;
+    const authorities = [userRole];
     const password = this.registerForm.get(['password'])!.value;
     if (password !== this.registerForm.get(['confirmPassword'])!.value) {
       this.doNotMatch = true;
     } else {
       const login = this.registerForm.get(['login'])!.value;
       const email = this.registerForm.get(['email'])!.value;
-      this.registerService.save({ login, email, password, langKey: this.translateService.currentLang }).subscribe(
+      this.registerService.save({ authorities, login, email, password, langKey: this.translateService.currentLang }).subscribe(
         () => (this.success = true),
         response => this.processError(response)
       );

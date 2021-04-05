@@ -58,6 +58,7 @@ describe('Component Tests', () => {
         tick();
 
         expect(service.save).toHaveBeenCalledWith({
+          authorities: ['ROLE_CUSTOMER'],
           email: '',
           password: 'password',
           login: '',

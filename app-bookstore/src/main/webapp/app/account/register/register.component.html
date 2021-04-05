@@ -29,6 +29,12 @@
     <div class="col-md-8">
       <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
         <div class="form-group">
+          <p jhiTranslate="register.form.select-account-type">Select account type:</p>
+          <input type="radio" id="ROLE_CUSTOMER" name="userRole" formControlName="userRole" value="ROLE_CUSTOMER" />
+          <label class="form-control-label" for="ROLE_CUSTOMER" jhiTranslate="register.form.role-customer">Customer</label>
+          <input type="radio" id="ROLE_OWNER" name="userRole" formControlName="userRole" value="ROLE_OWNER" />
+          <label class="form-control-label" for="ROLE_OWNER" jhiTranslate="register.form.role-owner">Owner</label>
+          <br />
           <label class="form-control-label" for="login" jhiTranslate="global.form.username.label">Username</label>
           <input
             type="text"

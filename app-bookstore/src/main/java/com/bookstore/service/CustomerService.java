@@ -89,6 +89,18 @@ public class CustomerService {
     }
 
     /**
+     * Get one customer by id.
+     *
+     * @param login the id of the entity.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<CustomerDTO> findByUserLogin(String login) {
+        log.debug("Request to get Customer : {}", login);
+        return customerRepository.findByUserLogin(login).map(customerMapper::toDto);
+    }
+
+    /**
      * Delete the customer by id.
      *
      * @param id the id of the entity.
