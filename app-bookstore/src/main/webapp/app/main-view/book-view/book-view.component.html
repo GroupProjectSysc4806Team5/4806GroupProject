@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="book">
+      <h2 data-cy="bookDetailsHeading"><span jhiTranslate="amazinBookstoreApp.book.detail.title">Book</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="amazinBookstoreApp.book.id">Id</span></dt>
+        <dd>
+          <span>{{ book.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.author">Author</span></dt>
+        <dd>
+          <span>{{ book.author }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.available">Available</span></dt>
+        <dd>
+          <span>{{ book.available }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.bookName">Book Name</span></dt>
+        <dd>
+          <span>{{ book.bookName }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.description">Description</span></dt>
+        <dd>
+          <span>{{ book.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.isbn">Isbn</span></dt>
+        <dd>
+          <span>{{ book.isbn }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.picture">Picture</span></dt>
+        <dd>
+          <span>{{ book.picture }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.publisher">Publisher</span></dt>
+        <dd>
+          <span>{{ book.publisher }}</span>
+        </dd>
+        <dt><span jhiTranslate="amazinBookstoreApp.book.bookstore">Bookstore</span></dt>
+        <dd>
+          <div *ngIf="book.bookstore">
+            <a [routerLink]="['/main/view-bookstore', book.bookstore?.id]">{{ book.bookstore?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/cart', book.id, 'add']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="main-view.cart.add-to-cart">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

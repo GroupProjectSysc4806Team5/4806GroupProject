@@ -1,0 +1,35 @@
+<div>
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="bookList?.length === 0">
+    <span jhiTranslate="amazinBookstoreApp.book.home.notFound">No books found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="bookList && bookList.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="amazinBookstoreApp.book.author">Author</span></th>
+          <th scope="col"><span jhiTranslate="amazinBookstoreApp.book.bookName">Book Name</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of bookList" data-cy="entityTable">
+          <td>{{ book.author }}</td>
+          <td>{{ book.bookName }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/main/view-book', book.id]" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

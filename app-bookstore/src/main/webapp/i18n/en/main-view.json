@@ -1,0 +1,8 @@
+{
+  "main-view": {
+    "cart": {
+      "title": "My Cart",
+      "add-to-cart": "Add to cart"
+    }
+  }
+}

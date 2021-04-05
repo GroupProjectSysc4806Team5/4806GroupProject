@@ -77,6 +77,17 @@ public class BookService {
     }
 
     /**
+     * Get all the books of a certain bookstore
+     *
+     * @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<BookDTO> findAllByBookstore(Long id) {
+        log.debug("Request to get all Books from Bookstore: " + id);
+        return bookRepository.findAllByBookstore(id).stream().map(bookMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      * Get one book by id.
      *
      * @param id the id of the entity.

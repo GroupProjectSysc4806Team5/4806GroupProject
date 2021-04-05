@@ -26,6 +26,14 @@
           </span>
         </a>
       </li>
+      <li *jhiHasAnyAuthority="'ROLE_CUSTOMER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="/main/my-cart" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="shopping-cart"></fa-icon>
+            <span jhiTranslate="global.menu.cart">My Cart</span>
+          </span>
+        </a>
+      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *jhiHasAnyAuthority="'ROLE_ADMIN'"

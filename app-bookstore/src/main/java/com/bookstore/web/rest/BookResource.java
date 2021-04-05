@@ -140,6 +140,17 @@ public class BookResource {
     }
 
     /**
+     * {@code GET  /books} : get all the books from bookstore with id.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of books in body.
+     */
+    @GetMapping("/books/bookstore={id}")
+    public List<BookDTO> getAllBooksByBookstore(@PathVariable Long id) {
+        log.debug("REST request to get all Books from bookstore: " + id);
+        return bookService.findAllByBookstore(id);
+    }
+
+    /**
      * {@code GET  /books/:id} : get the "id" book.
      *
      * @param id the id of the bookDTO to retrieve.
