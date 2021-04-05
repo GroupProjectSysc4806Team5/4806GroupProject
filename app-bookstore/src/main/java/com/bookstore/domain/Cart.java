@@ -23,14 +23,14 @@ public class Cart implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Sale sale;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "rel_cart__book", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
-    @JsonIgnoreProperties(value = { "bookstore", "carts" }, allowSetters = true)
+    @JsonIgnoreProperties(allowSetters = true)
     private Set<Book> books = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

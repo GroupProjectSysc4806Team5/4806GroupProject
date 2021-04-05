@@ -27,9 +27,8 @@ public class Owner implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "books", "owner" }, allowSetters = true)
     private Set<Bookstore> bookstores = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -44,7 +44,7 @@ export class BookViewComponent implements OnInit {
     );
     if (this.account) {
       this.customerService.findByLogin(this.account.login).subscribe(
-        (res: HttpResponse<IBook>) => {
+        (res: HttpResponse<ICustomer>) => {
           this.isLoading = false;
           this.customer = res.body ?? null;
         },

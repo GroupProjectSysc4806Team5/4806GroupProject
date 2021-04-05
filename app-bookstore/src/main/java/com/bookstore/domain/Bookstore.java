@@ -26,13 +26,13 @@ public class Bookstore implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "bookstore")
+    @OneToMany(mappedBy = "bookstore", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "bookstore", "carts" }, allowSetters = true)
+    @JsonIgnoreProperties(allowSetters = true)
     private Set<Book> books = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "bookstores" }, allowSetters = true)
+    @JsonIgnoreProperties(allowSetters = true)
     private Owner owner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

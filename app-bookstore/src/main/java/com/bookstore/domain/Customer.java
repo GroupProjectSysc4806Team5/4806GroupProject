@@ -21,8 +21,7 @@ public class Customer implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @JsonIgnoreProperties(value = { "sale", "books" }, allowSetters = true)
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(unique = true)
     private Cart cart;
 

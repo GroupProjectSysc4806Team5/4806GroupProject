@@ -136,7 +136,7 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customers in body.
      */
     @GetMapping("/customers")
-    public List<CustomerDTO> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers(boolean eagerload) {
         log.debug("REST request to get all Customers");
         return customerService.findAll();
     }
@@ -155,13 +155,13 @@ public class CustomerResource {
     }
 
     /**
-     * {@code GET  /customers/:id} : get the "id" customer.
+     * {@code GET  /customers/login=:id} : get the "login" of the customer.
      *
      * @param login the login of the customerDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/customers/{login}")
-    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable String login) {
+    @GetMapping("/customers/login={login}")
+    public ResponseEntity<CustomerDTO> getCustomerByLogin(@PathVariable String login) {
         log.debug("REST request to get Customer : {}", login);
         Optional<CustomerDTO> customerDTO = customerService.findByUserLogin(login);
         return ResponseUtil.wrapOrNotFound(customerDTO);
