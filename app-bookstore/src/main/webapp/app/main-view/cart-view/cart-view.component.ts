@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from 'app/core/auth/account.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-cart-view',

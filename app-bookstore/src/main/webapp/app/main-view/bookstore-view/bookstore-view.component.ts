@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from 'app/core/auth/account.model';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IBook } from 'app/entities/book/book.model';
 import { BookService } from 'app/entities/book/service/book.service';
 import { HttpResponse } from '@angular/common/http';
