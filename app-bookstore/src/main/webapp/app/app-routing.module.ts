@@ -33,6 +33,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'main',
           loadChildren: () => import('./main-view/main-view.module').then(m => m.MainViewModule),
         },
+        {
+          path: 'owner-view',
+          loadChildren: () => import('./owner-view/owner-view.module').then(m => m.OwnerViewModule),
+        },
         ...LAYOUT_ROUTES,
       ],
       { enableTracing: DEBUG_INFO_ENABLED }

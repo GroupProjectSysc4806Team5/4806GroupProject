@@ -29,6 +29,8 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { MainViewModule } from 'app/main-view/main-view.module';
+import { OwnerBookstoreListComponent } from './owner-view/owner-bookstore-list/owner-bookstore-list.component';
+import { OwnerViewModule } from 'app/owner-view/owner-view.module';
 
 @NgModule({
   imports: [
@@ -39,6 +41,7 @@ import { MainViewModule } from 'app/main-view/main-view.module';
     EntityRoutingModule,
     AppRoutingModule,
     MainViewModule,
+    OwnerViewModule,
     // Set this to true to enable service worker (PWA)
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     HttpClientModule,

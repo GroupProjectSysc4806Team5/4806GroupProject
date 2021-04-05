@@ -10,6 +10,8 @@
 
     <jhi-customer-home *jhiHasAnyAuthority="'ROLE_CUSTOMER'"></jhi-customer-home>
 
+    <jhi-owner-home *jhiHasAnyAuthority="'ROLE_OWNER'"></jhi-owner-home>
+
     <div [ngSwitch]="isAuthenticated()">
       <div class="alert alert-success" *ngSwitchCase="true">
         <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message" [translateValues]="{ username: account.login }"

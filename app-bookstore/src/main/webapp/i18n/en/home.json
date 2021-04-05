@@ -6,6 +6,9 @@
     "customer-home": {
       "view-bookstores": "View Bookstores"
     },
+    "owner-home": {
+      "view-your-bookstores": "View Your Bookstores"
+    },
     "subtitle": "This is your homepage",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."

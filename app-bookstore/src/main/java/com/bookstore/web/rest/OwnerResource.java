@@ -155,6 +155,19 @@ public class OwnerResource {
     }
 
     /**
+     * {@code GET  /customers/:id} : get the "id" owner.
+     *
+     * @param login the login of the ownerDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the ownerDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/owners/login={login}")
+    public ResponseEntity<OwnerDTO> getLoggedOwner(@PathVariable String login) {
+        log.debug("REST request to get Owner : {}", login);
+        Optional<OwnerDTO> ownerDTO = ownerService.findByUserLogin(login);
+        return ResponseUtil.wrapOrNotFound(ownerDTO);
+    }
+
+    /**
      * {@code DELETE  /owners/:id} : delete the "id" owner.
      *
      * @param id the id of the ownerDTO to delete.

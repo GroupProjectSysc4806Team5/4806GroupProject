@@ -2,6 +2,7 @@ package com.bookstore.service;
 
 import com.bookstore.domain.Owner;
 import com.bookstore.repository.OwnerRepository;
+import com.bookstore.service.dto.CustomerDTO;
 import com.bookstore.service.dto.OwnerDTO;
 import com.bookstore.service.mapper.OwnerMapper;
 import java.util.LinkedList;
@@ -86,6 +87,18 @@ public class OwnerService {
     public Optional<OwnerDTO> findOne(Long id) {
         log.debug("Request to get Owner : {}", id);
         return ownerRepository.findById(id).map(ownerMapper::toDto);
+    }
+
+    /**
+     * Get one customer by id.
+     *
+     * @param login the id of the entity.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<OwnerDTO> findByUserLogin(String login) {
+        log.debug("Request to get Owner : {}", login);
+        return ownerRepository.findByUserLogin(login).map(ownerMapper::toDto);
     }
 
     /**

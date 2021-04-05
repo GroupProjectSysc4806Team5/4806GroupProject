@@ -32,6 +32,10 @@ export class OwnerService {
     return this.http.get<IOwner>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findByLogin(login: string): Observable<EntityResponseType> {
+    return this.http.get<IOwner>(`${this.resourceUrl}/login=${login}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IOwner[]>(this.resourceUrl, { params: options, observe: 'response' });
