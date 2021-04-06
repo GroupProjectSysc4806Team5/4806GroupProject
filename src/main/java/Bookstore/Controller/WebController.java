@@ -303,6 +303,7 @@ public class WebController {
         // use the book from the repo and add values using the
         Book repoBook = bookRepo.findById(Long.parseLong(id));
         model.addAttribute("id", repoBook.getStore().getId());
+        model.addAttribute("owner_id",repoBook.getStore().getOwner().getId());
 
 //        System.out.println("passed id:" + id);
 //        System.out.println("store id:" + repoBook.getStore().getId());
