@@ -433,4 +433,26 @@ public class WebController {
 
         return "redirect:" + request.getHeader("Referer");
     }
+
+    @GetMapping("user/search_bookstores")
+    public String searchBookstores(Model model) {
+
+        // Create a query string
+        String query = "";
+
+        model.addAttribute("query",query);
+
+        return "user/search_bookstores";
+    }
+
+    @PostMapping("user/searched")
+    public String searchedTerm(Model model, @ModelAttribute("query") String query){
+
+        List<Book> books = bookRepo.findByBookName(query);
+
+        model.addAttribute("books",books);
+        model.addAttribute("query",query);
+
+        return "user/books_returned";
+    }
 }

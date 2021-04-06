@@ -87,7 +87,7 @@
             <td colspan="2"> No Books Available </td>
         </tr>
         <tr th:each="book : ${books}">
-            <td><span th:text="${book.bookName}"> Title </span></td>
+            <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.bookName}"> Title </a></td>
             <td><span th:text="${book.author}"> Author </span></td>
             <td><span th:text="${book.publisher}"> Publisher </span></td>
             <td><span th:text="${book.ISBN}"> ISBN </span></td>
