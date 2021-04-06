@@ -29,7 +29,7 @@ public class WebController {
     private OwnerRepository ownerRepo;
 	@Autowired
     private SaleRepository saleRepo;
-	
+
     private User currentUser;
 
   
@@ -260,6 +260,7 @@ public class WebController {
 
         model.addAttribute("id", id);
         model.addAttribute("books", books);
+        model.addAttribute("owner_id",store.getOwner().getId());
 
         return "owner/view_books";
     }
@@ -304,6 +305,7 @@ public class WebController {
         // use the book from the repo and add values using the
         Book repoBook = bookRepo.findById(Long.parseLong(id));
         model.addAttribute("id", repoBook.getStore().getId());
+        model.addAttribute("owner_id",repoBook.getStore().getOwner().getId());
 
 //        System.out.println("passed id:" + id);
 //        System.out.println("store id:" + repoBook.getStore().getId());
@@ -451,5 +453,27 @@ public class WebController {
 
         model.addAttribute("sale", completedSale);
         return "user/completed_checkout";
+    }
+
+    @GetMapping("user/search_bookstores")
+    public String searchBookstores(Model model) {
+
+        // Create a query string
+        String query = "";
+
+        model.addAttribute("query",query);
+
+        return "user/search_bookstores";
+    }
+
+    @PostMapping("user/searched")
+    public String searchedTerm(Model model, @ModelAttribute("query") String query){
+
+        List<Book> books = bookRepo.findByBookName(query);
+
+        model.addAttribute("books",books);
+        model.addAttribute("query",query);
+
+        return "user/books_returned";
     }
 }

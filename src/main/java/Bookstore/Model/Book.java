@@ -5,12 +5,7 @@ package Bookstore.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -33,7 +28,7 @@ public class Book {
 	@ManyToOne
 	private Bookstore store;
 
-	@ManyToMany(mappedBy = "books")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "books")
 	private List<Cart> carts;
 
 	@ManyToMany(mappedBy = "books")
