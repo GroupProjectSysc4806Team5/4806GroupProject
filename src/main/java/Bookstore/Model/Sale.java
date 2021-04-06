@@ -1,30 +1,28 @@
 package Bookstore.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.*;
 
-import static javax.persistence.CascadeType.ALL;
-
 @Entity
 public class Sale {
+	@Id
+	@GeneratedValue
 	private Long id;
-//	private Set<Book> books;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Book> books;
+
+	@ManyToOne
 	private User user;
-	private Set<Bookstore> bookstores;
 
 	public Sale() {
 	}
 
-	public Sale(Set<Book> books, User user) {
-//		this.books = books;
+	public Sale(User user) {
 		this.user = user;
-		this.bookstores = new HashSet<>();
+		this.books = new ArrayList<>(user.getCart().getBooks());
 	}
 
-	@Id
-	@GeneratedValue
 	public Long getId() {
 		return this.id;
 	}
@@ -33,16 +31,15 @@ public class Sale {
 		this.id = id;
 	}
 
-//	@ManyToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "sale")
-//	public Set<Book> getBooks() {
-//		return this.books;
-//	}
-//
-//	public void setBooks(Set<Book> books) {
-//		this.books = books;
-//	}
+	public List<Book> getBooks() {
+		return this.books;
+	}
 
-	@ManyToOne
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+
+
 	public User getCustomer() {
 		return this.user;
 	}
@@ -51,16 +48,17 @@ public class Sale {
 		this.user = customer;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = ALL)
-	public Set<Bookstore> getBookstores() {
-		return this.bookstores;
+	public double calculateTotal() {
+		if (!books.isEmpty())
+			return books.stream().map(Book::getPrice).mapToDouble(p -> p).sum();
+		return 0;
 	}
 
-	public void setBookstores(Set<Bookstore> bookstores) {
-		this.bookstores = bookstores;
+	public double calculateTax() {
+		return this.calculateTotal() * 0.13;
 	}
 
-	public void addBookstore(Bookstore bookstore) {
-		this.bookstores.add(bookstore);
+	public double calculateTotalWithTax() {
+		return this.calculateTotal() + this.calculateTax();
 	}
 }

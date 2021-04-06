@@ -27,7 +27,9 @@ public class WebController {
     private UserRepository userRepo;
 	@Autowired
     private OwnerRepository ownerRepo;
-	
+	@Autowired
+    private SaleRepository saleRepo;
+
     private User currentUser;
 
   
@@ -314,6 +316,7 @@ public class WebController {
         repoBook.setAuthor(book.getAuthor());
         repoBook.setDescription(book.getDescription());
         repoBook.setPublisher(book.getPublisher());
+        repoBook.setPrice(book.getPrice());
 
         //bookstoreRepo.save(store);
         bookRepo.save(repoBook);
@@ -326,8 +329,7 @@ public class WebController {
      */
 
     private User getUser(long id) {
-        User user = userRepo.findById(id);
-        return user;
+        return userRepo.findById(id);
     }
 
     @GetMapping("user/view_all_bookstores")
@@ -375,13 +377,7 @@ public class WebController {
             user.setCart(cart);
         }
 
-        List<Book> books = cart.getBooks();
-
-        if (books == null) {
-            books = new ArrayList<>();
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("books", books);
+        model.addAttribute("cart", cart);
 
         return "user/view_cart";
     }
@@ -432,6 +428,31 @@ public class WebController {
         }
 
         return "redirect:" + request.getHeader("Referer");
+    }
+
+    public Sale evaluateCart() {
+        User user = getUser(currentUser.getId());
+        return new Sale(user);
+    }
+
+    @GetMapping("user/checkout_cart")
+    public String checkoutCart(Model model) {
+        model.addAttribute("sale", this.evaluateCart());
+        return "user/checkout_cart";
+    }
+
+    @GetMapping("user/complete_checkout")
+    public String completeCheckout(Model model) {
+        Sale completedSale = this.evaluateCart();
+        saleRepo.save(completedSale);
+
+        User user = getUser(currentUser.getId());
+        Cart cart = user.getCart();
+        cart.setBooks(new ArrayList<>());
+        cartRepo.save(cart);
+
+        model.addAttribute("sale", completedSale);
+        return "user/completed_checkout";
     }
 
     @GetMapping("user/search_bookstores")

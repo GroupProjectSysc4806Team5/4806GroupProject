@@ -7,10 +7,10 @@
     <link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
-<h1>My Cart</h1>
+<h1>Checkout</h1>
 
-<span th:if="${cart.getBooks().isEmpty()}">You have no books in your cart</span>
-<span th:unless="${cart.getBooks().isEmpty()}">
+<span th:if="${sale.getBooks().isEmpty()}">You have no books in your cart</span>
+<span th:unless="${sale.getBooks().isEmpty()}">
     <table>
         <tr>
             <th>Book Name</th>
@@ -18,7 +18,7 @@
             <th>Options</th>
         </tr>
         
-        <tr th:each="book : ${cart.getBooks()}">
+        <tr th:each="book : ${sale.getBooks()}">
             <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.getBookName()}"></a></td>
             <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
             <td>
@@ -29,10 +29,18 @@
         </tr>
         <tr>
             <td>Subtotal:</td>
-            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(cart.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(sale.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td>Tax:</td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(sale.calculateTax(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td>Total:</td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(sale.calculateTotalWithTax(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
             <td>
-                <form action="#" th:action="@{/user/checkout_cart}" method="get">
-                    <button name="checkoutCart" value="checkoutCart">Checkout</button>
+                <form action="#" th:action="@{/user/complete_checkout}" method="get">
+                    <button name="completeSale" value="completeSale">Complete Sale</button>
                 </form>
             </td>
         </tr>
@@ -41,6 +49,6 @@
 <br><br>
 </body>
 <footer>
-<a th:href="'view_all_bookstores'">Return to Bookstore list</a>
+<a th:href="'view_cart'">Return to cart</a>
 </footer>
 </html>
