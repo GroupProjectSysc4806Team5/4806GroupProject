@@ -40,6 +40,7 @@ public class WebController {
     public String newOwner(Model model) {
 
         model.addAttribute(new Owner());
+        model.addAttribute("activePage", "new-owner");
         return "new_owner";
     }
 
@@ -52,6 +53,8 @@ public class WebController {
     @GetMapping("/new-book")
     public String newBook(Model model) {
         model.addAttribute(new Book());
+        model.addAttribute("activePage", "new-book");
+        
         return "new_book";
 
     }
@@ -59,12 +62,14 @@ public class WebController {
     @PostMapping("/new-book-successful")
     public String newBookSuccess(Model model, @ModelAttribute Book book) {
         bookRepo.save(book);
+        
         return "new_book_successful";
     }
 
     @GetMapping("new-bookstore")
     public String newBookstore(Model model) {
         model.addAttribute(new Bookstore());
+        model.addAttribute("activePage", "new-bookstore");
         return "new_bookstore";
     }
 
@@ -77,6 +82,8 @@ public class WebController {
     @GetMapping("new-user")
     public String newUser(Model model) {
         model.addAttribute(new User());
+        model.addAttribute("activePage", "new-user");
+        
         return "new_user";
     }
 
@@ -111,6 +118,8 @@ public class WebController {
         model.addAttribute("list", book_list);
         model.addAttribute("id", id);
         model.addAttribute("book_id", book_id);
+        model.addAttribute("activePage", "new-book");
+        
         return "add_book";
 
     }

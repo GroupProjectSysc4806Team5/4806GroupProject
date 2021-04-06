@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${store.getName()}"></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta charset="UTF-8">
+<title th:text="${store.getName()}"></title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 </head>
 <body>
-    <h1 th:text="'Welcome to '+${store.getName()}+'!'"></h1>
-    <p>Book List</p>
-    <span th:if="${books.isEmpty()}">No books available</span>
-    <span th:unless="${books.isEmpty()}">
-        <tr th:each="book : ${books}">
-            <li><a th:href="'view_book?id='+${book.getId()}" th:text="${book.getBookName()}"></a></li>
-        </tr>
-    </span>
-    <br><br>
-    <a th:href="'view_all_bookstores'">Return to Bookstore list</a>
+	<div th:replace="~{fragments/navigation :: navigation}"></div>
+	<h1 th:text="'Welcome to '+${store.getName()}+'!'"></h1>
+	<p>Book List</p>
+	<span th:if="${books.isEmpty()}">No books available</span>
+	<span th:unless="${books.isEmpty()}">
+		<tr th:each="book : ${books}">
+			<li><a th:href="'view_book?id='+${book.getId()}"
+				th:text="${book.getBookName()}"></a></li>
+		</tr>
+	</span>
+	<br>
+	<br>
+	<a th:href="'view_all_bookstores'">Return to Bookstore list</a>
 </body>
 </html>

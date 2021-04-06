@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Add a New Book</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>Add a New Book</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 </head>
 <body>
-    <h1>Creating a Book</h1>
-    <form action="#" th:action="@{/added_book(id=${id})}" th:object="${book}" method="post">
-        <p>Name: <input type="text" th:field="*{bookName}" /></p>
-        <p>ISBN: <input type="text" th:field="*{ISBN}" /></p>
-        <p>Picture: <input type="text" th:field="*{picture}" /></p>
-        <p>Author: <input type="text" th:field="*{author}" /></p>
-        <p>Description: <input type="text" th:field="*{description}" /></p>
-        <p>Publisher: <input type="text" th:field="*{publisher}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
+	<div th:replace="~{fragments/navigation :: navigation}"></div>
+	<h1>Creating a Book</h1>
+	<form action="#" th:action="@{/added_book(id=${id})}"
+		th:object="${book}" method="post">
+		<p>
+			Name: <input type="text" th:field="*{bookName}" />
+		</p>
+		<p>
+			ISBN: <input type="text" th:field="*{ISBN}" />
+		</p>
+		<p>
+			Picture: <input type="text" th:field="*{picture}" />
+		</p>
+		<p>
+			Author: <input type="text" th:field="*{author}" />
+		</p>
+		<p>
+			Description: <input type="text" th:field="*{description}" />
+		</p>
+		<p>
+			Publisher: <input type="text" th:field="*{publisher}" />
+		</p>
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+	</form>
 </body>
 </body>
 </html>

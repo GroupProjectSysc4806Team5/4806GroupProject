@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${name}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta charset="UTF-8">
+<title th:text="${name}" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
 </head>
 <body>
-    <h1 th:text="'Welcome owner '+${owner.getName()}+'!'"/>
-    <p>What would you like to do?</p>
+	<div th:replace="~{fragments/navigation :: navigation}"></div>
+	<h1 th:text="'Welcome owner '+${owner.getName()}+'!'" />
+	<p>What would you like to do?</p>
 
-    <ul>
-        <li><a th:href="'/view_books?id=' + ${store_id}">View Books</a></li>
-        <li><a th:href="'/owner_add_book?id=' + ${store_id}">Add a book</a></li>
-    </ul>
+	<ul>
+		<li><a th:href="'/view_books?id=' + ${store_id}">View Books</a></li>
+		<li><a th:href="'/owner_add_book?id=' + ${store_id}">Add a
+				book</a></li>
+	</ul>
 
-    <a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
+	<a th:href="'/login_page_owner?id='+${id}">Return to login page</a>
 
 </body>
 </html>
