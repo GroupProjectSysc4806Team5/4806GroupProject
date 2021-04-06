@@ -31,10 +31,14 @@ public class WebLauncher {
             BookRepository bookRepo) {
         return (args) -> {
             Owner ownerTest = new Owner("Eugene Cain", "pass");
+            Owner owner2 = new Owner("City of Ottawa Admin", "0774w4");
             ownerRepo.save(ownerTest);
+            ownerRepo.save(owner2);
 
             User userTest = new User("User Test", "usertest@email.ca", "userTest");
+            User user2 = new User("Some Guy", "someguy@email.ca", "S0M3oN3");
             userRepo.save(userTest);
+            userRepo.save(user2);
 
             Bookstore storeTest = new Bookstore(ownerTest);
             storeTest.setName("Test Bookstore1");
@@ -71,10 +75,68 @@ public class WebLauncher {
             bookTest3.setPrice(40.00);
             bookTest3.setStore(storeTest);
 
+            // New Books and Stores based on real places
+            Bookstore OPL = new Bookstore(owner2);
+            storeTestToo.setName("OPL");
+            storeRepo.save(OPL);
+
+            Book theKeys = new Book();
+            theKeys.setBookName("The Keys: A Memoir");
+            theKeys.setAuthor("DJ Khaled");
+            theKeys.setDescription("From Snapchat sensation, business mogul, and recording artist DJ Khaled, the book They don't want you to read reveals his major keys to success");
+            theKeys.setISBN("0451497570");
+            theKeys.setPublisher("Crown Archetype");
+            theKeys.setPicture("Lion");
+            theKeys.setPrice(24.00);
+            theKeys.setStore(OPL);
+
+            Book manga1 = new Book();
+            manga1.setBookName("Fullmetal Alchemist: Fullmetal Edition, Vol. 9");
+            manga1.setAuthor("Hiromu Arakawa");
+            manga1.setDescription("Alchemy tore the Elric brothers’ bodies apart. Can their bond make them whole again?");
+            manga1.setISBN("1421599902");
+            manga1.setPublisher("VIZ Media LLC");
+            manga1.setPicture("Envy");
+            manga1.setPrice(26.72);
+            manga1.setStore(storeTestToo);
+
+            Book doWork = new Book();
+            doWork.setBookName("How to Do the Work: Recognize Your Patterns, Heal from Your Past, and Create Your Self ");
+            doWork.setAuthor("Dr. Nicole LePera");
+            doWork.setDescription("From Dr. Nicole LePera, creator of \"the holistic psychologist\"—the online phenomenon with more than two million Instagram followers—comes a revolutionary approach to healing that harnesses the power of the self to produce lasting change.");
+            doWork.setISBN("0063076810");
+            doWork.setPublisher("Harper Wave");
+            doWork.setPicture("Bold Title");
+            doWork.setPrice(23.99);
+            doWork.setStore(storeTestToo);
+
+            Book lor = new Book();
+            lor.setBookName("The Lord of the Rings Hardcover – Special Edition");
+            lor.setAuthor("J.R.R. Tolkien");
+            lor.setDescription("Sumptuous slipcased edition of Tolkien’s classic epic tale of adventure, fully illustrated in colour for the first time by the author himself. Limited to a worldwide first printing of just 6,000 copies, this deluxe volume is quarterbound in leather and includes many special features unique to this edition.");
+            lor.setISBN(" 0008471290");
+            lor.setPublisher("HarperCollins");
+            lor.setPicture("Sauron");
+            lor.setPrice(149.99);
+            lor.setStore(storeTestToo);
+
+
+
+
+
+
             storeTest.addBook(bookTest);
             storeTest.addBook(bookTest2);
             storeTest.addBook(bookTest3);
+            storeTest.addBook(theKeys);
+            storeTest.addBook(manga1);
+            storeTest.addBook(doWork);
+            storeTest.addBook(lor);
             storeRepo.save(storeTest);
+            storeRepo.save(OPL);
+            storeRepo.save(storeTestToo);
+
+
         };
     }
 }
