@@ -2,6 +2,7 @@ package Bookstore.Model;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Book {
 	private String author;
 	private String publisher;
 	private boolean available;
+	private double price;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,14 +35,15 @@ public class Book {
 
 	@ManyToMany(mappedBy = "books")
 	private List<Cart> carts;
-//	@ManyToMany(mappedBy = "sale")
-//	private Sale sale;
+
+	@ManyToMany(mappedBy = "books")
+	private List<Sale> sales;
 
 	public Book() {
 
 	}
 
-	public Book(String bookName, String ISBN, String picture, String description, String author, String publisher) {
+	public Book(String bookName, String ISBN, String picture, String description, String author, String publisher, double price) {
 		this.bookName = bookName;
 		this.isbn = ISBN;
 		this.picture = picture;
@@ -48,7 +51,8 @@ public class Book {
 		this.author = author;
 		this.publisher = publisher;
 		this.available = true;
-
+		this.price = price;
+		this.sales = new ArrayList<Sale>();
 	}
 
 	public String getISBN() {
@@ -70,14 +74,6 @@ public class Book {
 	public String getPicture() {
 		return picture;
 	}
-
-//	public Sale getSale() {
-//		return this.sale;
-//	}
-//
-//	public void setSale(Sale sale) {
-//		this.sale = sale;
-//	}
 
 	public void setPicture(String picture) {
 		this.picture = picture;
@@ -111,6 +107,10 @@ public class Book {
 		this.id = id;
 	}
 
+	public void setPrice(double price) { this.price = price; }
+
+	public double getPrice() { return price; }
+
 	public Bookstore getStore() {
 		return store;
 	}
@@ -130,6 +130,12 @@ public class Book {
 	public void addCarts(Cart cart) {
 		carts.add(cart);
 	}
+
+	public List<Sale> getSales() { return this.sales; }
+
+	public void setSales(List<Sale> sales) { this.sales = sales; }
+
+	public void addSales(Sale sale) { this.sales.add(sale); }
 
 	public Long getId() {
 		return id;

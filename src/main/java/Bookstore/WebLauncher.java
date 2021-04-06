@@ -50,6 +50,7 @@ public class WebLauncher {
             bookTest.setDescription("Test Description");
             bookTest.setISBN("Test ISBN");
             bookTest.setPublisher("Test Publisher");
+            bookTest.setPrice(20.00);
             bookTest.setStore(storeTest);
 
             Book bookTest2 = new Book();
@@ -58,6 +59,7 @@ public class WebLauncher {
             bookTest2.setDescription("Test Description");
             bookTest2.setISBN("Test ISBN");
             bookTest2.setPublisher("Test Publisher");
+            bookTest2.setPrice(25.00);
             bookTest2.setStore(storeTest);
 
             Book bookTest3 = new Book();
@@ -66,6 +68,7 @@ public class WebLauncher {
             bookTest3.setDescription("Test Description");
             bookTest3.setISBN("Test ISBN");
             bookTest3.setPublisher("Test Publisher");
+            bookTest3.setPrice(40.00);
             bookTest3.setStore(storeTest);
 
             storeTest.addBook(bookTest);

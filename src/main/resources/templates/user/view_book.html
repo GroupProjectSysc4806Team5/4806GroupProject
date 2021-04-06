@@ -13,6 +13,7 @@
     <p th:text="'Author: ' + ${book.getAuthor()}"></p>
     <p th:text="'Description: ' + ${book.getDescription()}"></p>
     <p th:text="'Publisher: ' + ${book.getPublisher()}"></p>
+    <p th:text="'Price: ' + ${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></p>
     <form action="#" th:action="@{/user/add_to_cart(id=${book.getId()})}" th:object="${book}" method="post">
         <button name="addToCart" value="addToCart">Add to cart</button>
     </form>

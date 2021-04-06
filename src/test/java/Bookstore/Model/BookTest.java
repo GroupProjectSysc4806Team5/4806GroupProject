@@ -12,6 +12,7 @@ class BookTest {
 	private String description;
 	private String author;
 	private String publisher;
+	private double price;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -21,7 +22,8 @@ class BookTest {
 		this.description = "test book";
 		this.author = "testOwner";
 		this.publisher = "testPublisher";
-		this.book = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher);
+		this.price = 25.00;
+		this.book = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
 
 	}
 
@@ -57,9 +59,9 @@ class BookTest {
 
 	@Test
 	public void testEquals() {
-		Book sameBook = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher);
+		Book sameBook = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
 		Book differentBook = new Book("Different Test Book", "987654321", "different_picture.jpeg",
-				"book for testing purposes", "Mark Twain", "96024 publishing");
+				"book for testing purposes", "Mark Twain", "96024 publishing", 20.00);
 
 		assert (this.book.equals(sameBook));
 		assert (!this.book.equals(differentBook));
