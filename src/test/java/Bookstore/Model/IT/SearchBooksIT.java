@@ -71,5 +71,6 @@ public class SearchBooksIT {
 
         // Assert that there is only one book and it is the same book as the one found from before
         assert(book.equals(books_model.get(0)));
+        assert(books_model.size() == 1);
     }
 }
