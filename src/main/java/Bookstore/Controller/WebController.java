@@ -258,6 +258,7 @@ public class WebController {
 
         model.addAttribute("id", id);
         model.addAttribute("books", books);
+        model.addAttribute("owner_id",store.getOwner().getId());
 
         return "owner/view_books";
     }
