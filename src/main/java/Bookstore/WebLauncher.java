@@ -48,6 +48,10 @@ public class WebLauncher {
             storeTestToo.setName("Test Bookstore2");
             storeRepo.save(storeTestToo);
 
+            Bookstore OPL = new Bookstore(owner2);
+            OPL.setName("OPL");
+            storeRepo.save(OPL);
+
             Book bookTest = new Book();
             bookTest.setBookName("Test Book");
             bookTest.setAuthor("Test Author");
@@ -76,9 +80,6 @@ public class WebLauncher {
             bookTest3.setStore(storeTest);
 
             // New Books and Stores based on real places
-            Bookstore OPL = new Bookstore(owner2);
-            storeTestToo.setName("OPL");
-            storeRepo.save(OPL);
 
             Book theKeys = new Book();
             theKeys.setBookName("The Keys: A Memoir");
@@ -113,25 +114,42 @@ public class WebLauncher {
             Book lor = new Book();
             lor.setBookName("The Lord of the Rings Hardcover – Special Edition");
             lor.setAuthor("J.R.R. Tolkien");
-            lor.setDescription("Sumptuous slipcased edition of Tolkien’s classic epic tale of adventure, fully illustrated in colour for the first time by the author himself. Limited to a worldwide first printing of just 6,000 copies, this deluxe volume is quarterbound in leather and includes many special features unique to this edition.");
+            lor.setDescription("Sumptuous slipcased edition of Tolkien’s classic epic tale of adventure, fully illustrated in colour for the first time by the author himself.");
             lor.setISBN(" 0008471290");
             lor.setPublisher("HarperCollins");
             lor.setPicture("Sauron");
             lor.setPrice(149.99);
-            lor.setStore(storeTestToo);
+            lor.setStore(OPL);
 
+            Book lone = new Book();
+            lone.setBookName("Lone Survivor: The Eyewitness Account of Operation Redwing and the Lost Heroes of SEAL Team 10 ");
+            lone.setAuthor("Marcus Luttrell");
+            lone.setDescription("Follow along a Navy SEAL's firsthand account of American heroism during a secret military operation in Afghanistan in this true story of survival and difficult choices.");
+            lone.setISBN("0316067601");
+            lone.setPublisher("Back Bay Books");
+            lone.setPicture("Trident");
+            lone.setPrice(23.99);
+            lone.setStore(OPL);
 
-
-
-
+            Book f451 = new Book();
+            f451.setBookName("Fahrenheit 451: A Novel");
+            f451.setAuthor("Ray Bradbury");
+            f451.setDescription("Guy Montag is a fireman. His job is to destroy the most illegal of commodities, the printed book, along with the houses in which they are hidden.");
+            f451.setISBN("9781451673319");
+            f451.setPublisher("Simon & Schuster");
+            f451.setPicture("Book");
+            f451.setPrice(23.00);
+            f451.setStore(OPL);
 
             storeTest.addBook(bookTest);
             storeTest.addBook(bookTest2);
             storeTest.addBook(bookTest3);
-            storeTest.addBook(theKeys);
-            storeTest.addBook(manga1);
-            storeTest.addBook(doWork);
-            storeTest.addBook(lor);
+            storeTestToo.addBook(manga1);
+            storeTestToo.addBook(doWork);
+            OPL.addBook(lor);
+            OPL.addBook(theKeys);
+            OPL.addBook(lone);
+            OPL.addBook(f451);
             storeRepo.save(storeTest);
             storeRepo.save(OPL);
             storeRepo.save(storeTestToo);
