@@ -9,5 +9,5 @@ import Bookstore.Model.User;
 @RepositoryRestResource(collectionResourceRel = "sales", path = "sales")
 public interface SaleRepository extends PagingAndSortingRepository<Sale, Long> {
     Sale findById(long id);
-    Iterable<Sale> findByCustomer(User customer);
+    Iterable<Sale> findByUser(User user);
 }

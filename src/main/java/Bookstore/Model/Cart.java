@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Cart {
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Book> books;
 
     @OneToOne(mappedBy = "cart")
@@ -17,7 +17,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public Cart() {}
+    public Cart() {
+        books = new ArrayList<Book>();
+    }
 
     public Cart(User user) {
         this.user = user;
@@ -44,11 +46,15 @@ public class Cart {
         this.user = user;
     }
 
+    public double calculateTotal() {
+        if (!books.isEmpty())
+            return books.stream().map(Book::getPrice).mapToDouble(p -> p).sum();
+        return 0;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public Long getId() {
         return id;
