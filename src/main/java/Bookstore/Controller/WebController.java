@@ -36,8 +36,15 @@ public class WebController {
   
     @GetMapping("/")
     public String index(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @GetMapping("/dev")
+    public String development(Model model) {
         return "index";
     }
+
 
     @GetMapping("/new-owner")
     public String newOwner(Model model) {
@@ -143,7 +150,7 @@ public class WebController {
     }
 
     // Temporary Post Mapping
-    @PostMapping("login")
+    @PostMapping("login-check")
     public String checkLogin(Model model, @ModelAttribute User user) {
 
         List<Owner> possible_owners = ownerRepo.findByName(user.getName());
@@ -344,7 +351,7 @@ public class WebController {
 
     @GetMapping("user/view_all_bookstores")
     public String viewAllBookstores(Model model) {
-        List<Bookstore> stores = (List<Bookstore>) bookstoreRepo.findAll();
+        List<Bookstore> stores = bookstoreRepo.findAll();
 
         model.addAttribute("stores", stores);
         return "user/bookstores";
@@ -415,7 +422,7 @@ public class WebController {
         Book book = bookRepo.findById(Long.parseLong(book_id));
         if (cart.getBooks().stream().noneMatch(_book -> book.getId().equals(_book.getId()))) {
             cart.addBook(book);
-            user.setCart(cart);
+//            user.setCart(cart);
             cartRepo.save(cart);
         }
 
@@ -435,15 +442,45 @@ public class WebController {
             Book book = bookRepo.findById(Long.parseLong(id));
             Predicate<Book> isMatchingBookId = _book -> book.getId().equals(_book.getId());
             if (cart.getBooks().stream().anyMatch(isMatchingBookId)) {
-                List<Book> books = cart.getBooks();
-                Book bookToRemove = books.stream().filter(isMatchingBookId).findFirst().get();
-
-                books.remove(bookToRemove);
-                cart.setBooks(books);
+                cart.removeBook(book);
                 cartRepo.save(cart);
             }
         }
 
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    public void modifyQuantity(String id, String operation) {
+        User user = getUser(currentUser.getId());
+        Cart cart = user.getCart();
+
+        if (cart != null) {
+            Book book = bookRepo.findById(Long.parseLong(id));
+            Predicate<Book> isMatchingBookId = _book -> book.getId().equals(_book.getId());
+            if (cart.getBooks().stream().anyMatch(isMatchingBookId)) {
+                if (operation.equals("increase")) {
+                    cart.increaseQuantity(book.getId());
+                } else if (operation.equals("decrease")) {
+                    cart.decreaseQuantity(book.getId());
+                }
+                cartRepo.save(cart);
+            }
+        }
+    }
+
+    @PostMapping("user/cart_increase_book_quantity")
+    public String increaseQuantity(
+        @RequestParam(name = "id") String id,
+        HttpServletRequest request) {
+        this.modifyQuantity(id, "increase");
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    @PostMapping("user/cart_decrease_book_quantity")
+    public String decreaseQuantity(
+            @RequestParam(name = "id") String id,
+            HttpServletRequest request) {
+        this.modifyQuantity(id, "decrease");
         return "redirect:" + request.getHeader("Referer");
     }
 
@@ -466,10 +503,10 @@ public class WebController {
         User user = getUser(currentUser.getId());
         Cart cart = user.getCart();
         
-        //decrease the quantity of each book that was in the cart by 1
+        //decrease the quantity of each book that was in the cart by its quantity in the cart
         for(Book b: cart.getBooks()) {
         	
-        	b.setQuantity((b.getQuantity())-1);
+        	b.setQuantity(b.getQuantity() - cart.getQuantity(b.getId()));
         	        	
         	if (b.getQuantity() == 0) {
         		b.setAvailable(false);
