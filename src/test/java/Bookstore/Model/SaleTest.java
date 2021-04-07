@@ -18,6 +18,7 @@ class SaleTest {
 	private String author;
 	private String publisher;
 	private double price;
+	private Integer quantity;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -28,7 +29,8 @@ class SaleTest {
 		this.author = "testOwner";
 		this.publisher = "testPublisher";
 		this.price = 25.00;
-		this.book = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
+		this.quantity=4;
+		this.book = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price, this.quantity);
 
 		user =  new User("Babak", "babak@test.com", "xxxx");
 		cart = new Cart(user);

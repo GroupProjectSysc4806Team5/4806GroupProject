@@ -45,6 +45,11 @@ public class CheckoutCartUseCaseIT {
                 .andExpect(status().isOk());
 
         List<Book> bookList = (List<Book>) bookRepository.findAll();
+        
+        //to test the decrement of the variable quantity after checkout
+        Integer quantity1 = bookList.get(0).getQuantity();
+        Integer quantity2 = bookList.get(1).getQuantity();
+        Integer quantity3 = bookList.get(2).getQuantity();
 
         Assertions.assertTrue(bookList.size() > 0);
         Assertions.assertEquals(bookList.size(), 3);
@@ -61,7 +66,15 @@ public class CheckoutCartUseCaseIT {
 
         mockMvc.perform(get("/user/checkout_cart")).andExpect(status().isOk());
         mockMvc.perform(get("/user/complete_checkout")).andExpect(status().isOk());
+        
+        
+        //Test the decrement 
+        Assertions.assertEquals(bookList.get(0).getQuantity(), quantity1-1);
+        Assertions.assertEquals(bookList.get(1).getQuantity(), quantity2-1);
+        Assertions.assertEquals(bookList.get(2).getQuantity(), quantity3-1);
 
+        
+        
         List<Sale> completedSales = (List<Sale>) saleRepository.findAll();
         Assertions.assertEquals(completedSales.size(), 1);
 

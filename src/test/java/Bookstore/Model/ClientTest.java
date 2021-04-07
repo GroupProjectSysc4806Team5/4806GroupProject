@@ -6,27 +6,24 @@ import org.junit.jupiter.api.Test;
 
 class ClientTest {
     private String name = "Test Customer";
-    private String address = "Test Address";
-    private String email = "test@email.com";
-    private String phoneNumber = "123-4567";
-    private String username = "bookstoreUsername";
     private String password = "bookstorePassword";
-    private User customer;
+    private String role = "myrole";
+    
+    Client client = new Client(name,password,role);
     
 	@Test
 	void testGetUsername() {
-		customer = new User();
-		customer.setName("Test Customer");
-		assertEquals(name, customer.getName());
+		assertEquals(name, client.getUsername());
 
 	}
-
-
 	@Test
 	void testGetPassword() {
-		customer = new User();
-		customer.setPassword("bookstorePassword");
-		assertEquals(password, customer.getPassword());
+		assertEquals(password, client.getPassword());
+	}
+	
+	@Test
+	void testGetRole() {
+		assertEquals(role, client.getRole());
 	}
 
 }

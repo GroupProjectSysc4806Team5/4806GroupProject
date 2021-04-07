@@ -23,6 +23,8 @@ class BookstoreTest {
 	private String author;
 	private String publisher;
 	private double price;
+	private Integer quantity;
+
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -31,7 +33,7 @@ class BookstoreTest {
     	owner.setName(ownerName);
     	this.bookStore = new Bookstore(owner);
     	this.bookStore.setOwner(owner);
-    	
+    	this.quantity = 5;
     	
     	this.bookName = "testBook";
 		this.isbn = "456456654646";
@@ -40,9 +42,9 @@ class BookstoreTest {
 		this.author = "testOwner";
 		this.publisher = "testPublisher";
 		this.price = 25.00;
-		this.book1 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
+		this.book1 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price, null);
 		
-		this.book2 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
+		this.book2 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price, this.quantity);
 		books = new ArrayList<Book>();
 		books.add(book1);
 		books.add(book2);
