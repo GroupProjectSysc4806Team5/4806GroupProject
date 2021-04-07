@@ -17,43 +17,47 @@
 <body>
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <h1 th:text="'Welcome to '+${store.getName()}+'!'"></h1>
-    <table id="myTable2" class="sortable">
-        <thead>
-        <tr>
-            <th> Title </th>
-            <th> Author </th>
-            <th> Publisher </th>
-            <th> ISBN </th>
-            <th> Picture </th>
-            <th> Quantity </th>
-			<th> Availability </th>
+    <span th:switch="${books.isEmpty()}">
+        <span th:case="true">
+            <h4>There are currently no books!</h4>
+        </span>
+        <span th:case="false">
+            <table id="myTable2" class="sortable">
+                <thead>
+                <tr>
+                    <th> Title </th>
+                    <th> Author </th>
+                    <th> Publisher </th>
+                    <th> ISBN </th>
+                    <th> Picture </th>
+                    <th> Quantity </th>
+                    <th> Availability </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}" class="item">
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${books.isEmpty()}">
-            <td colspan="2"> No Books Available </td>
-        </tr>
-        <tr th:each="book : ${books}" class="item">
-			
-			<span th:switch="${book.isAvailable}">
-				<i th:case="true">
-					<td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.bookName}"> Title </a></td>
-				</i>
-				<i th:case="false">
-				 	<td><span th:text="${book.bookName}">Title </span></td>
-				</i>
-			</span>
-            <td><span th:text="${book.author}"> Author </span></td>
-            <td><span th:text="${book.publisher}"> Publisher </span></td>
-            <td><span th:text="${book.ISBN}"> ISBN </span></td>
-            <td><span th:text="${book.picture}"> Picture </span></td>
-            <td><span th:text="${book.quantity}"> Quantity</span></td>
-            <td><span th:text="${book.isAvailable}">isAvailable</span></td>
-			
-        </tr>
-        </tbody>
-    </table>
+                    <span th:switch="${book.isAvailable}">
+                        <i th:case="true">
+                            <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.bookName}"> Title </a></td>
+                        </i>
+                        <i th:case="false">
+                            <td><span th:text="${book.bookName}">Title </span></td>
+                        </i>
+                    </span>
+                    <td><span th:text="${book.author}"> Author </span></td>
+                    <td><span th:text="${book.publisher}"> Publisher </span></td>
+                    <td><span th:text="${book.ISBN}"> ISBN </span></td>
+                    <td><span th:text="${book.picture}"> Picture </span></td>
+                    <td><span th:text="${book.quantity}"> Quantity</span></td>
+                    <td><span th:text="${book.isAvailable}">isAvailable</span></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </span>
+    </span>
+
 </body>
 <footer>
 	<a th:href="'view_all_bookstores'">Return to Bookstore list</a>
