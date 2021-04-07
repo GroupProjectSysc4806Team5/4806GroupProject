@@ -15,7 +15,9 @@ class CartTest {
 	private String author;
 	private String publisher;
 	private double price;
+	private Integer quantity;
 
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		this.bookName = "testBook";
@@ -25,6 +27,7 @@ class CartTest {
 		this.author = "testOwner";
 		this.publisher = "testPublisher";
 		this.price = 25.00;
+		this.quantity = 4;
 		this.book = new Book(
 				this.bookName,
 				this.isbn,
@@ -32,7 +35,8 @@ class CartTest {
 				this.description,
 				this.author,
 				this.publisher,
-				this.price
+				this.price, 
+				this.quantity
 		);
 		user =  new User("Babak", "babak@test.com", "xxxx");
 		cart = new Cart(user);

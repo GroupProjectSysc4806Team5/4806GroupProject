@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Controller
@@ -200,7 +201,7 @@ public class WebController {
         store.setOwner(owner);
         owner.addStore(store);
         ownerRepo.save(owner);
-
+        
         model.addAttribute("store_name", store.getName());
         model.addAttribute("id", id);
         return "owner/opened_bookstore";
@@ -276,7 +277,11 @@ public class WebController {
     public String addedBook(Model model, @RequestParam(name = "id") String id, @ModelAttribute Book book) {
         model.addAttribute("name", book.getBookName());
         //bookRepo.save(book);
-
+        
+        if(book.getQuantity()>0) {
+        	book.setAvailable(true);
+        }
+        
         model.addAttribute("id", id);
         // Get the store for it's store id
         Bookstore store = bookstoreRepo.findById(Long.parseLong(id));
@@ -307,8 +312,8 @@ public class WebController {
         model.addAttribute("id", repoBook.getStore().getId());
         model.addAttribute("owner_id",repoBook.getStore().getOwner().getId());
 
-//        System.out.println("passed id:" + id);
-//        System.out.println("store id:" + repoBook.getStore().getId());
+//       System.out.println("passed id:" + id);
+//       System.out.println("store id:" + repoBook.getStore().getId());
 
         repoBook.setBookName(book.getBookName());
         repoBook.setISBN(book.getISBN());
@@ -317,7 +322,12 @@ public class WebController {
         repoBook.setDescription(book.getDescription());
         repoBook.setPublisher(book.getPublisher());
         repoBook.setPrice(book.getPrice());
-
+        repoBook.setQuantity(book.getQuantity());
+        
+        if(repoBook.getQuantity()>0) {
+        	repoBook.setAvailable(true);
+        }
+        
         //bookstoreRepo.save(store);
         bookRepo.save(repoBook);
 
@@ -348,6 +358,12 @@ public class WebController {
         if (books == null) {
             books = new ArrayList<>();
         }
+        
+       /* for(Book b: books) {
+        	if(!b.getAvailable()) {
+        		books.remove(b);
+        	}
+        }*/
 
         model.addAttribute("store", store);
         model.addAttribute("books", books);
@@ -376,6 +392,7 @@ public class WebController {
 
             user.setCart(cart);
         }
+        
 
         model.addAttribute("cart", cart);
 
@@ -448,7 +465,26 @@ public class WebController {
 
         User user = getUser(currentUser.getId());
         Cart cart = user.getCart();
+        
+        //decrease the quantity of each book that was in the cart by 1
+        for(Book b: cart.getBooks()) {
+        	
+        	b.setQuantity((b.getQuantity())-1);
+        	        	
+        	if (b.getQuantity() == 0) {
+        		b.setAvailable(false);
+        		//Bookstore storeOfBook = b.getStore();
+        		//List<Book> books = storeOfBook.getBooks();
+                //books.remove(b);
+                
+                //pdate the bookstore repo..
+                //bookstoreRepo.setBookstoreBooks(books,storeOfBook.getId());
+             }
+        }
+        
+        //empty the cart
         cart.setBooks(new ArrayList<>());
+        
         cartRepo.save(cart);
 
         model.addAttribute("sale", completedSale);

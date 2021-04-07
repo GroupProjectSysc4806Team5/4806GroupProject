@@ -16,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <groupId>GroupSoft</groupId>
+    <groupId>MergeGroup</groupId>
     <artifactId>BookStore</artifactId>
     <version>1.0-SNAPSHOT</version>
 
