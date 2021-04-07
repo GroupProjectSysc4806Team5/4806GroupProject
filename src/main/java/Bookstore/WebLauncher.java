@@ -95,6 +95,8 @@ public class WebLauncher {
             theKeys.setPublisher("Crown Archetype");
             theKeys.setPicture("Lion");
             theKeys.setPrice(24.00);
+            theKeys.setQuantity(4);
+            theKeys.setAvailable(true);
             theKeys.setStore(OPL);
 
             Book manga1 = new Book();
@@ -105,6 +107,8 @@ public class WebLauncher {
             manga1.setPublisher("VIZ Media LLC");
             manga1.setPicture("Envy");
             manga1.setPrice(26.72);
+            manga1.setQuantity(5);
+            manga1.setAvailable(true);
             manga1.setStore(storeTestToo);
 
             Book doWork = new Book();
@@ -115,6 +119,8 @@ public class WebLauncher {
             doWork.setPublisher("Harper Wave");
             doWork.setPicture("Bold Title");
             doWork.setPrice(23.99);
+            doWork.setQuantity(20);
+            doWork.setAvailable(true);
             doWork.setStore(storeTestToo);
 
             Book lor = new Book();
@@ -125,6 +131,8 @@ public class WebLauncher {
             lor.setPublisher("HarperCollins");
             lor.setPicture("Sauron");
             lor.setPrice(149.99);
+            lor.setQuantity(0);
+            lor.setAvailable(false);
             lor.setStore(OPL);
 
             Book lone = new Book();
@@ -135,6 +143,8 @@ public class WebLauncher {
             lone.setPublisher("Back Bay Books");
             lone.setPicture("Trident");
             lone.setPrice(23.99);
+            lone.setQuantity(10);
+            lone.setAvailable(true);
             lone.setStore(OPL);
 
             Book f451 = new Book();
@@ -145,6 +155,8 @@ public class WebLauncher {
             f451.setPublisher("Simon & Schuster");
             f451.setPicture("Book");
             f451.setPrice(23.00);
+            f451.setQuantity(14);
+            f451.setAvailable(true);
             f451.setStore(OPL);
 
             storeTest.addBook(bookTest);
