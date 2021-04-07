@@ -28,9 +28,6 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${books.isEmpty()}">
-            <td colspan="2"> No Books Available </td>
-        </tr>
         <tr th:each="book : ${books}">
             <td><a th:text="${book.bookName}" th:href="'view_book?id='+${book.getId()}"> Title </a></td>
             <td><span th:text="${book.author}"> Author </span></td>
