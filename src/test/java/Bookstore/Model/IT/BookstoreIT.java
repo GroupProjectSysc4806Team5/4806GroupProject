@@ -36,12 +36,14 @@ public class BookstoreIT {
 	private String author;
 	private String publisher;
 	private double price;
+	private Integer quantity;
 	private List<Bookstore> stores;
 
 	private User user;
 	private String userName; 
 	private String userEmail; 
 	private String password;
+	
 
 
 	@BeforeEach
@@ -64,9 +66,10 @@ public class BookstoreIT {
 		this.author = "testOwner";
 		this.publisher = "testPublisher";
 		this.price = 25.00;
+		this.quantity = 4;
 		
-		this.book1 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
-		this.book2 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
+		this.book1 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price, quantity);
+		this.book2 = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price, quantity);
 		books = new ArrayList<Book>();
 		books.add(book1);
 		books.add(book2);
@@ -146,9 +149,9 @@ public class BookstoreIT {
 
 	@Test
 	public void testBookEquals() {
-		Book sameBook = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price);
+		Book sameBook = new Book(this.bookName, this.isbn, this.picture, this.description, this.author, this.publisher, this.price, quantity);
 		Book differentBook = new Book("Different Test Book", "987654321", "different_picture.jpeg",
-				"book for testing purposes", "Mark Twain", "96024 publishing", 20.00);
+				"book for testing purposes", "Mark Twain", "96024 publishing", 20.00, quantity);
 		assert (this.book1.equals(sameBook));
 		assert (!this.book1.equals(differentBook));
 	}

@@ -15,7 +15,7 @@ public class Bookstore {
     @ManyToOne
     private Owner owner;
 
-    @OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", /*orphanRemoval = true,*/ cascade = CascadeType.ALL)
     private List<Book> books;
 
     //private List orders;
@@ -43,7 +43,7 @@ public class Bookstore {
         return books;
     }
 
-    public void setBooks(ArrayList<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

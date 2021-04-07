@@ -7,11 +7,14 @@
     <link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
-    <h1 th:text="'Welcome ' + ${name}"></h1>
+    <h1 th:text="'Welcome User ' + ${name}"></h1>
     <p>What would you like to do?</p>
     <ul>
         <li><a th:href="'user/view_all_bookstores'"> Visit a bookstore </a></li>
         <li><a th:href="'user/view_cart?id='+${id}"> View Cart </a></li>
     </ul>
 </body>
+<footer>
+	<li><a th:href="'/login'">Login</a></li>
+</footer>
 </html>

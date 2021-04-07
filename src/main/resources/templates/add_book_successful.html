@@ -10,7 +10,7 @@
     <h1>Books in Cart</h1>
 
     <tr th:each="book : ${cart.getBooks()}">
-        <p th:text="${book.getId()} +': ' + ${book.getBookName()} + ' by ' + ${book.getAuthor()}"/>
+        <p th:text="${book.getId()} +': ' + ${book.getBookName()} + ' by ' + ${book.getAuthor() + ' Available copies: ' + ${book.getQuantity()}"/>
     </tr> 
     
 </body>

@@ -80,6 +80,9 @@
             <th onclick="sortTable(2)"> Publisher </th>
             <th onclick="sortTable(3)"> ISBN </th>
             <th onclick="sortTable(4)"> Picture </th>
+            <th onclick="sortTable(5)"> Quantity </th>
+			<th onclick="sortTable(5)"> Availability </th>
+
         </tr>
         </thead>
         <tbody>
@@ -87,11 +90,22 @@
             <td colspan="2"> No Books Available </td>
         </tr>
         <tr th:each="book : ${books}">
-            <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.bookName}"> Title </a></td>
+			
+			<span th:switch="${book.isAvailable}">
+				<i th:case="true">
+					<td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.bookName}"> Title </a></td>
+				</i>
+				<i th:case="false">
+				 	<td><span th:text="${book.bookName}">Title </span></td>
+				</i>
+			</span>
             <td><span th:text="${book.author}"> Author </span></td>
             <td><span th:text="${book.publisher}"> Publisher </span></td>
             <td><span th:text="${book.ISBN}"> ISBN </span></td>
             <td><span th:text="${book.picture}"> Picture </span></td>
+            <td><span th:text="${book.quantity}"> Quantity</span></td>
+            <td><span th:text="${book.isAvailable}">isAvailable</span></td>
+			
         </tr>
         </tbody>
     </table>
