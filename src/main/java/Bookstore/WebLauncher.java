@@ -88,7 +88,7 @@ public class WebLauncher {
             // New Books and Stores based on real places
 
             Book theKeys = new Book();
-            theKeys.setBookName("The Keys: A Memoir");
+            theKeys.setBookName("The Keys");
             theKeys.setAuthor("DJ Khaled");
             theKeys.setDescription("From Snapchat sensation, business mogul, and recording artist DJ Khaled, the book They don't want you to read reveals his major keys to success");
             theKeys.setISBN("0451497570");
@@ -100,7 +100,7 @@ public class WebLauncher {
             theKeys.setStore(OPL);
 
             Book manga1 = new Book();
-            manga1.setBookName("Fullmetal Alchemist: Fullmetal Edition, Vol. 9");
+            manga1.setBookName("Fullmetal Alchemist Vol. 9");
             manga1.setAuthor("Hiromu Arakawa");
             manga1.setDescription("Alchemy tore the Elric brothers’ bodies apart. Can their bond make them whole again?");
             manga1.setISBN("1421599902");
@@ -112,7 +112,7 @@ public class WebLauncher {
             manga1.setStore(storeTestToo);
 
             Book doWork = new Book();
-            doWork.setBookName("How to Do the Work: Recognize Your Patterns, Heal from Your Past, and Create Your Self ");
+            doWork.setBookName("How to Do the Work");
             doWork.setAuthor("Dr. Nicole LePera");
             doWork.setDescription("From Dr. Nicole LePera, creator of \"the holistic psychologist\"—the online phenomenon with more than two million Instagram followers—comes a revolutionary approach to healing that harnesses the power of the self to produce lasting change.");
             doWork.setISBN("0063076810");
@@ -124,7 +124,7 @@ public class WebLauncher {
             doWork.setStore(storeTestToo);
 
             Book lor = new Book();
-            lor.setBookName("The Lord of the Rings Hardcover – Special Edition");
+            lor.setBookName("The Lord of the Rings Hardcover");
             lor.setAuthor("J.R.R. Tolkien");
             lor.setDescription("Sumptuous slipcased edition of Tolkien’s classic epic tale of adventure, fully illustrated in colour for the first time by the author himself.");
             lor.setISBN(" 0008471290");
@@ -136,7 +136,7 @@ public class WebLauncher {
             lor.setStore(OPL);
 
             Book lone = new Book();
-            lone.setBookName("Lone Survivor: The Eyewitness Account of Operation Redwing and the Lost Heroes of SEAL Team 10 ");
+            lone.setBookName("Lone Survivor");
             lone.setAuthor("Marcus Luttrell");
             lone.setDescription("Follow along a Navy SEAL's firsthand account of American heroism during a secret military operation in Afghanistan in this true story of survival and difficult choices.");
             lone.setISBN("0316067601");
@@ -148,7 +148,7 @@ public class WebLauncher {
             lone.setStore(OPL);
 
             Book f451 = new Book();
-            f451.setBookName("Fahrenheit 451: A Novel");
+            f451.setBookName("Fahrenheit 451");
             f451.setAuthor("Ray Bradbury");
             f451.setDescription("Guy Montag is a fireman. His job is to destroy the most illegal of commodities, the printed book, along with the houses in which they are hidden.");
             f451.setISBN("9781451673319");
