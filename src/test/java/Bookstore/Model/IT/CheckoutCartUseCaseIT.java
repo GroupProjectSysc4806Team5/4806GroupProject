@@ -59,7 +59,7 @@ public class CheckoutCartUseCaseIT {
         bookList = bookRepository.findAll();
 
         Assertions.assertTrue(bookList.size() > 0);
-        Assertions.assertEquals(bookList.size(), 3);
+        Assertions.assertEquals(bookList.size(), 9);
 
         for (Book book: bookList) {
             mockMvc.perform(post("/user/add_to_cart")
@@ -68,7 +68,7 @@ public class CheckoutCartUseCaseIT {
 
         cart = cartRepository.findAll().stream().findFirst().orElse(null);
         List<Book> addedBooks = cart.getBooks();
-        Assertions.assertEquals(addedBooks.size(), 3);
+        Assertions.assertEquals(addedBooks.size(), 9);
 
         // Get initial quantities of books
         quantity1 = bookList.get(0).getQuantity();
