@@ -1,12 +1,13 @@
-body {	
-	font-family: "Times New Roman";
+body {
+    margin: 150px 0 0 0;
+    height: auto;
     font-size: large;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-	flex-direction: column;		
+	flex-direction: column;
+    justify-content: center;
 }
 footer {
 	position: fixed;
-	bottom: 0;
+	bottom: 50px;
 }

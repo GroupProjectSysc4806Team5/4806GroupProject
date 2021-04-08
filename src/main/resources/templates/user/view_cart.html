@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Successful</title>
+    <title>My Cart</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
@@ -15,21 +15,33 @@
         <tr>
             <th>Book Name</th>
             <th style="text-align:left; padding:0 30px 0 30px">Price</th>
+            <th style="text-align:left; padding:0 30px 0 0">Quantity</th>
             <th>Options</th>
         </tr>
         
         <tr th:each="book : ${cart.getBooks()}">
             <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.getBookName()}"></a></td>
             <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
-            <td>
+            <td style="text-align:left; padding:0 30px 0 0" th:text="${cart.getQuantity(book.getId())}"></td>
+            <td style="display: flex; flex-direction: row;">
+                <form action="#" th:action="@{/user/cart_increase_book_quantity(id=${book.getId()})}" th:object="${book}" method="post">
+                    <button name="increase" value="increase">+</button>
+                </form>
+                <form action="#" th:action="@{/user/cart_decrease_book_quantity(id=${book.getId()})}" th:object="${book}" method="post">
+                    <button name="decrease" value="decrease">-</button>
+                </form>
                 <form action="#" th:action="@{/user/remove_from_cart(id=${book.getId()})}" th:object="${book}" method="post">
                     <button name="removeFromCart" value="removeFromCart">Remove</button>
                 </form>
             </td>
         </tr>
+        <tr style="border-bottom:1px solid black">
+            <td colspan="100%"></td>
+        </tr>
         <tr>
             <td>Subtotal:</td>
             <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(cart.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            <td style="text-align:left; padding:0 30px 0 30px"></td>
             <td>
                 <form action="#" th:action="@{/user/checkout_cart}" method="get">
                     <button name="checkoutCart" value="checkoutCart">Checkout</button>

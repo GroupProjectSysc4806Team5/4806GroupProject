@@ -43,7 +43,7 @@ public class SearchBooksIT {
 
     @Test
     public void testBookSearch() throws Exception {
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/login-check")
                 .param("name", "User Test")
                 .param("password", "userTest"))
                 .andExpect(status().isOk());

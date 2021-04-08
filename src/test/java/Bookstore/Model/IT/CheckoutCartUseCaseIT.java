@@ -14,7 +14,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,49 +39,79 @@ public class CheckoutCartUseCaseIT {
     @Autowired
     private BookRepository bookRepository;
 
-    @Test
-    void testCartCheckout() throws Exception {
-        mockMvc.perform(post("/login")
-                .param("name", "User Test")
-                .param("password", "userTest"))
-                .andExpect(status().isOk());
+    private List<Book> bookList;
+    private Cart cart;
+    private Integer quantity1;
+    private Integer quantity2;
+    private Integer quantity3;
 
-        List<Book> bookList = (List<Book>) bookRepository.findAll();
-        
-        //to test the decrement of the variable quantity after checkout
-        Integer quantity1 = bookList.get(0).getQuantity();
-        Integer quantity2 = bookList.get(1).getQuantity();
-        Integer quantity3 = bookList.get(2).getQuantity();
+    @Test
+    void testLogin() throws Exception {
+        mockMvc.perform(post("/login-check")
+            .param("name", "User Test")
+            .param("password", "userTest"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    void testCartCheckout() throws Exception {
+        bookList = bookRepository.findAll();
 
         Assertions.assertTrue(bookList.size() > 0);
-        Assertions.assertEquals(bookList.size(), 3);
+        Assertions.assertEquals(bookList.size(), 9);
 
         for (Book book: bookList) {
             mockMvc.perform(post("/user/add_to_cart")
                     .param("id", "" + book.getId()));
         }
 
-        List<Cart> carts = (List <Cart>) cartRepository.findAll();
-        Cart cart = carts.get(0);
+        cart = cartRepository.findAll().stream().findFirst().orElse(null);
         List<Book> addedBooks = cart.getBooks();
-        Assertions.assertEquals(addedBooks.size(), 3);
+        Assertions.assertEquals(addedBooks.size(), 9);
+
+        // Get initial quantities of books
+        quantity1 = bookList.get(0).getQuantity();
+        quantity2 = bookList.get(1).getQuantity();
+        quantity3 = bookList.get(2).getQuantity();
+
+        // Attempt to increase quantity of each book in cart (quantities should be 1, 2, 2 after)
+        for (Book book: bookList) {
+            mockMvc.perform(post("/user/cart_increase_book_quantity")
+                    .param("id", "" + book.getId()));
+        }
+
+        // Test that quantities are updated
+        cart = cartRepository.findAll().stream().findFirst().orElse(null);
+        Assertions.assertEquals(cart.getQuantity(bookList.get(0).getId()), 1);
+        Assertions.assertEquals(cart.getQuantity(bookList.get(1).getId()), 2);
+        Assertions.assertEquals(cart.getQuantity(bookList.get(2).getId()), 2);
+
+        mockMvc.perform(post("/user/cart_decrease_book_quantity")
+                .param("id", "" + bookList.get(2).getId()));
+
+        // Test that we decreased the quantity of book 3 in the cart
+        cart = cartRepository.findAll().stream().findFirst().orElse(null);
+        Assertions.assertEquals(cart.getQuantity(bookList.get(2).getId()), 1);
 
         mockMvc.perform(get("/user/checkout_cart")).andExpect(status().isOk());
         mockMvc.perform(get("/user/complete_checkout")).andExpect(status().isOk());
-        
-        
-        //Test the decrement 
-        Assertions.assertEquals(bookList.get(0).getQuantity(), quantity1-1);
-        Assertions.assertEquals(bookList.get(1).getQuantity(), quantity2-1);
-        Assertions.assertEquals(bookList.get(2).getQuantity(), quantity3-1);
 
-        
-        
-        List<Sale> completedSales = (List<Sale>) saleRepository.findAll();
+        // Fetch updated books
+        List<Book> bookList = (List<Book>) bookRepository.findAll();
+
+        //Test the decrement
+        // Book 1 initially has only 1 book so quantity can't be below 0
+        Assertions.assertEquals(bookList.get(0).getQuantity(), quantity1 - 1);
+        Assertions.assertEquals(bookList.get(1).getQuantity(), quantity2 - 2);
+        Assertions.assertEquals(bookList.get(2).getQuantity(), quantity3 - 1);
+
+        // Test a sale has been added to the repo
+        List<Sale> completedSales = saleRepository.findAll();
         Assertions.assertEquals(completedSales.size(), 1);
 
-        List<Cart> cartsList = (List <Cart>) cartRepository.findAll();
-        Cart nowEmptyCart = cartsList.get(0);
-        Assertions.assertEquals(nowEmptyCart.getBooks().size(), 0);
+        // Test that the cart is now empty
+        cart = cartRepository.findAll().stream().findFirst().orElse(null);
+        Assertions.assertEquals(cart.getBooks().size(), 0);
     }
 }
