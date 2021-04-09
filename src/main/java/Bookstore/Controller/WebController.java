@@ -148,6 +148,11 @@ public class WebController {
         model.addAttribute("user", new User());
         return "login";
     }
+    
+    @GetMapping("logout")
+    public String logout(Model model) {
+        return "logout";
+    }
 
     // Temporary Post Mapping
     @PostMapping("login-check")

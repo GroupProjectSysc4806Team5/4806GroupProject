@@ -29,10 +29,10 @@
 				<li
 					th:class="${activePage == 'view_all_bookstores'}? 'nav-item active' : 'nav-item'"><a
 					class="nav-link" th:href="view_all_bookstores" style="width: 100%">All
-						Bookstores Page</a></li>
-
-
-
+						Bookstores</a></li>
+						<li
+					th:class="${activePage == 'logout-check'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="'/logout'">Logout</a></li>
 			</ul>
 		</div>
 	</nav>

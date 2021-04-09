@@ -39,8 +39,10 @@ table, th, td {
 				</a></li>
 				<li
 					th:class="${activePage == 'login-check'}? 'nav-item active' : 'nav-item'"><a
-					class="nav-link" th:href="'/owner_open_bookstore?id=' + ${id}">View Cart</a></li>
-
+					class="nav-link" th:href="'user/view_cart'">View Cart</a></li>
+				<li
+					th:class="${activePage == 'login-check'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="'/logout'">Logout</a></li>
 			</ul>
 
 		</div>
@@ -94,7 +96,4 @@ table, th, td {
 		</div>
 	</div>
 </body>
-<footer>
-	<li><a th:href="'/login'">Login</a></li>
-</footer>
 </html>

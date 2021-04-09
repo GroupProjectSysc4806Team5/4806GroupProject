@@ -31,6 +31,9 @@
 					th:class="${activePage == 'login-check'}? 'nav-item active' : 'nav-item'"><a
 					class="nav-link" th:href="'/owner_open_bookstore?id=' + ${id}">Create
 						Bookstore</a></li>
+						<li
+					th:class="${activePage == 'login-check'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="'/logout'">Logout</a></li>
 
 			</ul>
 
@@ -52,7 +55,4 @@
 
 
 </body>
-<footer>
-	<li><a th:href="'/login'">Login</a></li>
-</footer>
 </html>
