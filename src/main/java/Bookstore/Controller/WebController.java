@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 @Controller
@@ -35,8 +36,15 @@ public class WebController {
   
     @GetMapping("/")
     public String index(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @GetMapping("/dev")
+    public String development(Model model) {
         return "index";
     }
+
 
     @GetMapping("/new-owner")
     public String newOwner(Model model) {
@@ -142,7 +150,7 @@ public class WebController {
     }
 
     // Temporary Post Mapping
-    @PostMapping("login")
+    @PostMapping("login-check")
     public String checkLogin(Model model, @ModelAttribute User user) {
 
         List<Owner> possible_owners = ownerRepo.findByName(user.getName());
@@ -204,7 +212,7 @@ public class WebController {
         store.setOwner(owner);
         owner.addStore(store);
         ownerRepo.save(owner);
-
+        
         model.addAttribute("store_name", store.getName());
         model.addAttribute("id", id);
         return "owner/opened_bookstore";
@@ -280,7 +288,11 @@ public class WebController {
     public String addedBook(Model model, @RequestParam(name = "id") String id, @ModelAttribute Book book) {
         model.addAttribute("name", book.getBookName());
         //bookRepo.save(book);
-
+        
+        if(book.getQuantity()>0) {
+        	book.setAvailable(true);
+        }
+        
         model.addAttribute("id", id);
         // Get the store for it's store id
         Bookstore store = bookstoreRepo.findById(Long.parseLong(id));
@@ -311,8 +323,8 @@ public class WebController {
         model.addAttribute("id", repoBook.getStore().getId());
         model.addAttribute("owner_id",repoBook.getStore().getOwner().getId());
 
-//        System.out.println("passed id:" + id);
-//        System.out.println("store id:" + repoBook.getStore().getId());
+//       System.out.println("passed id:" + id);
+//       System.out.println("store id:" + repoBook.getStore().getId());
 
         repoBook.setBookName(book.getBookName());
         repoBook.setISBN(book.getISBN());
@@ -321,7 +333,12 @@ public class WebController {
         repoBook.setDescription(book.getDescription());
         repoBook.setPublisher(book.getPublisher());
         repoBook.setPrice(book.getPrice());
-
+        repoBook.setQuantity(book.getQuantity());
+        
+        if(repoBook.getQuantity()>0) {
+        	repoBook.setAvailable(true);
+        }
+        
         //bookstoreRepo.save(store);
         bookRepo.save(repoBook);
 
@@ -338,7 +355,7 @@ public class WebController {
 
     @GetMapping("user/view_all_bookstores")
     public String viewAllBookstores(Model model) {
-        List<Bookstore> stores = (List<Bookstore>) bookstoreRepo.findAll();
+        List<Bookstore> stores = bookstoreRepo.findAll();
 
         model.addAttribute("stores", stores);
         return "user/bookstores";
@@ -352,6 +369,12 @@ public class WebController {
         if (books == null) {
             books = new ArrayList<>();
         }
+        
+       /* for(Book b: books) {
+        	if(!b.getAvailable()) {
+        		books.remove(b);
+        	}
+        }*/
 
         model.addAttribute("store", store);
         model.addAttribute("books", books);
@@ -380,6 +403,7 @@ public class WebController {
 
             user.setCart(cart);
         }
+        
 
         model.addAttribute("cart", cart);
 
@@ -402,7 +426,7 @@ public class WebController {
         Book book = bookRepo.findById(Long.parseLong(book_id));
         if (cart.getBooks().stream().noneMatch(_book -> book.getId().equals(_book.getId()))) {
             cart.addBook(book);
-            user.setCart(cart);
+//            user.setCart(cart);
             cartRepo.save(cart);
         }
 
@@ -422,15 +446,45 @@ public class WebController {
             Book book = bookRepo.findById(Long.parseLong(id));
             Predicate<Book> isMatchingBookId = _book -> book.getId().equals(_book.getId());
             if (cart.getBooks().stream().anyMatch(isMatchingBookId)) {
-                List<Book> books = cart.getBooks();
-                Book bookToRemove = books.stream().filter(isMatchingBookId).findFirst().get();
-
-                books.remove(bookToRemove);
-                cart.setBooks(books);
+                cart.removeBook(book);
                 cartRepo.save(cart);
             }
         }
 
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    public void modifyQuantity(String id, String operation) {
+        User user = getUser(currentUser.getId());
+        Cart cart = user.getCart();
+
+        if (cart != null) {
+            Book book = bookRepo.findById(Long.parseLong(id));
+            Predicate<Book> isMatchingBookId = _book -> book.getId().equals(_book.getId());
+            if (cart.getBooks().stream().anyMatch(isMatchingBookId)) {
+                if (operation.equals("increase")) {
+                    cart.increaseQuantity(book.getId());
+                } else if (operation.equals("decrease")) {
+                    cart.decreaseQuantity(book.getId());
+                }
+                cartRepo.save(cart);
+            }
+        }
+    }
+
+    @PostMapping("user/cart_increase_book_quantity")
+    public String increaseQuantity(
+        @RequestParam(name = "id") String id,
+        HttpServletRequest request) {
+        this.modifyQuantity(id, "increase");
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+    @PostMapping("user/cart_decrease_book_quantity")
+    public String decreaseQuantity(
+            @RequestParam(name = "id") String id,
+            HttpServletRequest request) {
+        this.modifyQuantity(id, "decrease");
         return "redirect:" + request.getHeader("Referer");
     }
 
@@ -452,7 +506,26 @@ public class WebController {
 
         User user = getUser(currentUser.getId());
         Cart cart = user.getCart();
+        
+        //decrease the quantity of each book that was in the cart by its quantity in the cart
+        for(Book b: cart.getBooks()) {
+        	
+        	b.setQuantity(b.getQuantity() - cart.getQuantity(b.getId()));
+        	        	
+        	if (b.getQuantity() == 0) {
+        		b.setAvailable(false);
+        		//Bookstore storeOfBook = b.getStore();
+        		//List<Book> books = storeOfBook.getBooks();
+                //books.remove(b);
+                
+                //pdate the bookstore repo..
+                //bookstoreRepo.setBookstoreBooks(books,storeOfBook.getId());
+             }
+        }
+        
+        //empty the cart
         cart.setBooks(new ArrayList<>());
+        
         cartRepo.save(cart);
 
         model.addAttribute("sale", completedSale);

@@ -10,7 +10,7 @@
 
     <h1>List of Available Books</h1>
     <tr th:each="book : ${list}">
-        <p th:text="${book.getId()} +': ' + ${book.getBookName()} + ' by ' + ${book.getAuthor()}"/>
+        <p th:text="${book.getId()} +': ' + ${book.getBookName()} + ' by ' + ${book.getAuthor() + ' Available copies: ' + ${book.getQuantity()}"/>
     </tr>
 
     <form action="#" th:action="@{/add-book-successful(id=${id})}" method="post">
@@ -24,10 +24,6 @@
     <form action="#" th:action="@{/}" method="get">
        	 <input type="submit" value="HomePage" />
     </form>
-    
-   
-
-
 </body>
 </html>
 

@@ -15,12 +15,16 @@ public class Sale {
 	@ManyToOne
 	private User user;
 
+	@ElementCollection
+	private Map<Long, Integer> quantities;
+
 	public Sale() {
 	}
 
 	public Sale(User user) {
 		this.user = user;
 		this.books = new ArrayList<>(user.getCart().getBooks());
+		this.quantities = new HashMap<>(user.getCart().getQuantities());
 	}
 
 	public Long getId() {
@@ -48,9 +52,13 @@ public class Sale {
 		this.user = customer;
 	}
 
+	public Integer getQuantity(Long bookId) {
+		return this.quantities.get(bookId);
+	}
+
 	public double calculateTotal() {
 		if (!books.isEmpty())
-			return books.stream().map(Book::getPrice).mapToDouble(p -> p).sum();
+			return books.stream().map(book -> book.getPrice() * this.getQuantity(book.getId())).mapToDouble(p -> p).sum();
 		return 0;
 	}
 

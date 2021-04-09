@@ -9,7 +9,7 @@ body {
 
 footer {
 	position: fixed;
-	bottom: 0;
+	bottom: 50px;
 }
 #wrapper{
 	  border-style: inset;

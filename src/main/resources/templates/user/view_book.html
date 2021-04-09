@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Successful</title>
+    <title>View Book</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link th:href="@{/styles/style.css}" rel="stylesheet" />
 <body>
@@ -13,6 +13,7 @@
     <p th:text="'Author: ' + ${book.getAuthor()}"></p>
     <p th:text="'Description: ' + ${book.getDescription()}"></p>
     <p th:text="'Publisher: ' + ${book.getPublisher()}"></p>
+    <p th:text="'Copies available: ' + ${book.getQuantity()}"></p>
     <p th:text="'Price: ' + ${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></p>
     <form action="#" th:action="@{/user/add_to_cart(id=${book.getId()})}" th:object="${book}" method="post">
         <button name="addToCart" value="addToCart">Add to cart</button>

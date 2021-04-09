@@ -24,18 +24,17 @@
             <th> Publisher </th>
             <th> ISBN </th>
             <th> Picture </th>
+            <th> Quantity </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${books.isEmpty()}">
-            <td colspan="2"> No Books Available </td>
-        </tr>
         <tr th:each="book : ${books}">
             <td><a th:text="${book.bookName}" th:href="'view_book?id='+${book.getId()}"> Title </a></td>
             <td><span th:text="${book.author}"> Author </span></td>
             <td><span th:text="${book.publisher}"> Publisher </span></td>
             <td><span th:text="${book.ISBN}"> ISBN </span></td>
             <td><span th:text="${book.picture}"> Picture </span></td>
+            <td><span th:text="${book.quantity}"> Quantity </span></td>
         </tr>
         </tbody>
     </table>

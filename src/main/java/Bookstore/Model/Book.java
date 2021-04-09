@@ -18,8 +18,9 @@ public class Book {
 	private String description;
 	private String author;
 	private String publisher;
-	private boolean available;
+	private boolean isAvailable;
 	private double price;
+	private Integer quantity;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,15 +39,16 @@ public class Book {
 
 	}
 
-	public Book(String bookName, String ISBN, String picture, String description, String author, String publisher, double price) {
+	public Book(String bookName, String ISBN, String picture, String description, String author, String publisher, double price, Integer quantity) {
 		this.bookName = bookName;
 		this.isbn = ISBN;
 		this.picture = picture;
 		this.description = description;
 		this.author = author;
 		this.publisher = publisher;
-		this.available = true;
+		this.isAvailable = true;
 		this.price = price;
+		this.quantity = quantity;
 		this.sales = new ArrayList<Sale>();
 	}
 
@@ -145,12 +147,12 @@ public class Book {
 		return false;
 	}
 
-	public boolean getAvailable() {
-		return this.available;
+	public boolean getIsAvailable() {
+		return this.isAvailable;
 	};
 
 	public void setAvailable(boolean available) {
-		this.available = available;
+		this.isAvailable = available;
 	}
 
 	@Override
@@ -162,10 +164,20 @@ public class Book {
 				", description='" + description + '\'' +
 				", author='" + author + '\'' +
 				", publisher='" + publisher + '\'' +
-				", available=" + available +
+				", isAvailable='" + isAvailable + '\'' +
+				", quantity='" + quantity +
 				", id=" + id +
 				", store=" + store +
 				", carts=" + carts +
 				'}';
 	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+
 }
