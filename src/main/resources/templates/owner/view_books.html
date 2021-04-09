@@ -1,43 +1,42 @@
-<html><head>
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
     <meta charset="UTF-8">
-    <title>View Book</title>
+    <title>Login Successful</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link href="/styles/style.css" rel="stylesheet">
-</head><body data-new-gr-c-s-check-loaded="14.1005.0" data-gr-ext-installed="">
-<h3 id="pageTitle" style="width: 100%">Bookstore Books</h3>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 25%">
-		<a class="navbar-brand" href="/">Login Page</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+<h3 id="pageTitle" style="width: 100%">All Bookstores Page</h3>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" th:href="@{/}">Login Page</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto" style="width: 65%">
-				<li class="${activePage == 'view_cart'}? 'nav-item active' : 'nav-item'" onclick="history.back(-1)" style="width: 90%"><a class="pointer">Selected Bookstore </a></li>
-					<li class="nav-item"><a class="menuusItem" href="view_cart" >View Cart</a></li>
+			<ul class="navbar-nav mr-auto">
+				<li
+					class="${activePage == 'new-bookstore'}? 'nav-item active' : 'nav-item'"
+					onclick="history.back(-1)"><a class="pointer">Owner Home Page </a></li>
+
+
 
 			</ul>
 
 		</div>
 	</nav>
-	
-    <h1>Book Information</h1>
-    <p>Name: Gang of Four Insainity Patterns</p>
-    <p>ISBN: Test ISBN</p>
-    <p>Picture: ii</p>
-    <p>Author: Test Author</p>
-    <p>Description: Test Description</p>
-    <p>Publisher: Test Publisher</p>
-    <p>Copies available: 1</p>
-    <p>Price: 20.00</p>
-    <form action="/user/add_to_cart?id=6" method="post">
-        <button name="addToCart" value="addToCart">Add to cart</button>
-    </form>
-    <br><br>
-    <a href="view_cart">View cart</a>
-    <br>
+    <h1>Book List</h1>
+    <tr th:each="book : ${books}">
+        <a th:text="${book.getBookName()}" th:href="'edit_book?id='+${book.getId()}"/><br/>
+<!--        <p th:text="${book.getBookName()}"/>-->
+    </tr>
 
+</body>
 <footer>
-    <a href="view_bookstore?id=3">Return to bookstore</a>
+    <a th:href="'/login_page_owner?id='+${owner_id}">Return to login page</a>
 </footer>
-</body></html>
+</html>
