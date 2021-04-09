@@ -33,6 +33,7 @@ To carry out basic funcitons, follow the following instructions:
 ## Weekly Scrums
 1. #### [Weekly Scrum - March 12th, 2021](../../issues/1)
 2. #### [Weekly Scrum - March 21st, 2021](../../issues/45)
+3. #### [Weekly Scrum - April 9th, 2021](../../issues/81)
 
 ## UML
 ### Class Diagram:
