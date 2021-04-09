@@ -7,6 +7,30 @@
     <link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
+<h3 id="pageTitle" style="width: 100%">Checkout Page</h3>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 23%">
+		<a class="navbar-brand" th:href="@{/}">Login Page</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto" style="width: 100%">
+				<li
+					class="${activePage == 'new-bookstore'}? 'nav-item active' : 'nav-item'"
+					onclick="history.back(-1)" style="width: 65%"><a class="pointer">View Cart Page </a></li>
+					<li
+					th:class="${activePage == 'view_cart'}? 'nav-item active' : 'nav-item'"><a
+					class="menuusItem" th:href="'view_cart'">View Cart</a></li>
+
+			</ul>
+
+		</div>
+	</nav>
+	
 <h1>Checkout</h1>
 
 <span th:if="${sale.getBooks().isEmpty()}">You have no books in your cart</span>
