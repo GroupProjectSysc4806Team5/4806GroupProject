@@ -20,6 +20,31 @@ table, th, td {
 </style>
 </head>
 <body>
+<h3 id="pageTitle" style="width: 100%">User Home Page</h3>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" th:href="@{/}">Login Page</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li
+					th:class="${activePage == 'view_bookstores'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="'user/view_all_bookstores'">Visit
+						BookStores <span class="sr-only">(current)</span>
+				</a></li>
+				<li
+					th:class="${activePage == 'login-check'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="'/owner_open_bookstore?id=' + ${id}">View Cart</a></li>
+
+			</ul>
+
+		</div>
+	</nav>
 	<h1 th:text="'Welcome ' + ${name}"></h1>
 	<p>What would you like to do?</p>
 	<ul>

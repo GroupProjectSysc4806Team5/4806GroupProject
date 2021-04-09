@@ -8,6 +8,25 @@
 
 </head>
 <body>
+<h3 id="pageTitle" style="width: 100%">Add Book Page</h3>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" th:href="@{/}">Login Page</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li
+					class="${activePage == 'new-bookstore'}? 'nav-item active' : 'nav-item'"
+					onclick="history.back(-1)"><a class="pointer">Bookstore Page </a></li>
+			</ul>
+
+		</div>
+	</nav>
     <h1>Creating a Book</h1>
     <form action="#" th:action="@{/added_book(id=${id})}" th:object="${book}" method="post">
         <p>Name:<br> <input type="text" th:field="*{bookName}" /></p>

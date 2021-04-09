@@ -7,6 +7,25 @@
 	<link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
+<h3 id="pageTitle" style="width: 100%">All Bookstores Page</h3>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" th:href="@{/}">Login Page</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li
+					class="${activePage == 'new-bookstore'}? 'nav-item active' : 'nav-item'"
+					onclick="history.back(-1)"><a class="pointer">User Home Page </a></li>
+			</ul>
+
+		</div>
+	</nav>
     <h1>Stores List</h1>
     <span th:if="${stores.isEmpty()}">No stores available</span>
     <span th:unless="${stores.isEmpty()}">

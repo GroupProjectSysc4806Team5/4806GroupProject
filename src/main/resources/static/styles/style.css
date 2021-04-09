@@ -11,6 +11,14 @@ footer {
 	position: fixed;
 	bottom: 50px;
 }
+.pointer{
+	  cursor: pointer;
+}
+#pageTitle{
+	width: 100%; 
+    text-align: center;
+    background-color: brown;
+}
 #wrapper{
 	  border-style: inset;
 	  padding-left: 50px;
@@ -18,14 +26,20 @@ footer {
 	  padding-top: 15px;
 	  padding-bottom: 10px;
 	  margin-top: -10px;
-	  background-color:#483535;
+	  background-color:brown;
 	  color: #007bff;
-	  border-bottom-left-radius: 30px;
+	
       border-bottom-right-radius: 30px;
 }
-
+.navbar-nav {
+    display: contents;
+}
+.menuusItem{
+	maring: 20%;
+		color:black;
+}
 #recommended{
-	margin-top: 70px;
+	margin-top: 30px;
 	text-decoration-line: underline;
     text-decoration-style: double;
     border-style: inset;
@@ -33,9 +47,8 @@ footer {
     padding-right: 57px;
     padding-top: 15px;
     padding-bottom: 10px;
-    background-color:#483535;
+    background-color:brown;
     color: #007bff;
-    border-top-left-radius: 30px;
     border-top-right-radius: 30px;
 }
 #recBooks{

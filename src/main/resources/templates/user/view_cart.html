@@ -1,58 +1,101 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>My Cart</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+<meta charset="UTF-8">
+<title>My Cart</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link th:href="@{/styles/style.css}" rel="stylesheet" />
 </head>
 <body>
-<h1>My Cart</h1>
+	<h3 id="pageTitle" style="width: 100%">View Cart Page</h3>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light"
+		style="width: 30%">
+		<a class="navbar-brand" href="/">Login Page</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto" style="width: 100%">
+				<li
+					class="${activePage == 'new-bookstore'}? 'nav-item active' : 'nav-item'"
+					onclick="history.back(-1)" style="width:47%"><a class="pointer">Selected
+						Book Page </a></li>
+				<li
+					th:class="${activePage == 'view_all_bookstores'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="view_all_bookstores" style="width: 100%">All
+						Bookstores Page</a></li>
 
-<span th:if="${cart.getBooks().isEmpty()}">You have no books in your cart</span>
-<span th:unless="${cart.getBooks().isEmpty()}">
-    <table>
-        <tr>
-            <th>Book Name</th>
-            <th style="text-align:left; padding:0 30px 0 30px">Price</th>
-            <th style="text-align:left; padding:0 30px 0 0">Quantity</th>
-            <th>Options</th>
-        </tr>
-        
-        <tr th:each="book : ${cart.getBooks()}">
-            <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.getBookName()}"></a></td>
-            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
-            <td style="text-align:left; padding:0 30px 0 0" th:text="${cart.getQuantity(book.getId())}"></td>
-            <td style="display: flex; flex-direction: row;">
-                <form action="#" th:action="@{/user/cart_increase_book_quantity(id=${book.getId()})}" th:object="${book}" method="post">
-                    <button name="increase" value="increase">+</button>
-                </form>
-                <form action="#" th:action="@{/user/cart_decrease_book_quantity(id=${book.getId()})}" th:object="${book}" method="post">
-                    <button name="decrease" value="decrease">-</button>
-                </form>
-                <form action="#" th:action="@{/user/remove_from_cart(id=${book.getId()})}" th:object="${book}" method="post">
-                    <button name="removeFromCart" value="removeFromCart">Remove</button>
-                </form>
-            </td>
-        </tr>
-        <tr style="border-bottom:1px solid black">
-            <td colspan="100%"></td>
-        </tr>
-        <tr>
-            <td>Subtotal:</td>
-            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(cart.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
-            <td style="text-align:left; padding:0 30px 0 30px"></td>
-            <td>
-                <form action="#" th:action="@{/user/checkout_cart}" method="get">
-                    <button name="checkoutCart" value="checkoutCart">Checkout</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-</span>
-<br><br>
+
+
+			</ul>
+		</div>
+	</nav>
+
+
+	<h1>My Cart</h1>
+
+	<span th:if="${cart.getBooks().isEmpty()}">You have no books in
+		your cart</span>
+	<span th:unless="${cart.getBooks().isEmpty()}">
+		<table>
+			<tr>
+				<th>Book Name</th>
+				<th style="text-align: left; padding: 0 30px 0 30px">Price</th>
+				<th style="text-align: left; padding: 0 30px 0 0">Quantity</th>
+				<th>Options</th>
+			</tr>
+
+			<tr th:each="book : ${cart.getBooks()}">
+				<td><a th:href="'view_book?id='+${book.getId()}"
+					th:text="${book.getBookName()}"></a></td>
+				<td style="text-align: left; padding: 0 30px 0 30px"
+					th:text="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td style="text-align: left; padding: 0 30px 0 0"
+					th:text="${cart.getQuantity(book.getId())}"></td>
+				<td style="display: flex; flex-direction: row;">
+					<form action="#"
+						th:action="@{/user/cart_increase_book_quantity(id=${book.getId()})}"
+						th:object="${book}" method="post">
+						<button name="increase" value="increase">+</button>
+					</form>
+					<form action="#"
+						th:action="@{/user/cart_decrease_book_quantity(id=${book.getId()})}"
+						th:object="${book}" method="post">
+						<button name="decrease" value="decrease">-</button>
+					</form>
+					<form action="#"
+						th:action="@{/user/remove_from_cart(id=${book.getId()})}"
+						th:object="${book}" method="post">
+						<button name="removeFromCart" value="removeFromCart">Remove</button>
+					</form>
+				</td>
+			</tr>
+			<tr style="border-bottom: 1px solid black">
+				<td colspan="100%"></td>
+			</tr>
+			<tr>
+				<td>Subtotal:</td>
+				<td style="text-align: left; padding: 0 30px 0 30px"
+					th:text="${#numbers.formatDecimal(cart.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+				<td style="text-align: left; padding: 0 30px 0 30px"></td>
+				<td>
+					<form action="#" th:action="@{/user/checkout_cart}" method="get">
+						<button name="checkoutCart" value="checkoutCart">Checkout</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</span>
+	<br>
+	<br>
 </body>
 <footer>
-<a th:href="'view_all_bookstores'">Return to Bookstore list</a>
+	<a th:href="'view_all_bookstores'">Return to Bookstore list</a>
 </footer>
 </html>
