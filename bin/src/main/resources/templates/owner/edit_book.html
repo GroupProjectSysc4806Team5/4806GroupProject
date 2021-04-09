@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Successful</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Creating a Book</h1>
+    <form action="#" th:action="@{/edited_book(id=${book.getId()})}" th:object="${book}" method="post">
+        <p>Name:<br> <input type="text" th:field="*{bookName}" th:value="${book.getBookName()}"/></p>
+        <p>ISBN:<Br> <input type="text" th:field="*{ISBN}" th:value="${book.getISBN()}"/></p>
+        <p>Picture:<br> <input type="text" th:field="*{picture}" th:value="${book.getPicture()}"/></p>
+        <p>Author:<br> <input type="text" th:field="*{author}" th:value="${book.getAuthor()}"/></p>
+        <p>Description:<br> <input type="text" th:field="*{description}" th:value="${book.getDescription()}"/></p>
+        <p>Publisher:<br> <input type="text" th:field="*{publisher}" th:value="${book.getPublisher()}"/></p>
+        <p>Price:<br> <input type="number" step="0.01" th:field="*{price}" th:value="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"/></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+</body>
+</html>

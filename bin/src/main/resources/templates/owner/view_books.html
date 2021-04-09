@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Successful</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Book List</h1>
+    <tr th:each="book : ${books}">
+        <a th:text="${book.getBookName()}" th:href="'edit_book?id='+${book.getId()}"/><br/>
+<!--        <p th:text="${book.getBookName()}"/>-->
+    </tr>
+
+</body>
+<footer>
+    <a th:href="'/login_page_owner?id='+${owner_id}">Return to login page</a>
+</footer>
+</html>

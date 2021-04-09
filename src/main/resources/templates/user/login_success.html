@@ -1,18 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Successful</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+<meta charset="UTF-8">
+<title>Login Successful</title>
+<script
+	src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+<script src="js/slideshow.js"></script>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<link th:href="@{/styles/style.css}" rel="stylesheet" />
+
+<style>
+table, th, td {
+	border: 1px solid black;
+}
+</style>
 </head>
 <body>
-    <h1 th:text="'Welcome User ' + ${name}"></h1>
-    <p>What would you like to do?</p>
-    <ul>
-        <li><a th:href="'user/view_all_bookstores'"> Visit a bookstore </a></li>
-        <li><a th:href="'user/view_cart?id='+${id}"> View Cart </a></li>
-    </ul>
+	<h1 th:text="'Welcome ' + ${name}"></h1>
+	<p>What would you like to do?</p>
+	<ul>
+		<li><a th:href="'user/view_all_bookstores'"> Visit a
+				bookstore </a></li>
+		<li><a th:href="'user/view_cart?id='+${id}"> View Cart </a></li>
+	</ul>
+
+
+	<script type="text/javascript">
+		/*
+			function recomendation() {
+			
+			}
+			
+			window.onload = function() {
+				
+				//var books = [[${books}]];
+				var len = [[${totalBooks}]];
+
+				const random = Math.floor(Math.random() * len)
+			//	console.log("sdsads" + books);
+			    var output = ${books[0]}
+			    //var output = books[0];
+			    
+			    console.log(";l;;;;sdsadsssas" + output);
+			    // Target the ID of the span and update the HTML
+			    document.getElementById('spanDate').innerHTML = output;
+			};
+		 */
+	</script>
+	<h3 id="recommended">Recommended Books</h3>
+	<div id="wrapper">
+		<div id="slideshow">
+			<div id="recBooks">
+				<a th:href="'user/view_book?id='+${books[0].getId()}"
+					th:text="${books[0].bookName}"></a>
+			</div>
+			<div id="recBooks">
+				<a th:href="'user/view_book?id='+${books[1].getId()}"
+					th:text="${books[1].bookName}"></a>
+			</div>
+			<div id="recBooks">
+				<a th:href="'user/view_book?id='+${books[2].getId()}"
+					th:text="${books[2].bookName}"></a>
+			</div>
+		</div>
+	</div>
 </body>
 <footer>
 	<li><a th:href="'/login'">Login</a></li>

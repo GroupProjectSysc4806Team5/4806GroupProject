@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search For Books</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+    <h1>Search for a Book</h1>
+    <form th:action="@{/user/searched}" method="post">
+        <input type="text" name="query" value="query" th:value="${query}" />
+        <input type="submit" />
+    </form>
+
+</body>
+</html>

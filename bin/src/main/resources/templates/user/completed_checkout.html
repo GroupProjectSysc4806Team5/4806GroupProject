@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Successful</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+<h1>Order Summary</h1>
+<h2>Thank you for shopping at Amazin Bookstore</h2>
+<span th:if="${sale.getBooks().isEmpty()}">You did not buy anything!</span>
+<span th:unless="${sale.getBooks().isEmpty()}">
+    <table>
+        <tr>
+            <th>Book Name</th>
+            <th style="text-align:left; padding:0 30px 0 30px">Price</th>
+        </tr>
+        <tr th:each="book : ${sale.getBooks()}">
+            <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.getBookName()}"></a></td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td>Subtotal:</td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(sale.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td>Tax:</td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(sale.calculateTax(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+        <tr>
+            <td>Total:</td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(sale.calculateTotalWithTax(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+        </tr>
+    </table>
+</span>
+<br><br>
+</body>
+<footer>
+    <a th:href="'view_all_bookstores'">Checkout more books</a>
+</footer>
+</html>

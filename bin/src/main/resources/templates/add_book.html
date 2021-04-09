@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Book to User's Cart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+
+    <h1>List of Available Books</h1>
+    <tr th:each="book : ${list}">
+        <p th:text="${book.getId()} +': ' + ${book.getBookName()} + ' by ' + ${book.getAuthor()}"/>
+    </tr>
+
+    <form action="#" th:action="@{/add-book-successful(id=${id})}" method="post">
+        <p>Book id:<br> <input type="text" th:field="*{book_id}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        <br><br><br>
+    </form>
+        
+   
+	 <br> 
+    <form action="#" th:action="@{/}" method="get">
+       	 <input type="submit" value="HomePage" />
+    </form>
+    
+   
+
+
+</body>
+</html>
+
