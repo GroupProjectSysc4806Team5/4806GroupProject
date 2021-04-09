@@ -53,7 +53,7 @@ public class WebLauncher {
             storeRepo.save(OPL);
 
             Book bookTest = new Book();
-            bookTest.setBookName("Test Book");
+            bookTest.setBookName("Gang of Four Insainity Patterns");
             bookTest.setAuthor("Test Author");
             bookTest.setDescription("Test Description");
             bookTest.setISBN("Test ISBN");
@@ -64,7 +64,7 @@ public class WebLauncher {
             bookTest.setStore(storeTest);
 
             Book bookTest2 = new Book();
-            bookTest2.setBookName("Test Book 2");
+            bookTest2.setBookName("50 Shades of Programming");
             bookTest2.setAuthor("Test Author");
             bookTest2.setDescription("Test Description");
             bookTest2.setISBN("Test ISBN");
@@ -75,7 +75,16 @@ public class WebLauncher {
             bookTest2.setStore(storeTest);
 
             Book bookTest3 = new Book();
-            bookTest3.setBookName("Test Book 3");
+            bookTest3.setBookName("Wolf of Silicon Valley");
+            bookTest3.setAuthor("Test Author");
+            bookTest3.setDescription("Test Description");
+            bookTest3.setISBN("Test ISBN");
+            bookTest3.setPublisher("Test Publisher");
+            bookTest3.setPrice(40.00);
+            bookTest3.setStore(storeTest);
+            
+            Book bookTest4 = new Book();
+            bookTest3.setBookName("Enough of Spring and MVC");
             bookTest3.setAuthor("Test Author");
             bookTest3.setDescription("Test Description");
             bookTest3.setISBN("Test ISBN");
