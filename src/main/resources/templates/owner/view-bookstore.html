@@ -22,6 +22,10 @@
 				<li
 					class="${activePage == 'new-bookstore'}? 'nav-item active' : 'nav-item'"
 					onclick="history.back(-1)"><a class="pointer">All Bookstores Page</a></li>
+				<li
+					th:class="${activePage == 'logout-check'}? 'nav-item active' : 'nav-item'"><a
+					class="nav-link" th:href="'/logout'">Logout</a></li>
+					
 			</ul>
 
 		</div>
