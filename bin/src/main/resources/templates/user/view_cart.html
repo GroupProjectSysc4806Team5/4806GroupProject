@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Successful</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link th:href="@{/styles/style.css}" rel="stylesheet" />
+</head>
+<body>
+<h1>My Cart</h1>
+
+<span th:if="${cart.getBooks().isEmpty()}">You have no books in your cart</span>
+<span th:unless="${cart.getBooks().isEmpty()}">
+    <table>
+        <tr>
+            <th>Book Name</th>
+            <th style="text-align:left; padding:0 30px 0 30px">Price</th>
+            <th>Options</th>
+        </tr>
+        
+        <tr th:each="book : ${cart.getBooks()}">
+            <td><a th:href="'view_book?id='+${book.getId()}" th:text="${book.getBookName()}"></a></td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(book.getPrice(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            <td>
+                <form action="#" th:action="@{/user/remove_from_cart(id=${book.getId()})}" th:object="${book}" method="post">
+                    <button name="removeFromCart" value="removeFromCart">Remove</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Subtotal:</td>
+            <td style="text-align:left; padding:0 30px 0 30px" th:text="${#numbers.formatDecimal(cart.calculateTotal(), 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
+            <td>
+                <form action="#" th:action="@{/user/checkout_cart}" method="get">
+                    <button name="checkoutCart" value="checkoutCart">Checkout</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</span>
+<br><br>
+</body>
+<footer>
+<a th:href="'view_all_bookstores'">Return to Bookstore list</a>
+</footer>
+</html>

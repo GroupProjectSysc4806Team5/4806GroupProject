@@ -171,6 +171,10 @@ public class WebController {
                 if (u.getName().equals(user.getName()) && u.getPassword().equals(user.getPassword())) {
                     model.addAttribute("name", u.getName());
                     model.addAttribute("id", u.getId());
+                    //add bookstores for the user
+                    List<Book> books = (List<Book>) bookRepo.findAll();
+                    model.addAttribute("totalBooks", books.size());
+                    model.addAttribute("books", books);
                     currentUser = u;
                     return "user/login_success";
                 }
