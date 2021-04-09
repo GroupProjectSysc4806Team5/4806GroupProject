@@ -49,7 +49,7 @@ public class SearchBooksIT {
                 .andExpect(status().isOk());
 
         // Get the Book to be searched for
-        List<Book> books = bookRepo.findByBookName("Test Book");
+        List<Book> books = bookRepo.findByBookName("The Keys");
 
         // Assert that there is only one book returned
         assert(books.size() == 1);
@@ -58,13 +58,13 @@ public class SearchBooksIT {
         Book book = books.get(0);
 
         // Assert that the correct book is returned
-        assert(book.getBookName().equals("Test Book"));
+        assert(book.getBookName().equals("The Keys"));
 
         // Go to the search page
         mockMvc.perform(get("/user/search_bookstores")).andExpect(status().isOk());
 
         // Perform a search for "Test Book" and return a result of the model
-        MvcResult result =  mockMvc.perform(post("/user/searched").param("query","Test Book")).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn();
+        MvcResult result =  mockMvc.perform(post("/user/searched").param("query","The Keys")).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn();
 
         // From the model the list of Books on the model
         List<Book> books_model = (List<Book>) result.getModelAndView().getModel().get("books");
